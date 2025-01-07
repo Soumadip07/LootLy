@@ -51,6 +51,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 50px;
+
 }
 
 header {
@@ -58,7 +60,7 @@ header {
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        padding: 1rem;
+        // padding: 1rem;
     }
 
     img {
@@ -145,6 +147,36 @@ header {
         img {
             height: 30rem;
             width: 35rem;
+        }
+    }
+}
+
+.product-wrapper {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    .card {
+        border-radius: 10px;
+
+        img {
+            height: 20rem;
+            width: 17rem;
+        }
+
+        .lower-card {
+            padding-left: 20px;
+
+            h3 {
+                font-size: 1rem;
+                font-weight: 800;
+            }
+
+            h5 {
+                font-size: 0.8rem;
+            }
         }
     }
 }

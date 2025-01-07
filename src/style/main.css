@@ -50,6 +50,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 50px;
 }
 
 header .header-container {
@@ -128,4 +129,29 @@ header .user-section .btn:hover {
 .hero-slider .box img {
   height: 30rem;
   width: 35rem;
+}
+
+.product-wrapper {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.product-wrapper .card {
+  border-radius: 10px;
+}
+.product-wrapper .card img {
+  height: 20rem;
+  width: 17rem;
+}
+.product-wrapper .card .lower-card {
+  padding-left: 20px;
+}
+.product-wrapper .card .lower-card h3 {
+  font-size: 1rem;
+  font-weight: 800;
+}
+.product-wrapper .card .lower-card h5 {
+  font-size: 0.8rem;
 }/*# sourceMappingURL=main.css.map */
