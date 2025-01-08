@@ -11,168 +11,84 @@ import prod9 from '../../assets/prod9.jpeg'
 import prod10 from '../../assets/prod10.jpeg'
 import prod11 from '../../assets/prod11.jpeg'
 import prod12 from '../../assets/prod12.jpeg'
+import { Link, NavLink, Route, Routes, } from 'react-router-dom'
+import ProductDetails from './ProductDetail'
 
 function Products() {
-    const [selectedProduct, setSelectedProduct] = useState();
+    const [selectedCategory, setSelectedCategory] = useState();
     const categories = {
-        0: "Juices",
-        1: "Jams",
-        2: "Bread",
-        3: "Dairy Products",
-        4: "Snacks",
-        5: "Vegetables",
-        6: "Fruits",
+        0: 'Juices',
+        1: 'Jams',
+        2: 'Bread',
+        3: 'Dairy Products',
+        4: 'Snacks',
+        5: 'Vegetables',
+        6: 'Fruits',
     };
-    const handleSelect = (event) => {
+    const products = [
+        { id: 1, name: 'Black Pepper Spice Pack', price: '52.00$', image: prod1 },
+        { id: 2, name: 'Mixed Fruit Jam', price: '45.00$', image: prod2 },
+        { id: 3, name: 'Wheat Bread', price: '30.00$', image: prod3 },
+        { id: 4, name: 'Organic Milk', price: '25.00$', image: prod4 },
+        { id: 5, name: 'Potato Chips', price: '15.00$', image: prod5 },
+        { id: 6, name: 'Fresh Carrots', price: '10.00$', image: prod6 },
+        { id: 7, name: 'Seasonal Mangoes', price: '20.00$', image: prod7 },
+        { id: 8, name: 'Apple Juice', price: '18.00$', image: prod8 },
+        { id: 9, name: 'Strawberry Jam', price: '50.00$', image: prod9 },
+        { id: 10, name: 'Garlic Bread', price: '28.00$', image: prod10 },
+        { id: 11, name: 'Cheddar Cheese', price: '35.00$', image: prod11 },
+        { id: 12, name: 'Bananas', price: '12.00$', image: prod12 },
+    ];
 
-        setSelectedProduct(categories[event.target.value]);
-    }
-    // console.log(selectedProduct)
+    const handleSelect = (event) => {
+        setSelectedCategory(categories[event.target.value]);
+    };
+    // const handleProductDetails = (id) => {
+    //     console.log(id)
+    //     navigate(`/product-details/${id}`); // Navigate to the product details page
+    // }
+
     return (
-        <section className='product-section' id='product-section'>
-            <div className='container mt-5 flex-column'>
+        <section className="product-section" id="product-section">
+            <div className="container mt-5 flex-column">
                 <div className="filter">
                     <div className="select-container">
                         <select className="form-select" onChange={handleSelect}>
+                            <option value="">Select a Category</option>
                             {Object.entries(categories).map(([key, value]) => (
                                 <option key={key} value={key}>
                                     {value}
                                 </option>
                             ))}
                         </select>
-                        {/* <span className="material-symbols-outlined dropdown-arrow">
-                            arrow_drop_down_circle
-                        </span> */}
                     </div>
                 </div>
 
                 <div>
-                    <h2>Day of the <span>Deal</span></h2>
+                    <h2>
+                        Day of the <span>Deal</span>
+                    </h2>
                     <p>Don’t wait. The time will never be just right.</p>
                 </div>
-                <div className='product-wrapper '>
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod1} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod2} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod3} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-
-
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod4} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod5} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-
-
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod6} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-
-
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod7} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod8} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod9} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod10} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod11} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
-                    <div className='card focus:ring-opacity-50 border border-gray-200 mt-4'>
-                        <div className='upper-card'>
-                            <img src={prod12} alt='prod-1' />
-                        </div>
-                        <div className="lower-card">
-                            <h3>Black Pepper Spice Pack</h3>
-                            <h5>52.00$</h5>
-                        </div>
-                    </div>
+                <div className="product-wrapper">
+                    {products.map((product) => (
+                        <NavLink
+                            key={product.id}
+                            to={`/products/${product.id}`}
+                            className="card focus:ring-opacity-50 border border-gray-200 mt-4"
+                        >
+                            <div className="upper-card">
+                                <img src={product.image} alt={product.name} />
+                            </div>
+                            <div className="lower-card">
+                                <h3>{product.name}</h3>
+                                <h5>{product.price}</h5>
+                            </div>
+                        </NavLink>
+                    ))}
                 </div>
-
             </div>
         </section>
-    )
+    );
 }
-
 export default Products

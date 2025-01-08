@@ -1,19 +1,24 @@
-import { useState } from 'react'
-// import reactLogo from './assets/react.sv
-// import viteLogo from '/vite.svg'
-import './App.css'
-import './main.css'
-import Header from './components/Header/Header'
-import Home from './components/Home'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Router, Routes, and Route
+import Home from './components/Home';
+import Products from './components/Products/products';
+import ProductDetails from './components/Products/ProductDetail';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <Home />
-    </>
-  )
+    <Router>
+      <Routes>
+        {/* Home route */}
+        <Route path="/" element={<Home />} />
+
+        {/* Products route */}
+        <Route path="products" element={<Products />} />
+
+        {/* Product details route */}
+        <Route path="products/:id" element={<ProductDetails />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
