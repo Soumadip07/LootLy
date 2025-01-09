@@ -5,7 +5,7 @@ function Header() {
         <header>
             <div className='header-container conatiner focus:ring-opacity-50 border border-gray-200'>
                 <div className='d-flex pe-4 gap-3'>
-                    <a href='#'>
+                    <a href='/'>
                         <img src={logo} alt='logo' />
                     </a>
                 </div>

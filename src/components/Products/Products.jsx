@@ -13,40 +13,33 @@ import prod11 from '../../assets/prod11.jpeg'
 import prod12 from '../../assets/prod12.jpeg'
 import { Link, NavLink, Route, Routes, } from 'react-router-dom'
 import ProductDetails from './ProductDetail'
+import { products } from '../../Data/ProductData'
+import { categories } from '../../Data/Category'
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
-    const categories = {
-        0: 'Juices',
-        1: 'Jams',
-        2: 'Bread',
-        3: 'Dairy Products',
-        4: 'Snacks',
-        5: 'Vegetables',
-        6: 'Fruits',
+    const imageMap = {
+        prod1: prod1,
+        prod2: prod2,
+        prod3: prod3,
+        prod4: prod4,
+        prod5: prod5,
+        prod6: prod6,
+        prod7: prod7,
+        prod8: prod8,
+        prod9: prod9,
+        prod10: prod10,
+        prod11: prod11,
+        prod12: prod12,
     };
-    const products = [
-        { id: 1, name: 'Black Pepper Spice Pack', price: '52.00$', image: prod1 },
-        { id: 2, name: 'Mixed Fruit Jam', price: '45.00$', image: prod2 },
-        { id: 3, name: 'Wheat Bread', price: '30.00$', image: prod3 },
-        { id: 4, name: 'Organic Milk', price: '25.00$', image: prod4 },
-        { id: 5, name: 'Potato Chips', price: '15.00$', image: prod5 },
-        { id: 6, name: 'Fresh Carrots', price: '10.00$', image: prod6 },
-        { id: 7, name: 'Seasonal Mangoes', price: '20.00$', image: prod7 },
-        { id: 8, name: 'Apple Juice', price: '18.00$', image: prod8 },
-        { id: 9, name: 'Strawberry Jam', price: '50.00$', image: prod9 },
-        { id: 10, name: 'Garlic Bread', price: '28.00$', image: prod10 },
-        { id: 11, name: 'Cheddar Cheese', price: '35.00$', image: prod11 },
-        { id: 12, name: 'Bananas', price: '12.00$', image: prod12 },
-    ];
 
     const handleSelect = (event) => {
         setSelectedCategory(categories[event.target.value]);
     };
-    // const handleProductDetails = (id) => {
-    //     console.log(id)
-    //     navigate(`/product-details/${id}`); // Navigate to the product details page
-    // }
+
+    const getImage = (imageName) => {
+        return imageMap[imageName] || '/images/default-image.jpeg';
+    };
 
     return (
         <section className="product-section" id="product-section">
@@ -78,7 +71,7 @@ function Products() {
                             className="card focus:ring-opacity-50 border border-gray-200 mt-4"
                         >
                             <div className="upper-card">
-                                <img src={product.image} alt={product.name} />
+                                <img src={getImage(product?.image)} alt={product.name} />
                             </div>
                             <div className="lower-card">
                                 <h3>{product.name}</h3>

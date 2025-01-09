@@ -3,19 +3,30 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Im
 import Home from './components/Home';
 import Products from './components/Products/products';
 import ProductDetails from './components/Products/ProductDetail';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Home route */}
         <Route path="/" element={<Home />} />
 
-        {/* Products route */}
-        <Route path="products" element={<Products />} />
+        <Route path="products" element={
+          <>
+            <Header />
+            <Products />
+            <Footer />
+          </>
+        } />
 
-        {/* Product details route */}
-        <Route path="products/:id" element={<ProductDetails />} />
+        <Route path="products/:id" element={
+          <>
+            <Header />
+            <ProductDetails />
+            <Footer />
+          </>
+        } />
       </Routes>
     </Router>
   );
