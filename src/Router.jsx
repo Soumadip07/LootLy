@@ -1,31 +1,25 @@
-import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import Products from './components/Products/products.jsx';
-import ProductDetails from './components/Products/ProductDetail.jsx';
-import Home from './components/Home.jsx';
-import App from './App.jsx';
+import Home from './components/Home';
+import Products from './components/Products/products';
+import ProductDetails from './components/Products/ProductDetail';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
     {
         path: '/',
-        element: <App />,
-        children: [
-            {
-                path: '/',
-                element: <Home />,
-            },
-            {
-                path: 'products',
-                element: <Products />,
-                children: [
-                    {
-                        path: ':id', // Nested dynamic route for product details
-                        element: <ProductDetails />,
-                    },
-                ],
-            },
-        ],
+        element: <Home />,
+    },
+    {
+        path: '/products',
+        element: <Products />,
+    },
+    {
+        path: '/products/:id',
+        element: <>
+            <Header />
+            <ProductDetails />
+            <Footer />
+        </>,
     },
 ]);
-
-export default router;
