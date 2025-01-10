@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import 'material-icons/iconfont/material-icons.css';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 * {
     box-sizing: border-box;
@@ -66,10 +67,18 @@ body {
 }
 
 header {
+    position: sticky;
+    z-index: 20;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
     .header-container {
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 100%;
+        position: sticky;
+        z-index: 20;
     }
 
     img {
@@ -155,8 +164,8 @@ header {
 
         img {
             transition: transform 0.3s ease-in-out;
-            height: 34rem;
-            width: 38rem;
+            height: 27rem;
+            width: 29rem;
             padding: 10px;
         }
 
@@ -214,16 +223,26 @@ header {
 
     .card {
         border-radius: 10px;
-        // border: 0.1px solid #757575;
-        padding: 2px;
+        border: 1px solid #ddd;
+        overflow: hidden;
+        transition: transform 0.4s ease-out;
 
-        img {
-            height: 18rem;
-            width: 17rem;
+        .upper-card {
+            padding-bottom: 10px;
+
+            img {
+                height: 18rem;
+                width: 100%;
+                object-fit: cover;
+            }
+
+            img:hover {
+                transform: scale(1.05);
+            }
         }
 
         .lower-card {
-            padding-left: 20px;
+            padding: 0 20px;
 
             h3 {
                 font-size: 1rem;
@@ -235,9 +254,20 @@ header {
             }
 
             .stars {
-                .material-symbols-outlined {
+                .fa-star {
+                    font-size: 20px;
+                    margin-right: 5px;
+                }
+
+                .golden-star {
+                    color: gold;
+                }
+
+                .normal-star {
                     color: #7688db;
                 }
+
+
 
                 // &:hover {
                 //     .material-symbols-outlined {

@@ -10,7 +10,6 @@ export const products = [
         quantity: '250g',
         tag: 'HOT',
         stockStatus: 'In Stock',
-        rating: 5,
         reviews: [
             { user: 'Alice', comment: 'Great quality!', rating: 5 },
             { user: 'Bob', comment: 'A bit pricey but worth it.', rating: 4 }
@@ -71,7 +70,7 @@ export const products = [
         name: 'Organic Milk',
         category: 'Dairy',
         image: 'prod4',
-        rating: 4.7,
+        rating: 2.7,
         marketPrice: 30.00,
         discountedPrice: 25.00,
         quantity: '1L',

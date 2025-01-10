@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import 'material-icons/iconfont/material-icons.css';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 * {
   box-sizing: border-box;
   margin: 0;
@@ -61,10 +62,19 @@ body {
   align-items: center;
 }
 
+header {
+  position: sticky;
+  z-index: 20;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 header .header-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  position: sticky;
+  z-index: 20;
 }
 header img {
   width: 6rem;
@@ -135,8 +145,8 @@ header .user-section .btn:hover {
 }
 .hero-slider .box img {
   transition: transform 0.3s ease-in-out;
-  height: 34rem;
-  width: 38rem;
+  height: 27rem;
+  width: 29rem;
   padding: 10px;
 }
 .hero-slider .box img:hover {
@@ -183,14 +193,24 @@ header .user-section .btn:hover {
 }
 .product-wrapper .card {
   border-radius: 10px;
-  padding: 2px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  transition: transform 0.4s ease-out;
 }
-.product-wrapper .card img {
+.product-wrapper .card .upper-card {
+  padding-bottom: 10px;
+}
+.product-wrapper .card .upper-card img {
   height: 18rem;
-  width: 17rem;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.product-wrapper .card .upper-card img:hover {
+  transform: scale(1.05);
 }
 .product-wrapper .card .lower-card {
-  padding-left: 20px;
+  padding: 0 20px;
 }
 .product-wrapper .card .lower-card h3 {
   font-size: 1rem;
@@ -199,7 +219,14 @@ header .user-section .btn:hover {
 .product-wrapper .card .lower-card h5 {
   font-size: 0.8rem;
 }
-.product-wrapper .card .lower-card .stars .material-symbols-outlined {
+.product-wrapper .card .lower-card .stars .fa-star {
+  font-size: 20px;
+  margin-right: 5px;
+}
+.product-wrapper .card .lower-card .stars .golden-star {
+  color: gold;
+}
+.product-wrapper .card .lower-card .stars .normal-star {
   color: #7688db;
 }
 

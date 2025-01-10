@@ -40,7 +40,7 @@ function Products() {
     const getImage = (imageName) => {
         return imageMap[imageName] || '/images/default-image.jpeg';
     };
-    console.log(products?.[0]?.rating)
+    console.log(products?.[10]?.rating)
     return (
         <section className="product-section" id="product-section">
             <div className="container mt-5 flex-column justify-content-start align-items-start">
@@ -76,14 +76,16 @@ function Products() {
                             <div className="lower-card">
                                 <div className='d-flex justify-content-between'>
                                     <div className="stars">
-                                        {Array(parseInt(product?.rating ? product?.rating : 4))
+                                        {Array(5)
                                             .fill()
                                             .map((_, index) => (
-                                                <span key={index} className="material-symbols-outlined">
-                                                    star
-                                                </span>
+                                                <i
+                                                    key={index}
+                                                    className={`fa-star ${index < parseInt(product?.rating ? product?.rating : 1) ? 'fas golden-star' : 'far normal-star'}`}
+                                                ></i>
                                             ))}
                                     </div>
+
                                     <p>{product?.category}</p>
                                 </div>
 
