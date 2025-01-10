@@ -7,6 +7,10 @@
     padding: 0;
 }
 
+.custom-link {
+    text-decoration: none;
+}
+
 body {
     font-family: "Poppins", serif;
 }
@@ -15,11 +19,17 @@ body {
     color: #7688db;
 }
 
+.cart-btn {
+    padding: 6px 60px;
+    border: 1px solid #7688db;
+    border-radius: 10px;
+    background-color: #F0F2FB;
+}
+
 .swiper-button-next,
 .swiper-button-prev {
     color: black;
-    border-radius: 50%;
-    background-color: #7688db;
+
 }
 
 .custom-prev,
@@ -51,16 +61,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    // padding: 50px;
 
 }
 
 header {
     .header-container {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: center;
-        // padding: 1rem;
     }
 
     img {
@@ -117,10 +126,9 @@ header {
 
             h3 {
                 font-size: 0.8rem;
-                font-weight: 800;
+                font-weight: 700;
                 color: #333;
                 margin: 0.3rem 0 0;
-                text-transform: uppercase;
             }
 
             h5 {
@@ -143,11 +151,58 @@ header {
         justify-content: space-evenly;
         align-items: center;
         margin: 0 35px;
+        overflow: hidden;
 
         img {
-            height: 30rem;
-            width: 35rem;
+            transition: transform 0.3s ease-in-out;
+            height: 34rem;
+            width: 38rem;
+            padding: 10px;
         }
+
+        img:hover {
+            transform: scale(0.8);
+        }
+
+        span {
+            color: #7688db;
+            background-color: #F5F5F5;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-weight: 600;
+            font-size: 2rem;
+        }
+
+        p {
+            color: #757575;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background-color: black;
+            color: white;
+        }
+    }
+}
+
+.product-section {
+    h2 {
+        font-size: 1.5rem;
+        color: #4B5563;
+        font-weight: 600;
+    }
+
+    span {
+        color: #7688db;
+    }
+
+    p {
+        color: #6B7280;
     }
 }
 
@@ -155,14 +210,15 @@ header {
     display: flex;
     gap: 25px;
     flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
 
     .card {
         border-radius: 10px;
+        // border: 0.1px solid #757575;
+        padding: 2px;
 
         img {
-            height: 20rem;
+            height: 18rem;
             width: 17rem;
         }
 
@@ -176,6 +232,19 @@ header {
 
             h5 {
                 font-size: 0.8rem;
+            }
+
+            .stars {
+                .material-symbols-outlined {
+                    color: #7688db;
+                }
+
+                // &:hover {
+                //     .material-symbols-outlined {
+                //         back: gold;
+                //         font-size: 20px;
+                //     }
+                // }
             }
         }
     }

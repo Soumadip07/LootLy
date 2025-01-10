@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from '../../assets/logo.png'
+import { Link } from 'react-router-dom'
 function Header() {
     return (
         <header>
@@ -15,25 +16,26 @@ function Header() {
                         <label for="search-box" className="fas fa-search"></label>
                     </form>
                 </div>
-                <div className='d-flex p-3 gap-3 user-section'>
-                    <a className='btn focus:ring-opacity-50 border border-gray-200'>
-                        <h5 className='ps-3'>0 Items</h5>
+
+                <div className='d-flex  gap-3 user-section p-3'>
+                    <Link className='btn focus:ring-opacity-50 border border-gray-200 p-3'>
+                        {/* <h5 className='ps-3'>0 Items</h5> */}
                         <div className='d-flex'>
                             <span className="material-symbols-outlined pe-2">
                                 shopping_cart
                             </span>
                             <h3>Cart</h3>
                         </div>
-                    </a>
-                    <a className='btn focus:ring-opacity-50 border border-gray-200 '>
-                        <h5 className='ps-3'>Account</h5>
+                    </Link>
+                    <Link className='btn focus:ring-opacity-50 border border-gray-200 p-3'>
+                        {/* <h5 className='ps-3'>Account</h5> */}
                         <div className='d-flex'>
                             <span className="material-symbols-outlined pe-2">
                                 person
                             </span>
                             <h3>Login</h3>
                         </div>
-                    </a>
+                    </Link>
                 </div>
 
             </div>

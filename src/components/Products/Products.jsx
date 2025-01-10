@@ -40,14 +40,14 @@ function Products() {
     const getImage = (imageName) => {
         return imageMap[imageName] || '/images/default-image.jpeg';
     };
-
+    console.log(products?.[0]?.rating)
     return (
         <section className="product-section" id="product-section">
-            <div className="container mt-5 flex-column">
-                <div className="filter">
-                    <div className="select-container">
+            <div className="container mt-5 flex-column justify-content-start align-items-start">
+                <div className="filter pb-3">
+                    <div className="">
                         <select className="form-select" onChange={handleSelect}>
-                            <option value="">Select a Category</option>
+                            <option value="">Filter by Category</option>
                             {Object.entries(categories).map(([key, value]) => (
                                 <option key={key} value={key}>
                                     {value}
@@ -65,23 +65,45 @@ function Products() {
                 </div>
                 <div className="product-wrapper">
                     {products.map((product) => (
-                        <NavLink
+                        <Link
                             key={product.id}
                             to={`/products/${product.id}`}
-                            className="card focus:ring-opacity-50 border border-gray-200 mt-4"
+                            className="card  mt-4 custom-link"
                         >
                             <div className="upper-card">
                                 <img src={getImage(product?.image)} alt={product.name} />
                             </div>
                             <div className="lower-card">
+                                <div className='d-flex justify-content-between'>
+                                    <div className="stars">
+                                        {Array(parseInt(product?.rating ? product?.rating : 4))
+                                            .fill()
+                                            .map((_, index) => (
+                                                <span key={index} className="material-symbols-outlined">
+                                                    star
+                                                </span>
+                                            ))}
+                                    </div>
+                                    <p>{product?.category}</p>
+                                </div>
+
                                 <h3>{product.name}</h3>
-                                <h5>{product.price}</h5>
+                                <div className='d-flex justify-content-between'>
+                                    <div className='d-flex'>
+                                        <h4>${product?.discountedPrice}</h4>
+                                        <h6>${product?.marketPrice}</h6>
+                                    </div>
+                                    <p>{product?.quantity}</p>
+                                </div>
+                                <div className='d-flex justify-content-center p-3'>
+                                    <button className='cart-btn'>Add to Cart</button>
+                                </div>
                             </div>
-                        </NavLink>
+                        </Link>
                     ))}
                 </div>
             </div>
-        </section>
+        </section >
     );
 }
 export default Products
