@@ -17,18 +17,18 @@ function Hero() {
     }, []);
 
     return (
-        <div className='container'>
+        <section className='hero-container container'>
             <div className="swiper hero-slider focus:ring-opacity-50 border border-gray-200 mt-4">
                 <div className="swiper-wrapper ">
                     <div className="swiper-slide">
                         <div className="box">
                             <div className="content">
-                                <span>Flate Sale 20% Off</span>
+                                <span className='mt-3'>Flate Sale 20% Off</span>
                                 <h3 className='pt-3'>New Year Eve Discount</h3>
                                 <p className='pt-2'>Get Discount in your most favourite brands and products</p>
                                 <span className='mt-3'>Use code: <b>BERRY</b> for 20% OFF</span>
                                 <div>
-                                    <Link to="/products" className="btn mt-5">
+                                    <Link to="/products" className="btn mt-4">
                                         Shop Now
                                     </Link>
                                 </div>
@@ -82,7 +82,7 @@ function Hero() {
                     <span className="material-icons">arrow_forward</span>
                 </button>
             </div>
-        </div>
+        </section>
     );
 }
 

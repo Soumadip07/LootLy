@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 function Header() {
     return (
         <header>
-            <div className='header-container conatiner focus:ring-opacity-50 border border-gray-200'>
-                <div className='d-flex pe-4 gap-3'>
+            <div className='header-container conatiner 
+            focus:ring-opacity-50 border border-gray-200'>
+                <div className='d-flex me-4 gap-3'>
                     <a href='/'>
                         <img src={logo} alt='logo' />
                     </a>
@@ -26,7 +27,7 @@ function Header() {
                 </div>
 
 
-                <div className='d-flex  gap-3 user-section p-3'>
+                <div className='d-flex  gap-3 user-section ms-3'>
                     <Link className='btn focus:ring-opacity-50 border border-gray-200 p-3'>
                         {/* <h5 className='ps-3'>0 Items</h5> */}
                         <div className='d-flex'>
