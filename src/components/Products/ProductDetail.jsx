@@ -41,8 +41,8 @@ function ProductDetails() {
 
     return (
         <section className="product-details">
-            <div className='container justify-content-evenly gap-3'>
-                <div className='focus:ring-opacity-50 border border-gray-200 mt-4'>
+            <div className='container gap-5'>
+                <div className=''>
                     <img src={getImage(filteredProductData?.image)} alt={filteredProductData?.name} />
                 </div>
                 <div className='product-info'>
@@ -56,16 +56,23 @@ function ProductDetails() {
                                     className={`fa-star ${index < parseInt(filteredProductData?.rating ? filteredProductData?.rating : 1) ? 'fas golden-star' : 'far normal-star'}`}
                                 ></i>
                             ))}
+
+                        ({filteredProductData?.reviews.length} reviews)
                     </div>
 
-                    <p>{filteredProductData?.price}</p>
+                    <div className='d-flex justify-content-between py-3'>
+                        <div className='d-flex'>
+                            <h5>${filteredProductData?.discountedPrice}</h5>
+                            <h6>${filteredProductData?.marketPrice}</h6>
+                        </div>
+                        <p>{filteredProductData?.quantity}</p>
+                    </div>
 
-                    <div className='stock-status'>
+                    <div className='stock-status my-3'>
                         {filteredProductData?.stockStatus}
                     </div>
-                    <p>20 people are viewing this</p>
-                    <p>{filteredProductData?.description}</p>
-                    <div>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam aperiam pariatur, eos ipsam aut mollitia autem est, accusamus, doloremque asperiores accusantium quaerat illum deleniti doloribus laudantium iste neque voluptatum eum error! Qui delectus soluta tenetur asperiores consequatur earum nisi molestiae similique laborum omnis eaque ex explicabo ullam possimus, illo amet.</p>
+                    {/* <div>
                         Quantity
                         <button>
                             <span class="material-symbols-outlined">
@@ -78,33 +85,49 @@ function ProductDetails() {
                             </span>
                         </button>
 
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                         Sub Total
                         <h5>25.00$</h5>
+                    </div> */}
+
+                    <div className='d-flex justify-content-center p-3 gap-4 py-4'>
+                        <button className='cart-btn'>Add to Cart</button>
+                        <button className='cart-btn'>Buy</button>
                     </div>
-                    <div>
-                        <span class="material-symbols-outlined">
-                            local_shipping
-                        </span>
+
+                    <div className='d-flex gap-4 justify-content-center py-4'>
+                        <div className='d-flex gap-2 justify-content-center align-items-center'>
+                            <span class="material-symbols-outlined">
+                                help
+                            </span>
+                            FAQ
+                        </div>
+                        <div className='d-flex gap-2 justify-content-center align-items-center'>
+                            <span class="material-symbols-outlined">
+                                local_shipping
+                            </span>
+                            Delivery & Return Policy
+                        </div>
+                        <div className='d-flex gap-2 justify-content-center align-items-center'>
+                            <span class="material-symbols-outlined">
+                                share
+                            </span>
+                            Share
+                        </div>
                     </div>
-                    <div>
-                        <span class="material-symbols-outlined">
-                            share
-                        </span>
-                    </div>
-                    <div>
-                        <span class="material-symbols-outlined">
-                            help
-                        </span>
+
+                    <div className='d-flex justify-content-center gap-4 py-4 product-info-footer'>
+                        <div className='focus:ring-opacity-50 border border-gray-200 ad-btn d-flex flex-column justify-content-center align-items-center'>
+                            <h4>Free Shipping</h4>
+                            <p>Free Shipping on order above 120$</p>
+                        </div>
+                        <div className='focus:ring-opacity-50 border border-gray-200 ad-btn d-flex flex-column justify-content-center align-items-center'>
+                            <h4>Flexible Payment</h4>
+                            <p>Free Shipping on order above 120$</p>
+                        </div>
                     </div>
                 </div>
-                <button>
-                    Add to Cart
-                </button>
-                <button>
-                    Buy
-                </button>
             </div>
         </section>
     );

@@ -27,6 +27,13 @@ body {
     background-color: #F0F2FB;
 }
 
+.ad-btn {
+    border: 1px solid #7688db;
+    border-radius: 10px;
+    background-color: #F0F2FB;
+    padding: 6px 40px;
+}
+
 .stars {
     .fa-star {
         font-size: 16px;
@@ -334,10 +341,19 @@ header {
 .product-details {
     img {
         max-height: 550px;
-        width: 100%;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        padding: 0.5rem;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    img:hover {
+        transform: scale(1.04);
     }
 
     .product-info {
+        padding-top: 5rem;
+
         h2 {
             font-size: 2rem;
         }
@@ -349,6 +365,38 @@ header {
             border-radius: 10px;
             color: #16A34A;
             font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        h4 {
+            font-size: 0.9rem;
+        }
+
+        h6 {
+            font-size: 0.7rem;
+            text-decoration: line-through;
+            color: #6B7280;
+        }
+
+        h5 {
+            font-size: 1.2rem;
+            padding-right: 5px;
+            color: #6B7280;
+        }
+
+        .product-info-footer {
+            h4 {
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
+
+            p {
+                text-align: center;
+            }
         }
     }
 }
