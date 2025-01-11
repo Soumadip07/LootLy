@@ -9,7 +9,7 @@ export const products = [
         discountedPrice: 52.00,
         quantity: '250g',
         tag: 'HOT',
-        stockStatus: 'In Stock',
+        stockStatus: 'Out of Stock',
         reviews: [
             { user: 'Alice', comment: 'Great quality!', rating: 5 },
             { user: 'Bob', comment: 'A bit pricey but worth it.', rating: 4 }

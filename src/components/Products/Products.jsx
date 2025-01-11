@@ -65,14 +65,19 @@ function Products() {
                 </div>
                 <div className="product-wrapper">
                     {products.map((product) => (
-                        <Link
+                        <div
                             key={product.id}
-                            to={`/products/${product.id}`}
                             className="card  mt-4 custom-link"
                         >
-                            <div className="upper-card">
-                                <img src={getImage(product?.image)} alt={product.name} />
-                            </div>
+                            <Link className="upper-card focus:ring-opacity-50 border border-gray-200" to={`/products/${product.id}`}>
+                                {/* <h6>{product?.tag}</h6> */}
+                                <img src={getImage(product?.image)} className={`${product?.stockStatus === "Out of Stock" ? "out-of-stock-img" : ""}`} alt={product.name} />
+                                {product?.stockStatus === "Out of Stock" && (
+                                    <div className="out-of-stock-overlay">
+                                        <span>Out of Stock</span>
+                                    </div>
+                                )}
+                            </Link>
                             <div className="lower-card">
                                 <div className='d-flex justify-content-between'>
                                     <div className="stars">
@@ -92,16 +97,17 @@ function Products() {
                                 <h3>{product.name}</h3>
                                 <div className='d-flex justify-content-between'>
                                     <div className='d-flex'>
-                                        <h4>${product?.discountedPrice}</h4>
+                                        <h5>${product?.discountedPrice}</h5>
                                         <h6>${product?.marketPrice}</h6>
                                     </div>
                                     <p>{product?.quantity}</p>
                                 </div>
+
                                 <div className='d-flex justify-content-center p-3'>
                                     <button className='cart-btn'>Add to Cart</button>
                                 </div>
                             </div>
-                        </Link>
+                        </div>
                     ))}
                 </div>
             </div>

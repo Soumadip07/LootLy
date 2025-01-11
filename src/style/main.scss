@@ -27,6 +27,26 @@ body {
     background-color: #F0F2FB;
 }
 
+.stars {
+    .fa-star {
+        font-size: 16px;
+        margin-right: 5px;
+    }
+
+    .golden-star {
+        color: gold;
+    }
+
+    .normal-star {
+        color: #7688db;
+    }
+}
+
+.cart-btn:hover {
+    color: white;
+    background-color: #7688db;
+}
+
 .swiper-button-next,
 .swiper-button-prev {
     color: black;
@@ -76,9 +96,11 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
+        // width: 100%;
         position: sticky;
+        padding: 10px 20px;
         z-index: 20;
+        margin: 0 auto;
     }
 
     img {
@@ -230,10 +252,36 @@ header {
         .upper-card {
             padding-bottom: 10px;
 
+
             img {
                 height: 18rem;
                 width: 100%;
                 object-fit: cover;
+            }
+
+            .out-of-stock-img {
+                filter: grayscale(100%);
+                opacity: 0.8;
+            }
+
+            .out-of-stock-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size: 1.2em;
+                font-weight: bold;
+                z-index: 5;
+
+                span {
+                    color: #333;
+                    font-weight: 800;
+                }
             }
 
             img:hover {
@@ -249,33 +297,23 @@ header {
                 font-weight: 800;
             }
 
+            h4 {
+                font-size: 0.9rem;
+            }
+
+            h6 {
+                font-size: 0.7rem;
+                text-decoration: line-through;
+                color: #6B7280;
+            }
+
             h5 {
-                font-size: 0.8rem;
+                font-size: 1.2rem;
+                padding-right: 5px;
+                color: #6B7280;
             }
 
-            .stars {
-                .fa-star {
-                    font-size: 20px;
-                    margin-right: 5px;
-                }
 
-                .golden-star {
-                    color: gold;
-                }
-
-                .normal-star {
-                    color: #7688db;
-                }
-
-
-
-                // &:hover {
-                //     .material-symbols-outlined {
-                //         back: gold;
-                //         font-size: 20px;
-                //     }
-                // }
-            }
         }
     }
 }
@@ -284,5 +322,20 @@ header {
     img {
         max-height: 550px;
         width: 100%;
+    }
+
+    .product-info {
+        h2 {
+            font-size: 2rem;
+        }
+
+        .stock-status {
+            background-color: #DCFCE7;
+            padding: 10px;
+            width: max-content;
+            border-radius: 10px;
+            color: #16A34A;
+            font-weight: 600;
+        }
     }
 }

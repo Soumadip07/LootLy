@@ -45,15 +45,26 @@ function ProductDetails() {
                 <div className='focus:ring-opacity-50 border border-gray-200 mt-4'>
                     <img src={getImage(filteredProductData?.image)} alt={filteredProductData?.name} />
                 </div>
-                <div className=''>
+                <div className='product-info'>
                     <h2>{filteredProductData?.name}</h2>
+                    <div className="stars">
+                        {Array(5)
+                            .fill()
+                            .map((_, index) => (
+                                <i
+                                    key={index}
+                                    className={`fa-star ${index < parseInt(filteredProductData?.rating ? filteredProductData?.rating : 1) ? 'fas golden-star' : 'far normal-star'}`}
+                                ></i>
+                            ))}
+                    </div>
+
                     <p>{filteredProductData?.price}</p>
 
-                    <div>
-                        In Stock
+                    <div className='stock-status'>
+                        {filteredProductData?.stockStatus}
                     </div>
                     <p>20 people are viewing this</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, perferendis. Quo eligendi non pariatur consequuntur.</p>
+                    <p>{filteredProductData?.description}</p>
                     <div>
                         Quantity
                         <button>
