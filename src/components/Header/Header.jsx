@@ -10,12 +10,21 @@ function Header() {
                         <img src={logo} alt='logo' />
                     </a>
                 </div>
-                <div className='searchbox'>
-                    <form action="">
-                        <input type="search" name="" placeholder="Search for Products" id="search-box" className='focus:ring-opacity-50 border border-gray-200' />
-                        <label for="search-box" className="fas fa-search"></label>
+                <div className="searchbox">
+                    <form action="" className="search-form">
+                        <input
+                            type="search"
+                            name=""
+                            placeholder="Search for Products"
+                            id="search-box"
+                            className="search-input focus:ring-opacity-50 border border-gray-200"
+                        />
+                        <label htmlFor="search-box" className="search-icon">
+                            <i className="fas fa-search"></i>
+                        </label>
                     </form>
                 </div>
+
 
                 <div className='d-flex  gap-3 user-section p-3'>
                     <Link className='btn focus:ring-opacity-50 border border-gray-200 p-3'>
@@ -39,7 +48,7 @@ function Header() {
                 </div>
 
             </div>
-        </header>
+        </header >
     )
 }
 

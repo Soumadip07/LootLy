@@ -88,6 +88,7 @@ body {
 
 header {
     position: sticky;
+    top: 0;
     z-index: 20;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -96,11 +97,8 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
-        // width: 100%;
-        position: sticky;
+        width: 100%;
         padding: 10px 20px;
-        z-index: 20;
-        margin: 0 auto;
     }
 
     img {
@@ -123,6 +121,10 @@ header {
         width: 900px;
 
         form {
+            display: flex;
+            align-items: center;
+            position: relative;
+
             input {
                 max-width: 900px;
                 width: 100%;
@@ -136,7 +138,18 @@ header {
                     outline: none;
                     box-shadow: 0 0 5px rgba(118, 136, 219, 0.5);
                 }
+            }
 
+            .search-icon {
+                position: absolute;
+                right: 10px;
+                font-size: 1.2rem;
+                color: #777;
+                cursor: pointer;
+
+                &:hover {
+                    color: #444;
+                }
             }
         }
     }

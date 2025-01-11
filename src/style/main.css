@@ -80,6 +80,7 @@ body {
 
 header {
   position: sticky;
+  top: 0;
   z-index: 20;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -88,10 +89,8 @@ header .header-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: sticky;
+  width: 100%;
   padding: 10px 20px;
-  z-index: 20;
-  margin: 0 auto;
 }
 header img {
   width: 6rem;
@@ -109,6 +108,11 @@ header .btn:hover {
 header .searchbox {
   width: 900px;
 }
+header .searchbox form {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 header .searchbox form input {
   max-width: 900px;
   width: 100%;
@@ -121,6 +125,16 @@ header .searchbox form input {
 header .searchbox form input:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(118, 136, 219, 0.5);
+}
+header .searchbox form .search-icon {
+  position: absolute;
+  right: 10px;
+  font-size: 1.2rem;
+  color: #777;
+  cursor: pointer;
+}
+header .searchbox form .search-icon:hover {
+  color: #444;
 }
 header .user-section {
   display: flex;
