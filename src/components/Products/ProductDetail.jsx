@@ -13,6 +13,9 @@ import prod9 from '../../assets/prod9.jpeg';
 import prod10 from '../../assets/prod10.jpeg';
 import prod11 from '../../assets/prod11.jpeg';
 import prod12 from '../../assets/prod12.jpeg';
+import Faq from '../Faq';
+import DeliveryPolicy from '../DeliveryPolicy';
+import Reviews from '../Reviews';
 
 function ProductDetails() {
     const { id } = useParams();
@@ -37,11 +40,12 @@ function ProductDetails() {
     const getImage = (imageName) => {
         return imageMap[imageName] || '/images/default-image.jpeg';
     };
+
     console.log(filteredProductData)
 
     return (
         <section className="product-details">
-            <div className='container gap-5'>
+            <div className='d-flex justify-content-center pt-5 gap-5'>
                 <div className=''>
                     <img src={getImage(filteredProductData?.image)} alt={filteredProductData?.name} />
                 </div>
@@ -71,7 +75,8 @@ function ProductDetails() {
                     <div className='stock-status my-3'>
                         {filteredProductData?.stockStatus}
                     </div>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam aperiam pariatur, eos ipsam aut mollitia autem est, accusamus, doloremque asperiores accusantium quaerat illum deleniti doloribus laudantium iste neque voluptatum eum error! Qui delectus soluta tenetur asperiores consequatur earum nisi molestiae similique laborum omnis eaque ex explicabo ullam possimus, illo amet.</p>
+                    <p>{filteredProductData?.description}</p>
+                    {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eveniet inventore dolorum molestiae ex amet, debitis eos magni rem laudantium id qui iusto, reiciendis vitae modi corporis enim ipsam cum a soluta quidem quia ipsum. Cum facilis obcaecati sed est! Harum minus nihil facilis voluptate cumque neque eius temporibus, vitae illo, cupiditate fugit a aliquam sit amet itaque. Provident asperiores animi dolorum non. Quisquam facilis earum ullam excepturi itaque voluptas pariatur possimus amet ab architecto molestiae, quasi rem voluptatem totam debitis maiores consequuntur harum libero commodi qui a ducimus ut. Cupiditate inventore itaque repudiandae odit nihil voluptates, modi iste ipsum.</p> */}
                     {/* <div>
                         Quantity
                         <button>
@@ -91,31 +96,48 @@ function ProductDetails() {
                         <h5>25.00$</h5>
                     </div> */}
 
-                    <div className='d-flex justify-content-center p-3 gap-4 py-4'>
+                    <div className='d-flex  p-3 gap-4 py-4'>
                         <button className='cart-btn'>Add to Cart</button>
                         <button className='cart-btn'>Buy</button>
                     </div>
 
                     <div className='d-flex gap-4 justify-content-center py-4'>
-                        <div className='d-flex gap-2 justify-content-center align-items-center'>
-                            <span class="material-symbols-outlined">
+                        <div className='d-flex gap-2 justify-content-center align-items-center'
+                            onClick={() => document.getElementById('faq').scrollIntoView({ behavior: 'smooth' })}
+                        >
+                            <span class="material-symbols-outlined" id='faq'>
                                 help
                             </span>
                             FAQ
                         </div>
-                        <div className='d-flex gap-2 justify-content-center align-items-center'>
+                        <div className='d-flex gap-2 justify-content-center align-items-center'
+                            onClick={() => document.getElementById('delivery').scrollIntoView({ behavior: 'smooth' })}
+                        >
                             <span class="material-symbols-outlined">
                                 local_shipping
                             </span>
                             Delivery & Return Policy
                         </div>
-                        <div className='d-flex gap-2 justify-content-center align-items-center'>
+                        <div className='d-flex gap-2 justify-content-center align-items-center'
+                            onClick={() => document.getElementById('user-reviews').scrollIntoView({ behavior: 'smooth' })}
+                        >
                             <span class="material-symbols-outlined">
+                                reviews
+                            </span>
+                            User Reviews
+                        </div>
+                        <div className='d-flex gap-2 justify-content-center align-items-center'>
+                            <span className="material-symbols-outlined">
                                 share
                             </span>
-                            Share
+                            <a href="https://web.whatsapp.com/send?text=www.google.com" data-action="share/whatsapp/share" target="_blank"
+                                rel="noopener noreferrer"
+                                className="whatsapp-share-btn">
+                                Share via Whatsapp </a>
                         </div>
+
                     </div>
+
 
                     <div className='d-flex justify-content-center gap-4 py-4 product-info-footer'>
                         <div className='focus:ring-opacity-50 border border-gray-200 ad-btn d-flex flex-column justify-content-center align-items-center'>
@@ -127,9 +149,20 @@ function ProductDetails() {
                             <p>Free Shipping on order above 120$</p>
                         </div>
                     </div>
+
+
+                    <div id='faq'>
+                        <Faq />
+                    </div>
+                    <div id='delivery'>
+                        <DeliveryPolicy />
+                    </div>
+                    <div id='user-reviews'>
+                        <Reviews />
+                    </div>
                 </div>
             </div>
-        </section>
+        </section >
     );
 }
 

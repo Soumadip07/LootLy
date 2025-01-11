@@ -16,6 +16,10 @@ body {
     font-family: "Poppins", serif;
 }
 
+span {
+    cursor: pointer;
+}
+
 .material-symbols-outlined {
     color: #7688db;
 }
@@ -342,7 +346,7 @@ header {
     img {
         max-height: 550px;
         border: 1px solid #d1d5db;
-        border-radius: 4px;
+        border-radius: 10px;
         padding: 0.5rem;
         transition: transform 0.2s ease-in-out;
     }
@@ -352,10 +356,11 @@ header {
     }
 
     .product-info {
-        padding-top: 5rem;
+        // padding-top: 5rem;
 
         h2 {
-            font-size: 2rem;
+            font-size: 2.15rem;
+            font-weight: 700;
         }
 
         .stock-status {
@@ -397,6 +402,100 @@ header {
             p {
                 text-align: center;
             }
+        }
+    }
+
+    .faq-section {
+        border: 1px solid #d1d5db;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+
+        h3 {
+            text-decoration: underline;
+        }
+
+        .accordion-item {
+            border: 1px solid #d1d5db;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            outline: none;
+        }
+    }
+
+    .delivery-section {
+        border: 1px solid #d1d5db;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+
+        p {
+            font-weight: 600;
+            text-align: center;
+        }
+
+        h3 {
+            text-decoration: underline;
+        }
+
+        .delivery-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .reviews-section {
+        .review-tab {
+            border: 1px solid #d1d5db;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .review-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: white;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h3 {
+            text-decoration: underline;
+        }
+
+        .review-username {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .review-rating i {
+            color: gold;
+        }
+
+        .review-comment {
+            margin-top: 10px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .fas.golden-star {
+            color: gold;
+        }
+
+        .far {
+            color: #7688db;
         }
     }
 }

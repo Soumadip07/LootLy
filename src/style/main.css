@@ -15,6 +15,10 @@ body {
   font-family: "Poppins", serif;
 }
 
+span {
+  cursor: pointer;
+}
+
 .material-symbols-outlined {
   color: #7688db;
 }
@@ -293,18 +297,16 @@ header .user-section .btn:hover {
 .product-details img {
   max-height: 550px;
   border: 1px solid #d1d5db;
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 0.5rem;
   transition: transform 0.2s ease-in-out;
 }
 .product-details img:hover {
   transform: scale(1.04);
 }
-.product-details .product-info {
-  padding-top: 5rem;
-}
 .product-details .product-info h2 {
-  font-size: 2rem;
+  font-size: 2.15rem;
+  font-weight: 700;
 }
 .product-details .product-info .stock-status {
   background-color: #DCFCE7;
@@ -338,4 +340,79 @@ header .user-section .btn:hover {
 }
 .product-details .product-info .product-info-footer p {
   text-align: center;
+}
+.product-details .faq-section {
+  border: 1px solid #d1d5db;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+.product-details .faq-section h3 {
+  text-decoration: underline;
+}
+.product-details .faq-section .accordion-item {
+  border: 1px solid #d1d5db;
+  padding: 5px;
+  border-radius: 10px;
+}
+.product-details .faq-section .accordion-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+.product-details .delivery-section {
+  border: 1px solid #d1d5db;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+.product-details .delivery-section p {
+  font-weight: 600;
+  text-align: center;
+}
+.product-details .delivery-section h3 {
+  text-decoration: underline;
+}
+.product-details .delivery-section .delivery-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product-details .reviews-section .review-tab {
+  border: 1px solid #d1d5db;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+.product-details .reviews-section .review-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: white;
+}
+.product-details .reviews-section .review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-details .reviews-section h3 {
+  text-decoration: underline;
+}
+.product-details .reviews-section .review-username {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.product-details .reviews-section .review-rating i {
+  color: gold;
+}
+.product-details .reviews-section .review-comment {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #333;
+}
+.product-details .reviews-section .fas.golden-star {
+  color: gold;
+}
+.product-details .reviews-section .far {
+  color: #7688db;
 }/*# sourceMappingURL=main.css.map */
