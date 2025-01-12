@@ -60,7 +60,7 @@ function Products() {
     }, [selectedCategory]);
 
 
-    console.log(selectedCategory, "check", products)
+    // console.log(selectedCategory, "check", products)
     return (
         <section className="product-section" id="product-section">
             <div className="container mt-5 flex-column justify-content-start align-items-start">
@@ -99,8 +99,8 @@ function Products() {
                             key={product.id}
                             className="card  mt-4 custom-link"
                         >
-                            <Tooltip title={`View ${product.name}`} disableInteractive>
-                                <Link className="upper-card focus:ring-opacity-50 border border-gray-200" to={`/products/${product.id}`}>
+                            <Tooltip title={product?.stockStatus != "Out of Stock" ? `View ${product.name}` : ""} disableInteractive>
+                                <Link className="upper-card focus:ring-opacity-50 border border-gray-200" to={product?.stockStatus != "Out of Stock" ? `/products/${product.id}` : "#"}>
                                     {/* <h6>{product?.tag}</h6> */}
                                     <img src={getImage(product?.image)} className={`${product?.stockStatus === "Out of Stock" ? "out-of-stock-img" : ""}`} alt={product.name} />
                                     {product?.stockStatus === "Out of Stock" && (
@@ -137,8 +137,8 @@ function Products() {
 
                                 <div className='d-flex justify-content-center p-3'>
                                     <Tooltip title="Add this item to your cart" disableInteractive>
-                                        <button className='cart-btn'>
-                                            Add to Cart
+                                        <button className={`${product?.stockStatus === "Out of Stock" ? "cartless-btn" : "cart-btn"}`}>
+                                            {product?.stockStatus === "Out of Stock" ? "Out of Stock" : "Add to Cart"}
                                         </button>
                                     </Tooltip>
                                 </div>

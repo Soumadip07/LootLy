@@ -20,30 +20,33 @@ body {
     overflow-x: hidden;
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: white;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #7688db;
+    }
 }
 
 * {
     box-sizing: border-box;
 }
 
-&::-webkit-scrollbar {
-    width: 0.5rem;
-}
-
-&::-webkit-scrollbar-track {
-    background: white;
-}
-
-&::-webkit-scrollbar-thumb {
-    background: #7688db;
-}
-
 @media (max-width: 768px) {
-    &::-webkit-scrollbar {
-        width: 0.3rem;
+
+    html,
+    body {
+        ::-webkit-scrollbar {
+            width: 0.3rem;
+        }
     }
 }
-
 
 span {
     cursor: pointer;
@@ -58,6 +61,13 @@ span {
     border: 1px solid #7688db;
     border-radius: 10px;
     background-color: #F0F2FB;
+}
+
+.cartless-btn {
+    padding: 6px 60px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background-color: #F5F5F5;
 }
 
 @media (max-width: 768px) {
