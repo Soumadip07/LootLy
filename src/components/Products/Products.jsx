@@ -15,6 +15,7 @@ import { Link, NavLink, Route, Routes, } from 'react-router-dom'
 import ProductDetails from './ProductDetail'
 import { products } from '../../Data/ProductData'
 import { categories } from '../../Data/Category'
+import { Tooltip } from '@mui/material'
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
@@ -68,15 +69,17 @@ function Products() {
                             key={product.id}
                             className="card  mt-4 custom-link"
                         >
-                            <Link className="upper-card focus:ring-opacity-50 border border-gray-200" to={`/products/${product.id}`}>
-                                {/* <h6>{product?.tag}</h6> */}
-                                <img src={getImage(product?.image)} className={`${product?.stockStatus === "Out of Stock" ? "out-of-stock-img" : ""}`} alt={product.name} />
-                                {product?.stockStatus === "Out of Stock" && (
-                                    <div className="out-of-stock-overlay">
-                                        <span>Out of Stock</span>
-                                    </div>
-                                )}
-                            </Link>
+                            <Tooltip title={`View ${product.name}`} disableInteractive>
+                                <Link className="upper-card focus:ring-opacity-50 border border-gray-200" to={`/products/${product.id}`}>
+                                    {/* <h6>{product?.tag}</h6> */}
+                                    <img src={getImage(product?.image)} className={`${product?.stockStatus === "Out of Stock" ? "out-of-stock-img" : ""}`} alt={product.name} />
+                                    {product?.stockStatus === "Out of Stock" && (
+                                        <div className="out-of-stock-overlay">
+                                            <span>Out of Stock</span>
+                                        </div>
+                                    )}
+                                </Link>
+                            </Tooltip>
                             <div className="lower-card">
                                 <div className='d-flex justify-content-between'>
                                     <div className="stars">
@@ -103,8 +106,13 @@ function Products() {
                                 </div>
 
                                 <div className='d-flex justify-content-center p-3'>
-                                    <button className='cart-btn'>Add to Cart</button>
+                                    <Tooltip title="Add this item to your cart" disableInteractive>
+                                        <button className='cart-btn'>
+                                            Add to Cart
+                                        </button>
+                                    </Tooltip>
                                 </div>
+
                             </div>
                         </div>
                     ))}

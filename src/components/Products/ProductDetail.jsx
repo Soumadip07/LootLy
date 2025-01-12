@@ -16,6 +16,7 @@ import prod12 from '../../assets/prod12.jpeg';
 import Faq from '../Faq';
 import DeliveryPolicy from '../DeliveryPolicy';
 import Reviews from '../Reviews';
+import { Tooltip } from '@mui/material';
 
 function ProductDetails() {
     const { id } = useParams();
@@ -73,7 +74,9 @@ function ProductDetails() {
                     </div>
 
                     <div className='stock-status my-3'>
-                        {filteredProductData?.stockStatus}
+                        <Tooltip title="Stock" disableInteractive>
+                            {filteredProductData?.stockStatus}
+                        </Tooltip>
                     </div>
                     <p>{filteredProductData?.description}</p>
                     {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eveniet inventore dolorum molestiae ex amet, debitis eos magni rem laudantium id qui iusto, reiciendis vitae modi corporis enim ipsam cum a soluta quidem quia ipsum. Cum facilis obcaecati sed est! Harum minus nihil facilis voluptate cumque neque eius temporibus, vitae illo, cupiditate fugit a aliquam sit amet itaque. Provident asperiores animi dolorum non. Quisquam facilis earum ullam excepturi itaque voluptas pariatur possimus amet ab architecto molestiae, quasi rem voluptatem totam debitis maiores consequuntur harum libero commodi qui a ducimus ut. Cupiditate inventore itaque repudiandae odit nihil voluptates, modi iste ipsum.</p> */}
@@ -96,9 +99,13 @@ function ProductDetails() {
                         <h5>25.00$</h5>
                     </div> */}
 
-                    <div className='d-flex  p-3 gap-4 py-4'>
-                        <button className='cart-btn'>Add to Cart</button>
-                        <button className='cart-btn'>Buy</button>
+                    <div className='d-flex  p-3 gap-4 py-5'>
+                        <Tooltip title="Add this item to your cart" disableInteractive>
+                            <button className='cart-btn'>Add to Cart</button>
+                        </Tooltip>
+                        <Tooltip title="Buy this item" disableInteractive>
+                            <button className='cart-btn'>Buy</button>
+                        </Tooltip>
                     </div>
 
                     <div className='d-flex gap-4 justify-content-center flex-wrap py-5'>
@@ -139,7 +146,7 @@ function ProductDetails() {
                     </div>
 
 
-                    <div className='d-flex justify-content-center gap-4 py-4 product-info-footer'>
+                    <div className='d-flex justify-content-center gap-4 py-5 product-info-footer'>
                         <div className='focus:ring-opacity-50 border border-gray-200 ad-btn d-flex flex-column justify-content-center align-items-center'>
                             <h4>Free Shipping</h4>
                             <p>Free Shipping on order above 120$</p>
