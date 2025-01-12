@@ -142,6 +142,13 @@ span {
 
 }
 
+.loader-section {
+    img {
+        height: 6rem;
+        width: 6rem;
+    }
+}
+
 header {
     position: sticky;
     top: 0;
