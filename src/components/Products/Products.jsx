@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import prod1 from '../../assets/prod1.jpeg'
 import prod2 from '../../assets/prod2.jpeg'
 import prod3 from '../../assets/prod3.jpeg'
@@ -19,6 +19,8 @@ import { Tooltip } from '@mui/material'
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
+    const [filteredproductdata, setFilteredProductData] = useState(products);
+
     const imageMap = {
         prod1: prod1,
         prod2: prod2,
@@ -41,10 +43,28 @@ function Products() {
     const getImage = (imageName) => {
         return imageMap[imageName] || '/images/default-image.jpeg';
     };
+    const handleClearAll = () => {
+        setSelectedCategory();
+        setFilteredProductData(products);
+        document.querySelector('.form-select').value = '';
+    }
+    useEffect(() => {
+        if (!selectedCategory) {
+            setFilteredProductData(products);
+        } else {
+            const filteredData = products.filter(
+                (product) => product.category === selectedCategory
+            );
+            setFilteredProductData(filteredData);
+        }
+    }, [selectedCategory]);
+
+
+    console.log(selectedCategory, "check", products)
     return (
         <section className="product-section" id="product-section">
             <div className="container mt-5 flex-column justify-content-start align-items-start">
-                <div className="filter pb-3">
+                <div className="filter pb-3 d-flex gap-3">
                     <div className="">
                         <select className="form-select" onChange={handleSelect}>
                             <option value="">Filter by Category</option>
@@ -55,6 +75,16 @@ function Products() {
                             ))}
                         </select>
                     </div>
+                    {selectedCategory && (
+                        <button className='cart-btn d-flex justify-content-center align-items-center gap-2'
+                            onClick={handleClearAll}
+                        >
+                            Reset
+                            <span class="material-symbols-outlined">
+                                cancel
+                            </span>
+                        </button>
+                    )}
                 </div>
 
                 <div>
@@ -64,7 +94,7 @@ function Products() {
                     <p>Don’t wait. The time will never be just right.</p>
                 </div>
                 <div className="product-wrapper">
-                    {products.map((product) => (
+                    {filteredproductdata?.map((product) => (
                         <div
                             key={product.id}
                             className="card  mt-4 custom-link"
