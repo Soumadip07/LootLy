@@ -45,7 +45,7 @@ function ProductDetails() {
 
     return (
         <section className="product-details">
-            <div className='d-flex justify-content-center pt-5 gap-5'>
+            <div className="d-flex justify-content-center flex-column flex-lg-row pt-5 gap-5">
                 <div className=''>
                     <img src={getImage(filteredProductData?.image)} alt={filteredProductData?.name} />
                 </div>
@@ -101,7 +101,7 @@ function ProductDetails() {
                         <button className='cart-btn'>Buy</button>
                     </div>
 
-                    <div className='d-flex gap-4 justify-content-center py-4'>
+                    <div className='d-flex gap-4 justify-content-center flex-wrap py-5'>
                         <div className='d-flex gap-2 justify-content-center align-items-center'
                             onClick={() => document.getElementById('faq').scrollIntoView({ behavior: 'smooth' })}
                         >
