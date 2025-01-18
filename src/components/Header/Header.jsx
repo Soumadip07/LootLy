@@ -30,7 +30,10 @@ function Header() {
 
                 <div className='d-flex  gap-3 user-section ms-3'>
                     <Tooltip title="View your shopping cart" disableInteractive>
-                        <Link className='btn focus:ring-opacity-50 border border-gray-200 p-3'>
+                        <Link
+                            className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                            to='/cart'
+                        >
                             {/* <h5 className='ps-3'>0 Items</h5> */}
                             <div className='d-flex'>
                                 <span className="material-symbols-outlined pe-2">
@@ -41,14 +44,31 @@ function Header() {
                         </Link>
                     </Tooltip>
 
-                    <Tooltip title="Login to your account" disableInteractive>
-                        <Link className='btn focus:ring-opacity-50 border border-gray-200 p-3'>
+                    <Tooltip title="Sign Up to your account" disableInteractive>
+                        <Link
+                            className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                            to='/sign-up'
+                        >
                             {/* <h5 className='ps-3'>Account</h5> */}
                             <div className='d-flex'>
                                 <span className="material-symbols-outlined pe-2">
                                     person
                                 </span>
-                                <h3>Login</h3>
+                                <h3>Sign Up</h3>
+                            </div>
+                        </Link>
+                    </Tooltip>
+                    <Tooltip title="Log In to your account" disableInteractive>
+                        <Link
+                            className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                            to='/log-in'
+                        >
+                            {/* <h5 className='ps-3'>Account</h5> */}
+                            <div className='d-flex'>
+                                <span className="material-symbols-outlined pe-2">
+                                    person
+                                </span>
+                                <h3>Log In</h3>
                             </div>
                         </Link>
                     </Tooltip>

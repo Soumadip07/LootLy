@@ -1,15 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import 'material-icons/iconfont/material-icons.css';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 
 .custom-link {
     text-decoration: none;
 }
 
+.NavLink {
+    text-decoration: none;
+}
+
 body {
-    font-family: "Poppins", serif;
+    font-family: "Roboto", serif;
 }
 
 html,
@@ -635,4 +639,52 @@ header {
             width: 18rem;
         }
     }
+}
+
+.SignUp-section {
+    background-image: url('../assets/img17.jpg');
+    font-family: "Quicksand", serif;
+    font-weight: 600;
+    background-color: #C3B2FF;
+    background-size: contain;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    height: 82vh;
+    object-fit: cover;
+
+    form {
+        background-color: white;
+        padding: 15px;
+        border-radius: 10px;
+        width: 40%;
+
+        input {
+            border-radius: 1px;
+            border: 1px solid #C3B2FF;
+        }
+    }
+
+    button {
+        width: max-content;
+    }
+}
+
+.login-section {
+    background-image: url('../assets/LogIn.jpg');
+    background-color: #D7DDFD;
+    background-size: contain;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    height: 82vh;
+    object-fit: cover;
+}
+
+.cart-section {
+    background-image: url('../assets/cart.jpg');
+    background-color: #CAD1FD;
+    background-size: contain;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    height: 82vh;
+    object-fit: cover;
 }
