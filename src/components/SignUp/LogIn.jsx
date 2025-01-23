@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
+import LoginApis from '../Services/LogInServices';
 
 export default function LogIn() {
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (data, { resetForm }) => {
+        setError("");
+        setLoading(true);
+        try {
+            console.log("Payload being sent:", data);
+
+            const response = await LoginApis.LoginUser(data);
+
+            console.log("Response:", response.data);
+            alert("User created successfully!");
+            resetForm(); // Reset form values after successful submission
+        } catch (err) {
+            console.error("Error:", err.response?.data || err.message);
+            setError(err.response?.data?.message || "Something went wrong!");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const formik = useFormik({
         initialValues: {
-            firstName: '',
-            lastName: '',
-            email: '',
+            username: '',
+            password: ''
         },
         validate: values => {
             const errors = {};
@@ -17,61 +39,54 @@ export default function LogIn() {
             if (!values.lastName) {
                 errors.lastName = 'Last name is required';
             }
-            if (!values.email) {
-                errors.email = 'Email is required';
-            } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-                errors.email = 'Email address is invalid';
+            if (!values.username) {
+                errors.username = 'username is required';
+            } else if (!/\S+@\S+\.\S+/.test(values.username)) {
+                errors.username = 'username address is invalid';
             }
             return errors;
         },
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-        },
+        onSubmit: handleSubmit, // Bind handleSubmit here
     });
 
     return (
         <section className='login-section p-5'>
             <form
-                onSubmit={formik.handleSubmit}
+                onSubmit={formik.handleSubmit} // Use formik's handleSubmit
                 className="d-flex flex-column justify-content-center align-items-center gap-4"
             >
-                <label htmlFor="firstName" className="d-flex flex-column">First Name</label>
+                <label htmlFor="username" className="d-flex flex-column">Email </label>
                 <input
-                    id="firstName"
-                    name="firstName"
+                    id="username"
+                    name="username"
+                    type="username"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.username}
+                />
+                {formik.errors.username && formik.touched.username && (
+                    <div className="error">{formik.errors.username}</div>
+                )}
+
+                <label htmlFor="password" className="d-flex flex-column">Password</label>
+                <input
+                    id="password"
+                    name="password"
                     type="text"
                     onChange={formik.handleChange}
-                    value={formik.values.firstName}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
                 />
-                {formik.errors.firstName && formik.touched.firstName && (
-                    <div className="error">{formik.errors.firstName}</div>
+                {formik.errors.lastName && formik.touched.password && (
+                    <div className="error">{formik.errors.password}</div>
                 )}
 
-                <label htmlFor="lastName" className="d-flex flex-column">Last Name</label>
-                <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    onChange={formik.handleChange}
-                    value={formik.values.lastName}
-                />
-                {formik.errors.lastName && formik.touched.lastName && (
-                    <div className="error">{formik.errors.lastName}</div>
-                )}
 
-                <label htmlFor="email" className="d-flex flex-column">Email Address</label>
-                <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                />
-                {formik.errors.email && formik.touched.email && (
-                    <div className="error">{formik.errors.email}</div>
-                )}
 
-                <button type="submit" className="cart-btn">Submit</button>
+                <button type="submit" className="cart-btn" disabled={loading}>
+                    {loading ? "Submitting..." : "Submit"}
+                </button>
+                {error && <div className="error-message">{error}</div>}
             </form>
         </section>
     );

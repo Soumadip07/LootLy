@@ -19,7 +19,7 @@ function SignIn() {
         try {
             // console.log("Payload being sent:", data);
 
-            const response = await SignInApis.CreateUser(data);
+            const response = await SignInApis.RegisterUser(data);
 
             console.log("Response:", response.data);
             alert("User created successfully!");
