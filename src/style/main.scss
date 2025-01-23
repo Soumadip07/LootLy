@@ -677,6 +677,22 @@ header {
     background-repeat: no-repeat;
     height: 82vh;
     object-fit: cover;
+
+    form {
+        background-color: white;
+        padding: 15px;
+        border-radius: 10px;
+        width: 40%;
+
+        // input {
+        //     border-radius: 1px;
+        //     border: 1px solid #C3B2FF;
+        // }
+    }
+
+    button {
+        width: max-content;
+    }
 }
 
 .cart-section {

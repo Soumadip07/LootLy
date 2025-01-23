@@ -610,6 +610,16 @@ header .user-section .btn:hover {
   -o-object-fit: cover;
      object-fit: cover;
 }
+.login-section form {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  width: 40%;
+}
+.login-section button {
+  width: -moz-max-content;
+  width: max-content;
+}
 
 .cart-section {
   background-image: url("../assets/cart.jpg");

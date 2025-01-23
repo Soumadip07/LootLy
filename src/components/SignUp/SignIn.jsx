@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import SignInApis from "../Services/SignInServices";
+import { Link, NavLink } from "react-router-dom";
 
 function SignIn() {
     const {
@@ -106,6 +107,9 @@ function SignIn() {
                     <button type="submit" className="cart-btn" disabled={loading}>
                         {loading ? "Submitting..." : "Submit"}
                     </button>
+                    <NavLink to='/log-in'>
+                        <p>Already Have an Acoount? Log In</p>
+                    </NavLink>
                 </form>
             </div>
         </section>
