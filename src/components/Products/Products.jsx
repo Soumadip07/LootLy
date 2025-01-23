@@ -16,11 +16,14 @@ import ProductDetails from './ProductDetail'
 import { products } from '../../Data/ProductData'
 import { categories } from '../../Data/Category'
 import { Tooltip } from '@mui/material'
+import ProductsApis from '../Services/ProductsService'
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
     const [filteredproductdata, setFilteredProductData] = useState(products);
-
+    const [data, setData] = useState();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const imageMap = {
         prod1: prod1,
         prod2: prod2,
@@ -58,7 +61,27 @@ function Products() {
             setFilteredProductData(filteredData);
         }
     }, [selectedCategory]);
+    const getData = async (pageNumber, pageSize, sortBy, sortDir) => {
+        setError("");
+        setLoading(true);
+        try {
+            // console.log("Payload being sent:", data);
 
+            const response = await ProductsApis.getProducts(pageNumber, pageSize, sortBy, sortDir);
+            setData(response)
+            console.log("Response:", response.data);
+            // alert("User created successfully!");
+        } catch (err) {
+            console.error("Error:", err.response?.data || err.message);
+            setError(err.response?.data?.message || "Something went wrong!");
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        if (!data)
+            getData();
+    }, [data])
 
     // console.log(selectedCategory, "check", products)
     return (
