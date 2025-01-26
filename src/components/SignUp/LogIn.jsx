@@ -1,65 +1,58 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
-import LoginApis from '../Services/LogInServices';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../slice/AuthSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function LogIn() {
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const { loading, error, isAuthenticated } = useSelector((state) => state.auth);
+    console.log(isAuthenticated)
+    const navigate = useNavigate();
 
-    const handleSubmit = async (data, { resetForm }) => {
-        setError("");
-        setLoading(true);
-        try {
-            console.log("Payload being sent:", data);
-
-            const response = await LoginApis.LoginUser(data);
-
-            console.log("Response:", response.data);
-            alert("User created successfully!");
-            resetForm(); // Reset form values after successful submission
-        } catch (err) {
-            console.error("Error:", err.response?.data || err.message);
-            setError(err.response?.data?.message || "Something went wrong!");
-        } finally {
-            setLoading(false);
-        }
-    };
-
+    // Formik initialization
     const formik = useFormik({
         initialValues: {
-            username: '',
-            password: ''
+            username: '', // Email
+            password: '',
         },
-        validate: values => {
+        validate: (values) => {
             const errors = {};
 
-            if (!values.firstName) {
-                errors.firstName = 'First name is required';
-            }
-            if (!values.lastName) {
-                errors.lastName = 'Last name is required';
-            }
             if (!values.username) {
-                errors.username = 'username is required';
+                errors.username = 'Email is required';
             } else if (!/\S+@\S+\.\S+/.test(values.username)) {
-                errors.username = 'username address is invalid';
+                errors.username = 'Invalid email address';
             }
+
+            if (!values.password) {
+                errors.password = 'Password is required';
+            }
+
             return errors;
         },
-        onSubmit: handleSubmit, // Bind handleSubmit here
+        onSubmit: async (values, { resetForm }) => {
+            // Dispatch loginUser action
+            dispatch(loginUser(values));
+            resetForm(); // Reset the form after submission
+            navigate('/');
+        },
     });
 
     return (
-        <section className='login-section p-5'>
+        <section className="login-section p-5">
             <form
-                onSubmit={formik.handleSubmit} // Use formik's handleSubmit
+                onSubmit={formik.handleSubmit} // Correctly binding Formik's handleSubmit
                 className="d-flex flex-column justify-content-center align-items-center gap-4"
             >
-                <label htmlFor="username" className="d-flex flex-column">Email </label>
+                {/* Username (Email) */}
+                <label htmlFor="username" className="d-flex flex-column">
+                    Email
+                </label>
                 <input
                     id="username"
                     name="username"
-                    type="username"
+                    type="text"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.username}
@@ -68,24 +61,28 @@ export default function LogIn() {
                     <div className="error">{formik.errors.username}</div>
                 )}
 
-                <label htmlFor="password" className="d-flex flex-column">Password</label>
+                {/* Password */}
+                <label htmlFor="password" className="d-flex flex-column">
+                    Password
+                </label>
                 <input
                     id="password"
                     name="password"
-                    type="text"
+                    type="password"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
                 />
-                {formik.errors.lastName && formik.touched.password && (
+                {formik.errors.password && formik.touched.password && (
                     <div className="error">{formik.errors.password}</div>
                 )}
 
-
-
+                {/* Submit Button */}
                 <button type="submit" className="cart-btn" disabled={loading}>
-                    {loading ? "Submitting..." : "Submit"}
+                    {loading ? 'Logging in...' : 'Log In'}
                 </button>
+
+                {/* Error Message */}
                 {error && <div className="error-message">{error}</div>}
             </form>
         </section>

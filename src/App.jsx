@@ -6,9 +6,13 @@ import ProductDetails from './components/Products/ProductDetail';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { router } from './Router';
+import { Provider } from 'react-redux';
+import { store } from './components/store/store';
 function App() {
   return (
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   )
 }
 

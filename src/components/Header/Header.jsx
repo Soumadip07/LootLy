@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom'
 import { Tooltip } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux';
+import Cookies from "js-cookie"; // Import js-cookie
+import { logoutUser } from '../slice/AuthSlice';
+
 function Header() {
+    const dispatch = useDispatch();
+    const { isAuthenticated } = useSelector((state) => state.auth);
+    const authenticationStatus = Cookies.get("isAuthenticated") || isAuthenticated;
+
+    useEffect(() => {
+
+    }, [authenticationStatus]);
+
+    const logOutHnadler = () => {
+        dispatch(logoutUser())
+    }
+    console.log(isAuthenticated)
     return (
         <header>
             <div className='header-container conatiner 
@@ -43,35 +59,55 @@ function Header() {
                             </div>
                         </Link>
                     </Tooltip>
-
-                    <Tooltip title="Sign Up to your account" disableInteractive>
-                        <Link
-                            className='btn focus:ring-opacity-50 border border-gray-200 p-3'
-                            to='/sign-up'
-                        >
-                            {/* <h5 className='ps-3'>Account</h5> */}
-                            <div className='d-flex'>
-                                <span className="material-symbols-outlined pe-2">
-                                    person
-                                </span>
-                                <h3>Sign Up</h3>
-                            </div>
-                        </Link>
-                    </Tooltip>
-                    <Tooltip title="Log In to your account" disableInteractive>
-                        <Link
-                            className='btn focus:ring-opacity-50 border border-gray-200 p-3'
-                            to='/log-in'
-                        >
-                            {/* <h5 className='ps-3'>Account</h5> */}
-                            <div className='d-flex'>
-                                <span className="material-symbols-outlined pe-2">
-                                    person
-                                </span>
-                                <h3>Log In</h3>
-                            </div>
-                        </Link>
-                    </Tooltip>
+                    {!authenticationStatus && (
+                        <>
+                            <Tooltip title="Sign Up to your account" disableInteractive>
+                                <Link
+                                    className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                                    to='/sign-up'
+                                >
+                                    {/* <h5 className='ps-3'>Account</h5> */}
+                                    <div className='d-flex'>
+                                        <span className="material-symbols-outlined pe-2">
+                                            person
+                                        </span>
+                                        <h3>Sign Up</h3>
+                                    </div>
+                                </Link>
+                            </Tooltip>
+                            <Tooltip title="Log In to your account" disableInteractive>
+                                <Link
+                                    className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                                    to='/log-in'
+                                >
+                                    {/* <h5 className='ps-3'>Account</h5> */}
+                                    <div className='d-flex'>
+                                        <span className="material-symbols-outlined pe-2">
+                                            person
+                                        </span>
+                                        <h3>Log In</h3>
+                                    </div>
+                                </Link>
+                            </Tooltip>
+                        </>
+                    )}
+                    {authenticationStatus && (
+                        <Tooltip title="Log Out of your account" disableInteractive>
+                            <Link
+                                className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                                to='/'
+                                onClick={logOutHnadler}
+                            >
+                                {/* <h5 className='ps-3'>Account</h5> */}
+                                <div className='d-flex' >
+                                    <span className="material-symbols-outlined pe-2">
+                                        person
+                                    </span>
+                                    <h3>Log Out</h3>
+                                </div>
+                            </Link>
+                        </Tooltip>
+                    )}
                 </div>
 
             </div>

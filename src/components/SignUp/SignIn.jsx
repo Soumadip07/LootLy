@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import SignInApis from "../Services/SignInServices";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../slice/AuthSlice";
 
 function SignIn() {
     const {
@@ -12,6 +14,8 @@ function SignIn() {
     } = useForm();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onSubmit = async (data) => {
         setError("");
@@ -23,7 +27,13 @@ function SignIn() {
 
             console.log("Response:", response.data);
             alert("User created successfully!");
-            reset();
+            dispatch(
+                loginUser({
+                    password: data.password, // Assuming the API provides a token
+                    username: data.email,
+                })
+            );
+            navigate('/')
         } catch (err) {
             console.error("Error:", err.response?.data || err.message);
             setError(err.response?.data?.message || "Something went wrong!");
