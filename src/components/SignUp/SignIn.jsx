@@ -126,8 +126,8 @@ function SignIn() {
 
                 </form>
                 <div className="text-start ">
-                    <h2>Welcome</h2>
-                    <h4>To</h4>
+                    <h2>Sign Up</h2>
+                    <h4>For</h4>
                     <div className="d-flex gap-3 justify-content-center align-items-center">
                         <h3>LootLY</h3>
                         <a href='/'>
