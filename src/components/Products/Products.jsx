@@ -17,6 +17,7 @@ import { products } from '../../Data/ProductData'
 import { categories } from '../../Data/Category'
 import { Tooltip } from '@mui/material'
 import ProductsApis from '../Services/ProductsService'
+import CategoriesApis from '../Services/CategoryService'
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
@@ -24,6 +25,7 @@ function Products() {
     const [data, setData] = useState();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [category, setCategories] = useState();
     const imageMap = {
         prod1: prod1,
         prod2: prod2,
@@ -78,12 +80,34 @@ function Products() {
             setLoading(false);
         }
     };
+    const getCategory = async () => {
+        try {
+            // console.log("Payload being sent:", data);
+
+            const response = await CategoriesApis.getCategories();
+            // console.log(response)
+            setCategories(response.data)
+
+            console.log("Response:", response?.data);
+            // alert("User created successfully!");
+        } catch (err) {
+            console.error("Error:", err.response?.data || err.message);
+            setError(err.response?.data?.message || "Something went wrong!");
+        } finally {
+        }
+    }
     useEffect(() => {
         if (!data)
             getData();
     }, [data])
 
-    console.log(selectedCategory, "check", data?.data?.content?.[4]?.title)
+    useEffect(() => {
+        console.log("Category", category)
+        if (!category)
+            getCategory();
+    }, [category])
+
+    // console.log((category), "check", data?.data?.content?.[4]?.title)
     return (
         <section className="product-section" id="product-section">
             <div className="container mt-5 flex-column justify-content-start align-items-start">
@@ -91,9 +115,9 @@ function Products() {
                     <div className="">
                         <select className="form-select" onChange={handleSelect}>
                             <option value="">Filter by Category</option>
-                            {Object.entries(categories).map(([key, value]) => (
-                                <option key={key} value={key}>
-                                    {value}
+                            {category && category?.map((categoryItem, index) => (
+                                <option key={index} value={categoryItem?.categoryId}>
+                                    {categoryItem?.categoryTitle}
                                 </option>
                             ))}
                         </select>

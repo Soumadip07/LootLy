@@ -29,7 +29,7 @@ function SignIn() {
             alert("User created successfully!");
             dispatch(
                 loginUser({
-                    password: data.password, // Assuming the API provides a token
+                    password: data.password,
                     username: data.email,
                     id: response.data?.roles?.[0]?.id,
                 })
