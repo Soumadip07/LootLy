@@ -83,7 +83,7 @@ function Products() {
             getData();
     }, [data])
 
-    // console.log(selectedCategory, "check", products)
+    console.log(selectedCategory, "check", data?.data?.content?.[4]?.title)
     return (
         <section className="product-section" id="product-section">
             <div className="container mt-5 flex-column justify-content-start align-items-start">
@@ -125,6 +125,7 @@ function Products() {
                             <Tooltip title={product?.stockStatus != "Out of Stock" ? `View ${product.name}` : ""} disableInteractive>
                                 <Link className="upper-card focus:ring-opacity-50 border border-gray-200" to={product?.stockStatus != "Out of Stock" ? `/products/${product.id}` : "#"}>
                                     {/* <h6>{product?.tag}</h6> */}
+                                    {/* <img src={`http://localhost:8082/api/products/image/${data?.data?.content?.[4]?.imageName}`} alt='hello' /> */}
                                     <img src={getImage(product?.image)} className={`${product?.stockStatus === "Out of Stock" ? "out-of-stock-img" : ""}`} alt={product.name} />
                                     {product?.stockStatus === "Out of Stock" && (
                                         <div className="out-of-stock-overlay">
@@ -149,7 +150,7 @@ function Products() {
                                     <p>{product?.category}</p>
                                 </div>
 
-                                <h3>{product.name}</h3>
+                                <h3>{data?.data?.content?.[4]?.title}</h3>
                                 <div className='d-flex justify-content-between'>
                                     <div className='d-flex'>
                                         <h5>${product?.discountedPrice}</h5>

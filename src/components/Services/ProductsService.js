@@ -6,11 +6,23 @@ const getProducts = (pageNumber = 0, pageSize = 5, sortBy = "productId", sortDir
         `/api/products?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`
     );
 };
+const createProduct = (categoryId, userId, productData) => {
+    return axiosInstance.post(
+        `/api/user/${userId}/category/${categoryId}/products`, productData
+    );
+};
+const uploadProductImage = (productId, imageData, config) => {
+    return axiosInstance.post(
+        `/api/products/image/upload/${productId}`, imageData, config
+    );
+};
 
 
 // Export the API functions
 const ProductsApis = {
-    getProducts
+    getProducts,
+    createProduct,
+    uploadProductImage
 };
 
 export default ProductsApis;

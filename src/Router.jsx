@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer';
 import SignIn from './components/SignUp/SignIn';
 import LogIn from './components/SignUp/LogIn';
 import Cart from './components/Cart/Cart';
+import CreateProductForm from './components/Product/CreateProductForm';
 
 export const router = createBrowserRouter([
     {
@@ -46,6 +47,14 @@ export const router = createBrowserRouter([
         element: <>
             <Header />
             <Cart />
+            <Footer />
+        </>
+    },
+    {
+        path: '/product-form',
+        element: <>
+            <Header />
+            <CreateProductForm />
             <Footer />
         </>
     },

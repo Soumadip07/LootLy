@@ -45,6 +45,35 @@ function Header() {
 
 
                 <div className='d-flex  gap-3 user-section ms-3'>
+                    {/* <Tooltip title="Sell your products" disableInteractive>
+                        <Link
+                            className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                            to='/cart'
+                        >
+                            <h5 className='ps-3'>0 Items</h5>
+                            <div className='d-flex'>
+                                <span class="material-symbols-outlined">
+                                    storefront
+                                </span>
+                                <h3>Seller</h3>
+                            </div>
+                        </Link>
+                    </Tooltip> */}
+                    {/* <Tooltip title="Sell your products" disableInteractive>
+                        <Link
+                            className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                            to='/product-form'
+                        >
+                            <h5 className='ps-3'>0 Items</h5>
+                            <div className='d-flex'>
+                                <span class="material-symbols-outlined">
+                                    grocery
+                                </span>
+                                <h3>Product</h3>
+                            </div>
+                        </Link>
+                    </Tooltip> */}
+
                     <Tooltip title="View your shopping cart" disableInteractive>
                         <Link
                             className='btn focus:ring-opacity-50 border border-gray-200 p-3'

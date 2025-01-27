@@ -25,12 +25,13 @@ function SignIn() {
 
             const response = await SignInApis.RegisterUser(data);
 
-            console.log("Response:", response.data);
+            console.log("Response:", response.data?.roles?.[0]?.id);
             alert("User created successfully!");
             dispatch(
                 loginUser({
                     password: data.password, // Assuming the API provides a token
                     username: data.email,
+                    id: response.data?.roles?.[0]?.id,
                 })
             );
             navigate('/')

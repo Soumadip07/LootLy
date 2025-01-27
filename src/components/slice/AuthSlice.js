@@ -7,16 +7,21 @@ import LoginApis from "../Services/LogInServices";
 // Async Thunk for login API
 export const loginUser = createAsyncThunk(
     "auth/loginUser",
-    async (credentials, { rejectWithValue }) => {
-        console.log("Credentials being sent:", credentials); // Debugging line
+    async (credentials, { rejectWithValue }, id) => {
+        console.log("Credentials being sent:", credentials?.id); // Debugging line
 
         try {
             const response = await LoginApis.LoginUser(credentials);
             const userData = response.data;
-
+            console.log(userData)
             // Save token and user data in cookies
             Cookies.set("authToken", userData.token, { expires: 7 }); // Set token cookie with a 7-day expiry
-            Cookies.set("user", JSON.stringify(userData.user), { expires: 7 }); // Store user data
+            Cookies.set("userId", credentials?.id, {
+                secure: true,  // Transmitted only over HTTPS
+                httpOnly: true, // Not accessible via JavaScript
+                sameSite: "Strict", // Prevent cross-site requests
+                expires: 7,  // Set an expiration date
+            });
             Cookies.set("isAuthenticated", "true", { expires: 7 }); // Authentication status
 
             return userData;
@@ -40,7 +45,7 @@ const authSlice = createSlice({
             // Clear cookies on logout
             console.log(Cookies.get("isAuthenticated"))
             Cookies.remove("authToken");
-            Cookies.remove("user");
+            Cookies.remove("userId");
             Cookies.remove("isAuthenticated");
 
             state.user = null;
