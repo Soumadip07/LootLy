@@ -52,6 +52,17 @@ body {
     }
 }
 
+input::placeholder,
+textarea::placeholder {
+    font-weight: bold;
+}
+
+input:focus,
+textarea:focus {
+    border: 2px solid #7688db;
+    outline: none;
+}
+
 span {
     cursor: pointer;
 }
@@ -643,29 +654,110 @@ header {
 
 .SignUp-section {
     background-image: url('../assets/img17.jpg');
-    font-family: "Quicksand", serif;
-    font-weight: 600;
     background-color: #C3B2FF;
     background-size: contain;
     background-position: right bottom;
     background-repeat: no-repeat;
-    height: 82vh;
-    object-fit: cover;
+    max-height: 100vh;
+    min-height: 82vh;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
 
-    form {
-        background-color: white;
-        padding: 15px;
-        border-radius: 10px;
-        width: 40%;
+    @media (max-width: 768px) {
+        background-image: none;
 
-        input {
-            border-radius: 1px;
-            border: 1px solid #C3B2FF;
+        p {
+            font-size: 0.6rem;
+        }
+
+        span {
+            font-size: 0.6rem;
         }
     }
 
-    button {
-        width: max-content;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: inherit;
+        background-size: inherit;
+        background-position: inherit;
+        background-repeat: inherit;
+        filter: blur(2px);
+        z-index: 1;
+    }
+
+    .form-container {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            background-color: #C3B2FF;
+            padding: 14vh 0;
+            border-radius: 10px;
+            min-width: 45vw;
+            border: 2px solid #F0F2FB;
+
+            input,
+            textarea {
+                border-radius: 5px;
+                color: #C3B2FF;
+                padding: 10px 20px;
+                background: #F0F2FB;
+                outline: none;
+                border: none;
+                margin-bottom: 15px;
+
+                @media (max-width: 768px) {
+                    font-size: 0.75rem;
+                }
+            }
+
+            textarea {
+                padding: 10px 20px;
+            }
+
+            .error-text {
+                color: red;
+                font-size: 0.7rem;
+            }
+        }
+
+        h2 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        h3 {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #7688db;
+        }
+
+        button {
+            width: max-content;
+        }
     }
 }
 
@@ -675,23 +767,106 @@ header {
     background-size: contain;
     background-position: right bottom;
     background-repeat: no-repeat;
-    height: 82vh;
-    object-fit: cover;
+    max-height: 100vh;
+    min-height: 82vh;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
 
-    form {
-        background-color: white;
-        padding: 15px;
-        border-radius: 10px;
-        width: 40%;
+    @media (max-width: 768px) {
+        background-image: none;
 
-        // input {
-        //     border-radius: 1px;
-        //     border: 1px solid #C3B2FF;
-        // }
+        p {
+            font-size: 0.6rem;
+        }
+
+        span {
+            font-size: 0.6rem;
+        }
     }
 
-    button {
-        width: max-content;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: inherit;
+        background-size: inherit;
+        background-position: inherit;
+        background-repeat: inherit;
+        filter: blur(2px);
+        z-index: 1;
+    }
+
+    .form-container {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            background-color: #D8DEFE;
+            padding: 14vh 0;
+            border-radius: 10px;
+            min-width: 45vw;
+            border: 2px solid #F0F2FB;
+
+            input,
+            textarea {
+                border-radius: 5px;
+                color: #C3B2FF;
+                padding: 10px 20px;
+                background: #F0F2FB;
+                outline: none;
+                border: none;
+                margin-bottom: 15px;
+
+                @media (max-width: 768px) {
+                    font-size: 0.75rem;
+                }
+            }
+
+            textarea {
+                padding: 10px 20px;
+            }
+
+            .error-text {
+                color: red;
+                font-size: 0.7rem;
+            }
+        }
+
+        h2 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        h3 {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #7688db;
+        }
+
+        button {
+            width: max-content;
+        }
     }
 }
 
