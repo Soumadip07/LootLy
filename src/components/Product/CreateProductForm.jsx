@@ -9,6 +9,7 @@ import Dropdown from '../../utils/Dropdown';
 import { DiscountTypes } from '../../utils/DiscountType';
 import { QuantityTypes } from '../../utils/QuantityType';
 import CategoriesApis from '../Services/CategoryService';
+import Checkbox from '../../utils/Checkbox';
 
 function CreateProductForm() {
     const {
@@ -32,7 +33,6 @@ function CreateProductForm() {
             // console.log(response)
             setCategories(response.data)
 
-            console.log("Response:", response?.data);
             // alert("User created successfully!");
         } catch (err) {
             console.error("Error:", err.response?.data || err.message);
@@ -43,7 +43,6 @@ function CreateProductForm() {
 
 
     useEffect(() => {
-        console.log("Category", category)
         if (!category)
             getCategory();
     }, [category])
@@ -58,7 +57,7 @@ function CreateProductForm() {
                 content: data?.content
             });
 
-            console.log(response?.data?.productId);
+            // console.log(response?.data?.productId);
 
             if (data?.image?.[0]) {
                 const formData = new FormData();
@@ -102,14 +101,14 @@ function CreateProductForm() {
     }), []);
     const [selectedOption, setSelectedOption] = useState();
     const [open, setOpen] = useState(false)
-    console.log(selectedOption)
+    const [checked, setChecked] = useState();
 
     return (
         <section className='product-form p-3' id='product-form'>
             <div className="row g-4">
                 {/* General Information */}
                 <div className='d-flex gap-2'>
-                    <span classname="material-symbols-outlined">
+                    <span class="material-symbols-outlined">
                         package_2
                     </span>
                     <h4>Add New Product</h4>
@@ -169,7 +168,7 @@ function CreateProductForm() {
                                 <div className="col-6">
                                     <label className="form-label ps-3">Order Status</label>
                                     <p className='ps-3'>Click on the status for the product</p>
-                                    <div className='pt-2'>
+                                    {/* <div className='pt-2'>
                                         {["Available", "Unavailable", "Will be back"].map((status) => (
                                             <div key={status} className="form-check form-check-inline">
                                                 <input
@@ -184,8 +183,16 @@ function CreateProductForm() {
                                                 </label>
                                             </div>
                                         ))}
-                                    </div>
-
+                                    </div> */}
+                                    <Checkbox
+                                        checkboxItems={["Available", "Unavailable", "Will be back"]}
+                                        type={"radio_button_unchecked"}
+                                        id={"status"}
+                                        name={"status"}
+                                        value={"status"}
+                                        checked={checked}
+                                        setChecked={setChecked}
+                                    />
                                 </div>
                             </div>
 
@@ -264,7 +271,7 @@ function CreateProductForm() {
                                         options={DiscountTypes}
                                         onChange={(item) => setSelectedOption(item)}
                                         selectedKey={selectedOption}
-                                        placeholder={"Type to search Season Discount"}
+                                        placeholder={"Search Season Discount"}
                                         open={open}
                                         setOpen={setOpen}
                                     />

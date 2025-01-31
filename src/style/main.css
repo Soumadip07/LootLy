@@ -854,7 +854,7 @@ header .user-section .btn:hover {
 }
 
 .dropdown-container {
-  max-width: 250px;
+  max-width: 450px;
   position: relative;
 }
 .dropdown-container .input-container {
@@ -904,7 +904,7 @@ header .user-section .btn:hover {
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  max-height: 200px;
+  max-height: 220px;
   overflow-y: auto;
   display: none;
   border-radius: 10px;

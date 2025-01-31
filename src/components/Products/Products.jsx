@@ -18,6 +18,7 @@ import { categories } from '../../Data/Category'
 import { Tooltip } from '@mui/material'
 import ProductsApis from '../Services/ProductsService'
 import CategoriesApis from '../Services/CategoryService'
+import Dropdown from '../../utils/Dropdown'
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
@@ -26,6 +27,8 @@ function Products() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [category, setCategories] = useState();
+    const [selectedOption, setSelectedOption] = useState();
+    const [open, setOpen] = useState(false)
     const imageMap = {
         prod1: prod1,
         prod2: prod2,
@@ -71,7 +74,7 @@ function Products() {
 
             const response = await ProductsApis.getProducts(pageNumber, pageSize, sortBy, sortDir);
             setData(response)
-            console.log("Response:", response.data);
+            // console.log("Response:", response.data);
             // alert("User created successfully!");
         } catch (err) {
             console.error("Error:", err.response?.data || err.message);
@@ -88,7 +91,7 @@ function Products() {
             // console.log(response)
             setCategories(response.data)
 
-            console.log("Response:", response?.data);
+            // console.log("Response:", response?.data);
             // alert("User created successfully!");
         } catch (err) {
             console.error("Error:", err.response?.data || err.message);
@@ -102,7 +105,7 @@ function Products() {
     }, [data])
 
     useEffect(() => {
-        console.log("Category", category)
+        // console.log("Category", category)
         if (!category)
             getCategory();
     }, [category])
@@ -113,14 +116,16 @@ function Products() {
             <div className="container mt-5 flex-column justify-content-start align-items-start">
                 <div className="filter pb-3 d-flex gap-3">
                     <div className="">
-                        <select className="form-select" onChange={handleSelect}>
-                            <option value="">Filter by Category</option>
-                            {category && category?.map((categoryItem, index) => (
-                                <option key={index} value={categoryItem?.categoryId}>
-                                    {categoryItem?.categoryTitle}
-                                </option>
-                            ))}
-                        </select>
+                        <Dropdown
+                            options={category}
+                            onChange={(item) => setSelectedOption(item)}
+                            selectedKey={selectedOption}
+                            placeholder={"Product Category"}
+                            open={open}
+                            setOpen={setOpen}
+                            keyTitle={"categoryTitle"}
+                            idTitle={"categoryId"}
+                        />
                     </div>
                     {selectedCategory && (
                         <button className='cart-btn d-flex justify-content-center align-items-center gap-2'

@@ -18,7 +18,7 @@ function Header() {
     const logOutHnadler = () => {
         dispatch(logoutUser())
     }
-    console.log(isAuthenticated)
+    // console.log(isAuthenticated)
     return (
         <header>
             <div className='header-container conatiner 
