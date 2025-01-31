@@ -47,16 +47,20 @@ body ::-webkit-scrollbar-thumb {
   }
 }
 input::-moz-placeholder, textarea::-moz-placeholder {
-  font-weight: bold;
+  font-weight: 600;
+  padding-left: 10px;
+  font-size: 0.85rem;
 }
 input::placeholder,
 textarea::placeholder {
-  font-weight: bold;
+  font-weight: 600;
+  padding-left: 10px;
+  font-size: 0.85rem;
 }
 
 input:focus,
 textarea:focus {
-  border: 2px solid #7688db;
+  border: 2px solid #7688DB;
   outline: none;
 }
 
@@ -791,6 +795,53 @@ header .user-section .btn:hover {
   width: max-content;
 }
 
+.product-form {
+  font-size: 0.75rem;
+}
+.product-form h5 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.product-form p {
+  font-size: 0.7rem;
+  color: #777;
+}
+.product-form ul {
+  list-style: circle;
+}
+.product-form .card {
+  background-color: #F9F9F9;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+.product-form .card form label {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.product-form .card form select {
+  background-color: #EFEFEF;
+  padding: 7px 0;
+}
+.product-form .card form option {
+  font-size: 0.75rem;
+}
+.product-form .card form input {
+  background-color: #EFEFEF;
+  padding: 7px 0;
+}
+.product-form .card form input:not(:-moz-placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
+}
+.product-form .card form input:not(:placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
+}
+.product-form .card form .jodit-wysiwyg {
+  background-color: #EFEFEF;
+}
+
 .cart-section {
   background-image: url("../assets/cart.jpg");
   background-color: #CAD1FD;
@@ -800,4 +851,81 @@ header .user-section .btn:hover {
   height: 82vh;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.dropdown-container {
+  max-width: 250px;
+  position: relative;
+}
+.dropdown-container .input-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+}
+.dropdown-container .input-container input {
+  width: 100%;
+  color: #7688DB;
+  border: 2px solid #dee2e6;
+  font-weight: 800;
+  font-size: 14px;
+  background: transparent;
+  border-radius: 6px;
+  padding: 8px 0;
+}
+.dropdown-container .input-container input:not(:-moz-placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
+}
+.dropdown-container .input-container input:not(:placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
+}
+.dropdown-container .input-container .input-arrow-container {
+  position: absolute;
+  right: 10px;
+  top: 55%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.dropdown-container .input-container .input-clear-container {
+  position: absolute;
+  right: 10px;
+  top: 55%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.dropdown-container .dropdown {
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+  border-radius: 10px;
+}
+.dropdown-container .dropdown.active {
+  display: block;
+}
+.dropdown-container .dropdown .option {
+  padding: 10px;
+  cursor: pointer;
+  color: black;
+}
+.dropdown-container .dropdown .option:hover {
+  color: #7688DB;
+  font-weight: 800;
+  background-color: #EFEFEF;
+  margin: 3px;
+  border-radius: 5px;
+}
+.dropdown-container .dropdown .no-results {
+  padding: 10px;
+  text-align: center;
+  color: gray;
 }/*# sourceMappingURL=main.css.map */

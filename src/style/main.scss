@@ -16,6 +16,31 @@ body {
     font-family: "Roboto", serif;
 }
 
+// .jodit-wysiwyg {
+//     background-color: #f0f0f0;
+//     /* Background color */
+//     color: #333333;
+//     /* Text color */
+//     border: 1px solid #ccc;
+//     /* Border */
+//     border-radius: 10px;
+//     /* Rounded corners */
+//     font-family: Arial, sans-serif;
+//     /* Set a custom font */
+// }
+
+// .jodit-wysiwyg .jodit-ui-button {
+//     background-color: #4CAF50;
+//     /* Set button background color */
+//     color: white;
+//     /* Set button text color */
+// }
+
+// /* Button hover state */
+// .jodit-wysiwyg .jodit-ui-button:hover {
+//     background-color: #45a049;
+// }
+
 html,
 body {
     margin: 0;
@@ -52,14 +77,18 @@ body {
     }
 }
 
+
 input::placeholder,
 textarea::placeholder {
-    font-weight: bold;
+    font-weight: 600;
+    padding-left: 10px;
+    font-size: 0.85rem;
 }
+
 
 input:focus,
 textarea:focus {
-    border: 2px solid #7688db;
+    border: 2px solid #7688DB;
     outline: none;
 }
 
@@ -844,6 +873,7 @@ header {
                 color: red;
                 font-size: 0.7rem;
             }
+
         }
 
         h2 {
@@ -870,6 +900,64 @@ header {
     }
 }
 
+.product-form {
+    font-size: 0.75rem;
+
+    h5 {
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    p {
+        font-size: 0.7rem;
+        color: #777;
+    }
+
+    ul {
+        list-style: circle;
+    }
+
+    .card {
+        background-color: #F9F9F9;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        margin: auto;
+
+        form {
+            label {
+                font-size: 0.85rem;
+                font-weight: 700;
+            }
+
+            select {
+                background-color: #EFEFEF;
+                padding: 7px 0;
+            }
+
+            option {
+                font-size: 0.75rem;
+            }
+
+            input {
+                background-color: #EFEFEF;
+                padding: 7px 0;
+
+                &:not(:placeholder-shown) {
+                    font-weight: 700;
+                    padding-left: 12px;
+                }
+            }
+
+
+            .jodit-wysiwyg {
+                background-color: #EFEFEF;
+            }
+
+        }
+    }
+}
+
+
 .cart-section {
     background-image: url('../assets/cart.jpg');
     background-color: #CAD1FD;
@@ -878,4 +966,91 @@ header {
     background-repeat: no-repeat;
     height: 82vh;
     object-fit: cover;
+}
+
+// 🔹 Dropdown Container
+.dropdown-container {
+    max-width: 250px;
+    position: relative;
+
+    .input-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        border-radius: 5px;
+
+        input {
+            width: 100%;
+            color: #7688DB;
+            border: 2px solid #dee2e6;
+            font-weight: 800;
+            font-size: 14px;
+            background: transparent;
+            border-radius: 6px;
+            padding: 8px 0;
+
+
+            &:not(:placeholder-shown) {
+                font-weight: 700;
+                padding-left: 12px;
+            }
+        }
+
+
+        .input-arrow-container {
+            position: absolute;
+            right: 10px;
+            top: 55%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .input-clear-container {
+            position: absolute;
+            right: 10px;
+            top: 55%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    }
+
+    // 🔹 Dropdown Menu
+    .dropdown {
+        position: absolute;
+        width: 100%;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;
+        border-radius: 10px;
+
+        &.active {
+            display: block;
+        }
+
+        .option {
+            padding: 10px;
+            cursor: pointer;
+            color: black;
+
+            &:hover {
+                color: #7688DB;
+                font-weight: 800;
+                background-color: #EFEFEF;
+                margin: 3px;
+                border-radius: 5px;
+            }
+        }
+
+        .no-results {
+            padding: 10px;
+            text-align: center;
+            color: gray;
+        }
+    }
 }
