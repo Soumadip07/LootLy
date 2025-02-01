@@ -24,8 +24,13 @@ function CreateProductForm() {
     const [loading, setLoading] = useState(false);
     const userId = Cookies.get("userId");
     const [category, setCategories] = useState();
+    const [selectedOption, setSelectedOption] = useState();
+    const [open, setOpen] = useState(false)
+    const [selectedCheckboxValue, setSelectedCheckboxValue] = useState(null);
 
     const getCategory = async () => {
+        if (error)
+            return;
         try {
             // console.log("Payload being sent:", data);
 
@@ -99,9 +104,6 @@ function CreateProductForm() {
         ],
         toolbar: true,
     }), []);
-    const [selectedOption, setSelectedOption] = useState();
-    const [open, setOpen] = useState(false)
-    const [checked, setChecked] = useState();
 
     return (
         <section className='product-form p-3' id='product-form'>
@@ -168,73 +170,19 @@ function CreateProductForm() {
                                 <div className="col-6">
                                     <label className="form-label ps-3">Order Status</label>
                                     <p className='ps-3'>Click on the status for the product</p>
-                                    {/* <div className='pt-2'>
-                                        {["Available", "Unavailable", "Will be back"].map((status) => (
-                                            <div key={status} className="form-check form-check-inline">
-                                                <input
-                                                    type="radio"
-                                                    id={status}
-                                                    name="status"
-                                                    value={status}
-                                                    className=""
-                                                />
-                                                <label htmlFor={status} className="ps-2">
-                                                    {status}
-                                                </label>
-                                            </div>
-                                        ))}
-                                    </div> */}
                                     <Checkbox
                                         checkboxItems={["Available", "Unavailable", "Will be back"]}
-                                        type={"radio_button_unchecked"}
-                                        id={"status"}
-                                        name={"status"}
-                                        value={"status"}
-                                        checked={checked}
-                                        setChecked={setChecked}
+                                        type={"radio"}
+                                        selectedCheckboxValue={selectedCheckboxValue}
+                                        setSelectedCheckboxValue={setSelectedCheckboxValue}
                                     />
+
                                 </div>
                             </div>
-
-
-                            {/* Product Category */}
-                            {/* <label className="d-flex flex-column">
-                        Product Category
-                        <select {...register("category")} className='dropdown'>
-                            <option value="1">Spices</option>
-                            <option value="2">Beverages</option>
-                            <option value="3">Other</option>
-                        </select>
-                    </label> */}
-
-                            {/* Product Image Upload */}
-                            {/* <label className="d-flex flex-column">
-                        Product Image Upload
-                        <input {...register("image")} type="file" />
-                    </label> */}
-
-                            {/* Error Message */}
-                            {/* {error && <span className="error-text">{error}</span>} */}
-
-                            {/* Submit Button */}
-                            {/* <button type="submit" className="cart-btn" disabled={loading}>
-                        {loading ? "Submitting..." : "Submit"}
-                    </button> */}
                         </form>
-
-                        {/* <div className="text-start">
-                    <h2>List</h2>
-                    <h4>Your</h4>
-                    <h2>Product on</h2>
-                    <div className="d-flex gap-3 justify-content-center align-items-center">
-                        <h3>LootLY</h3>
-                        <a href='/'>
-                            <img src={logo} alt='logo' />
-                        </a>
-                    </div>
-                </div> */}
                     </div>
                 </div>
+
                 {/* Upload Image */}
                 <div className="col-12 col-lg-4">
                     <div className="card p-4">
@@ -266,7 +214,6 @@ function CreateProductForm() {
                                 </div>
                                 <div className="col-6">
                                     <label className="form-label">Discount Type</label>
-                                    {/* <input type="text" className="form-control" placeholder="e.g. Seasonal Discount" /> */}
                                     <Dropdown
                                         options={DiscountTypes}
                                         onChange={(item) => setSelectedOption(item)}

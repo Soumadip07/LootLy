@@ -78,6 +78,7 @@ body {
 }
 
 
+
 input::placeholder,
 textarea::placeholder {
     font-weight: 600;
@@ -941,6 +942,7 @@ header {
             input {
                 background-color: #EFEFEF;
                 padding: 7px 0;
+                padding-left: 10px;
 
                 &:not(:placeholder-shown) {
                     font-weight: 700;
@@ -1053,4 +1055,23 @@ header {
             color: gray;
         }
     }
+}
+
+//checkbox-container
+.checkbox-container {
+    flex-wrap: wrap;
+
+    .selected {
+        color: #7688DB;
+    }
+
+    span {
+        color: gray;
+
+        &:hover {
+            color: #7688DB;
+        }
+
+    }
+
 }

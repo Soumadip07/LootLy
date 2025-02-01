@@ -1,44 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-function Checkbox(
-    {
-        checkboxItems = [],
-        type,
-        id,
-        name,
-        value
-    }
-) {
+function Checkbox({ checkboxItems, type, selectedCheckboxValue, setSelectedCheckboxValue }) {
 
-    const [checked, setChecked] = useState(false);
-    const onInputClick = (e) => {
-        if (e.target.tagName !== "SPAN") {
-            setChecked((prev) => !prev);
-        }
+
+    const onInputClick = (e, index) => {
+        setSelectedCheckboxValue(e.target.value);
     };
-    console.log(checked)
     return (
-        <div className='pt-2' >
-            <div className="checkbox-container" onClick={onInputClick}>
-                {checkboxItems && checkboxItems?.map((status) => (
-                    <div key={status} className="form-check form-check-inline">
+        <div className='pt-2'>
+            <div className="checkbox-container">
+                {checkboxItems.map((value, index) => (
+                    <div key={index} className="form-check form-check-inline">
                         <input
                             type={type}
-                            id={id}
-                            name={name}
                             value={value}
+                            id={`radio-${index}`}
+                            checked={selectedCheckboxValue === value}
+                            onChange={(e) => onInputClick(e, index)}
                             className="visually-hidden"
                         />
-                        <label htmlFor={status} className="ps-2">
-                            <span className="material-icons">{type}</span>
-
-                            {status}
+                        <label htmlFor={`radio-${index}`} className='d-flex justify-content-center align-items-center gap-2'>
+                            <span className={`material-icons  ${selectedCheckboxValue === value ? 'selected' : ''}`}>
+                                {selectedCheckboxValue === value
+                                    ? type === 'checkbox'
+                                        ? 'check_box'
+                                        : 'radio_button_checked'
+                                    : type === 'checkbox'
+                                        ? 'check_box_outline_blank'
+                                        : 'radio_button_unchecked'}
+                            </span>
+                            {value}
                         </label>
                     </div>
                 ))}
             </div>
         </div>
-    )
+    );
 }
 
-export default Checkbox
+export default Checkbox;

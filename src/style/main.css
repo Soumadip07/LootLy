@@ -829,6 +829,7 @@ header .user-section .btn:hover {
 .product-form .card form input {
   background-color: #EFEFEF;
   padding: 7px 0;
+  padding-left: 10px;
 }
 .product-form .card form input:not(:-moz-placeholder-shown) {
   font-weight: 700;
@@ -928,4 +929,17 @@ header .user-section .btn:hover {
   padding: 10px;
   text-align: center;
   color: gray;
+}
+
+.checkbox-container {
+  flex-wrap: wrap;
+}
+.checkbox-container .selected {
+  color: #7688DB;
+}
+.checkbox-container span {
+  color: gray;
+}
+.checkbox-container span:hover {
+  color: #7688DB;
 }/*# sourceMappingURL=main.css.map */
