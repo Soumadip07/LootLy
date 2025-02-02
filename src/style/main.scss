@@ -1075,3 +1075,100 @@ header {
     }
 
 }
+
+.dropzone-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+
+
+    span {
+        font-size: 30px;
+    }
+
+    .image-main-preview {
+        position: relative;
+        width: 280px;
+        height: 260px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .uploaded-main-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .uploaded-images {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .uploaded-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .image-preview {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .remove-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    .add-image-box {
+        width: 120px;
+        height: 120px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #aaa;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .add-image-box:hover {
+        background: #f9f9f9;
+    }
+
+    .plus-icon {
+        font-size: 24px;
+        color: #666;
+    }
+}

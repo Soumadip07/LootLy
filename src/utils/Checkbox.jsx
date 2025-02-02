@@ -10,7 +10,7 @@ function Checkbox({ checkboxItems, type, selectedCheckboxValue, setSelectedCheck
         <div className='pt-2'>
             <div className="checkbox-container">
                 {checkboxItems.map((value, index) => (
-                    <div key={index} className="form-check form-check-inline">
+                    <div key={index} className="form-check form-check-inline ">
                         <input
                             type={type}
                             value={value}
@@ -19,8 +19,8 @@ function Checkbox({ checkboxItems, type, selectedCheckboxValue, setSelectedCheck
                             onChange={(e) => onInputClick(e, index)}
                             className="visually-hidden"
                         />
-                        <label htmlFor={`radio-${index}`} className='d-flex justify-content-center align-items-center gap-2'>
-                            <span className={`material-icons  ${selectedCheckboxValue === value ? 'selected' : ''}`}>
+                        <label htmlFor={`radio-${index}`} className='d-flex justify-content-center align-items-center gap-1'>
+                            <span className={`material-icons ${selectedCheckboxValue === value ? 'selected' : ''}`}>
                                 {selectedCheckboxValue === value
                                     ? type === 'checkbox'
                                         ? 'check_box'

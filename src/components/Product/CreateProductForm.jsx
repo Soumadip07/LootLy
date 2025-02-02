@@ -6,6 +6,8 @@ import Cookies from "js-cookie";
 import logo from '../../assets/logo.png'
 import JoditEditor from 'jodit-react';
 import Dropdown from '../../utils/Dropdown';
+import Dropzone from '../../utils/Dropzone';
+
 import { DiscountTypes } from '../../utils/DiscountType';
 import { QuantityTypes } from '../../utils/QuantityType';
 import CategoriesApis from '../Services/CategoryService';
@@ -24,7 +26,10 @@ function CreateProductForm() {
     const [loading, setLoading] = useState(false);
     const userId = Cookies.get("userId");
     const [category, setCategories] = useState();
-    const [selectedOption, setSelectedOption] = useState();
+    const [selectedQuantityOption, setSelectedQuantityOption] = useState();
+    const [selectedDiscountOption, setSelectedDiscountOption] = useState();
+    const [selectedCategoryOption, setSelectedCategoryOption] = useState();
+
     const [open, setOpen] = useState(false)
     const [selectedCheckboxValue, setSelectedCheckboxValue] = useState(null);
 
@@ -104,7 +109,7 @@ function CreateProductForm() {
         ],
         toolbar: true,
     }), []);
-
+    // console.log(selectedCategoryOption, "sadasd", selectedDiscountOption, "asdasd", selectedQuantityOption)
     return (
         <section className='product-form p-3' id='product-form'>
             <div className="row g-4">
@@ -158,8 +163,8 @@ function CreateProductForm() {
                                     <p>Pick Available quantity</p>
                                     <Dropdown
                                         options={QuantityTypes}
-                                        onChange={(item) => setSelectedOption(item)}
-                                        selectedKey={selectedOption}
+                                        onChange={(item) => setSelectedQuantityOption(item)}
+                                        // selectedOption={selectedQuantityOption}
                                         placeholder={"Type to search"}
                                         open={open}
                                         setOpen={setOpen}
@@ -168,10 +173,10 @@ function CreateProductForm() {
 
 
                                 <div className="col-6">
-                                    <label className="form-label ps-3">Order Status</label>
+                                    <label className="form-label ps-3">Inventory Status</label>
                                     <p className='ps-3'>Click on the status for the product</p>
                                     <Checkbox
-                                        checkboxItems={["Available", "Unavailable", "Will be back"]}
+                                        checkboxItems={["Available", "Unavailable", "Discontinued"]}
                                         type={"radio"}
                                         selectedCheckboxValue={selectedCheckboxValue}
                                         setSelectedCheckboxValue={setSelectedCheckboxValue}
@@ -187,10 +192,13 @@ function CreateProductForm() {
                 <div className="col-12 col-lg-4">
                     <div className="card p-4">
                         <h5 className="card-title">Upload Image</h5>
-                        <div className="d-flex flex-column align-items-center">
+                        <p >Only .png, .jpg, and .jpeg files are allowed.</p>
+                        <Dropzone />
+
+                        {/* <div className="d-flex flex-column align-items-center">
                             <img src="/path/to/image.jpg" alt="Product Preview" className="img-fluid mb-3" />
                             <button className="btn btn-outline-secondary">Upload New Image</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="col-12 col-lg-8">
@@ -216,8 +224,8 @@ function CreateProductForm() {
                                     <label className="form-label">Discount Type</label>
                                     <Dropdown
                                         options={DiscountTypes}
-                                        onChange={(item) => setSelectedOption(item)}
-                                        selectedKey={selectedOption}
+                                        onChange={(item) => setSelectedDiscountOption(item)}
+                                        // selectedDiscountOption={selectedOption}
                                         placeholder={"Search Season Discount"}
                                         open={open}
                                         setOpen={setOpen}
@@ -232,11 +240,11 @@ function CreateProductForm() {
                         <h5 className="card-title">Category</h5>
                         <p>Pick a Category from the dropdown</p>
                         <form>
-                            <label className="form-label" htmlFor="quantityDropdown"> Product Category</label>
+                            <label className="form-label" htmlFor="categoryDropdown"> Product Category</label>
                             <Dropdown
                                 options={category}
-                                onChange={(item) => setSelectedOption(item)}
-                                selectedKey={selectedOption}
+                                onChange={(item) => setSelectedCategoryOption(item)}
+                                // selectedQuantityOption={selectedOption}
                                 placeholder={"Type to search Product Category"}
                                 open={open}
                                 setOpen={setOpen}

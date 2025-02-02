@@ -23,6 +23,7 @@
     "material-icons": "^1.13.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.5",
     "react-hook-form": "^7.54.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",

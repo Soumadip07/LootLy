@@ -4,7 +4,7 @@ function Dropdown({
     options = [],
     placeholder = "Type to search...",
     onChange,
-    selectedKey,
+    selectedOption,
     keyTitle,
     idTitle
 }) {
