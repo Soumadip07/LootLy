@@ -1030,4 +1030,133 @@ header .user-section .btn:hover {
 .dropzone-container .plus-icon {
   font-size: 24px;
   color: #666;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: -24px;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-overlay .input-desc {
+  width: 100%;
+  min-height: 180px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+.modal-overlay .modal-container {
+  background: #F9F9F9;
+  padding: 1rem;
+  min-width: 500px;
+  min-height: 500px;
+  border-radius: 10px;
+  max-width: 700px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+.modal-overlay .modal-container .close-btn {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  font-size: 17px;
+  width: 30px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  background-color: #EFEFEF;
+  z-index: 1;
+  cursor: pointer;
+}
+.modal-overlay .modal-container .close-btn:hover {
+  color: white;
+  background-color: #7688db;
+}
+.modal-overlay .modal-container h4 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.modal-overlay .modal-container p {
+  font-size: 0.7rem;
+  color: #777;
+}
+.modal-overlay .modal-container ul {
+  list-style: circle;
+}
+.modal-overlay .modal-container .card {
+  background-color: #F9F9F9;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+.modal-overlay .modal-container .form-container {
+  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.modal-overlay .modal-container .form-container h4 {
+  font-size: 1rem;
+  font-weight: 900;
+}
+.modal-overlay .modal-container .form-container label {
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+.modal-overlay .modal-container .form-container select {
+  background-color: #EFEFEF;
+  padding: 7px 0;
+}
+.modal-overlay .modal-container .form-container option {
+  font-size: 0.75rem;
+}
+.modal-overlay .modal-container .form-container form input:not([type=submit]),
+.modal-overlay .modal-container .form-container form textarea {
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  background-color: #EFEFEF;
+  min-width: 450px;
+}
+.modal-overlay .modal-container .form-container form input:not([type=submit]):not(:-moz-placeholder-shown), .modal-overlay .modal-container .form-container form textarea:not(:-moz-placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
+}
+.modal-overlay .modal-container .form-container form input:not([type=submit]):not(:placeholder-shown),
+.modal-overlay .modal-container .form-container form textarea:not(:placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
+}
+.modal-overlay .modal-container .form-container form input[type=submit] {
+  padding: 6px 15px;
+  border: 1px solid #7688db;
+  border-radius: 10px;
+  background-color: #F0F2FB;
+}
+.modal-overlay .modal-container .form-container form input[type=submit]:not(:-moz-placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
+}
+.modal-overlay .modal-container .form-container form input[type=submit]:not(:placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
+}
+.modal-overlay .modal-container .form-container form input[type=submit]:hover {
+  color: white;
+  background-color: #7688db;
 }/*# sourceMappingURL=main.css.map */

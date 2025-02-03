@@ -12,6 +12,7 @@ import { DiscountTypes } from '../../utils/DiscountType';
 import { QuantityTypes } from '../../utils/QuantityType';
 import CategoriesApis from '../Services/CategoryService';
 import Checkbox from '../../utils/Checkbox';
+import Modal from '../../utils/Modal';
 
 function CreateProductForm() {
     const {
@@ -29,6 +30,12 @@ function CreateProductForm() {
     const [selectedQuantityOption, setSelectedQuantityOption] = useState();
     const [selectedDiscountOption, setSelectedDiscountOption] = useState();
     const [selectedCategoryOption, setSelectedCategoryOption] = useState();
+    const [uploadedImages, setuploadedImages] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalData, setModalData] = useState();
+
+    const closeModal = () => setShowModal(false);
+
 
     const [open, setOpen] = useState(false)
     const [selectedCheckboxValue, setSelectedCheckboxValue] = useState(null);
@@ -109,7 +116,7 @@ function CreateProductForm() {
         ],
         toolbar: true,
     }), []);
-    // console.log(selectedCategoryOption, "sadasd", selectedDiscountOption, "asdasd", selectedQuantityOption)
+    // console.log(modalData)
     return (
         <section className='product-form p-3' id='product-form'>
             <div className="row g-4">
@@ -193,14 +200,14 @@ function CreateProductForm() {
                     <div className="card p-4">
                         <h5 className="card-title">Upload Image</h5>
                         <p >Only .png, .jpg, and .jpeg files are allowed.</p>
-                        <Dropzone />
-
-                        {/* <div className="d-flex flex-column align-items-center">
-                            <img src="/path/to/image.jpg" alt="Product Preview" className="img-fluid mb-3" />
-                            <button className="btn btn-outline-secondary">Upload New Image</button>
-                        </div> */}
+                        <Dropzone
+                            uploadedImages={uploadedImages}
+                            setuploadedImages={setuploadedImages}
+                        />
                     </div>
                 </div>
+
+
                 <div className="col-12 col-lg-8">
                     <div className="card p-4">
                         <h5 className="card-title">Pricing and Stock</h5>
@@ -251,11 +258,23 @@ function CreateProductForm() {
                                 keyTitle={"categoryTitle"}
                                 idTitle={"categoryId"}
                             />
-                            <button className='cart-btn mt-3'>Add Category</button>
+                            <button
+                                type="button"
+                                className='cart-btn mt-3'
+                                onClick={() => setShowModal(true)}
+                            >
+                                Add Category
+                            </button>
                         </form>
                     </div>
                 </div>
-
+                {showModal &&
+                    <Modal
+                        modalData={modalData}
+                        setModalData={setModalData}
+                        closeModal={closeModal}
+                        type={"form"}
+                    />}
             </div>
 
         </section>

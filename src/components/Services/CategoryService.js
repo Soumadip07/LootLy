@@ -4,10 +4,13 @@ import { axiosInstance } from '../../utils/AxiosInstance';
 const getCategories = () => {
     return axiosInstance.get('/api/categories/');
 };
-
+const addCategories = (data) => {
+    return axiosInstance.post('/api/categories/', data);
+};
 // Export the API functions
 const CategoriesApis = {
-    getCategories
+    getCategories,
+    addCategories,
 };
 
 export default CategoriesApis;
