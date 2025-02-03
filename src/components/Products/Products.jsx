@@ -152,7 +152,7 @@ function Products() {
                             className="card  mt-4 custom-link"
                         >
                             <Tooltip title={product?.stockStatus != "Out of Stock" ? `View ${product.name}` : ""} disableInteractive>
-                                <Link className="upper-card focus:ring-opacity-50 border border-gray-200" to={product?.stockStatus != "Out of Stock" ? `/products/${product.id}` : "#"}>
+                                <Link className="upper-card focus:ring-opacity-50 " to={product?.stockStatus != "Out of Stock" ? `/products/${product.id}` : "#"}>
                                     {/* <h6>{product?.tag}</h6> */}
                                     {/* <img src={`http://localhost:8082/api/products/image/${data?.data?.content?.[4]?.imageName}`} alt='hello' /> */}
                                     <img src={getImage(product?.image)} className={`${product?.stockStatus === "Out of Stock" ? "out-of-stock-img" : ""}`} alt={product.name} />

@@ -360,7 +360,9 @@ header .user-section .btn:hover {
   border-radius: 10px;
   border: 1px solid #ddd;
   overflow: hidden;
+  background-color: #F9F9F9;
   transition: transform 0.4s ease-out;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 .product-section .product-wrapper .card .upper-card {
   padding-bottom: 10px;
@@ -872,9 +874,10 @@ header .user-section .btn:hover {
   border: 2px solid #dee2e6;
   font-weight: 800;
   font-size: 14px;
+  padding-left: 12px;
   background: transparent;
   border-radius: 6px;
-  padding: 8px 0;
+  padding: 8px 15px;
 }
 .dropdown-container .input-container input:not(:-moz-placeholder-shown) {
   font-weight: 700;
