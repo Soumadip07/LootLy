@@ -8,6 +8,7 @@ import SignIn from './components/SignUp/SignIn';
 import LogIn from './components/SignUp/LogIn';
 import Cart from './components/Cart/Cart';
 import CreateProductForm from './components/Product/CreateProductForm';
+import Admin from './components/Admin/Admin';
 
 export const router = createBrowserRouter([
     {
@@ -55,6 +56,22 @@ export const router = createBrowserRouter([
         element: <>
             <Header />
             <CreateProductForm />
+            <Footer />
+        </>
+    },
+    {
+        path: '/product-form',
+        element: <>
+            <Header />
+            <CreateProductForm />
+            <Footer />
+        </>
+    },
+    {
+        path: '/admin',
+        element: <>
+            <Header />
+            <Admin />
             <Footer />
         </>
     },

@@ -59,16 +59,16 @@ function Header() {
                             </div>
                         </Link>
                     </Tooltip> */}
-                    <Tooltip title="Sell your products" disableInteractive>
+                    <Tooltip title="Admin Pannel" disableInteractive>
                         <Link
                             className='btn focus:ring-opacity-50 border border-gray-200 p-3'
-                            to='/product-form'
+                            to='/admin'
                         >
                             <div className='d-flex'>
                                 <span class="material-symbols-outlined pe-2">
                                     grocery
                                 </span>
-                                <h3>Product</h3>
+                                <h3>Admin</h3>
                             </div>
                         </Link>
                     </Tooltip>
