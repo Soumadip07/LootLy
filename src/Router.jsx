@@ -8,6 +8,8 @@ import SignIn from './components/SignUp/SignIn';
 import LogIn from './components/SignUp/LogIn';
 import Cart from './components/Cart/Cart';
 import CreateProductForm from './components/Product/CreateProductForm';
+import Dashboard from './components/Admin/Dashboard';
+import AdminLayout from './components/Admin/AdminLayout';
 import Admin from './components/Admin/Admin';
 
 export const router = createBrowserRouter([
@@ -69,10 +71,11 @@ export const router = createBrowserRouter([
     },
     {
         path: '/admin',
-        element: <>
-            <Header />
-            <Admin />
-            <Footer />
-        </>
+        element: <AdminLayout />, // This keeps Header, Sidebar, and Footer fixed
+        children: [
+            { path: 'overview', element: <Admin /> },
+            { path: 'analytics', element: <Dashboard /> }, // Default admin dashboard
+            { path: 'product-form', element: <CreateProductForm /> }, // Renders inside AdminLayout
+        ],
     },
 ]);

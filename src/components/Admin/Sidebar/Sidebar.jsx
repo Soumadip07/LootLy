@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../../assets/logo.png';
 
-function Sidebar() {
-    const [active, setActive] = useState("Product");
+function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
+    const [active, setActive] = useState(null);
+    // const [isOpen, setIsOpen] = useState(false); // Sidebar toggle state
+
     const menuItems = [
-        { title: "Overview", icon: "grid_view", slug: "#" },
-        { title: "Analytics", icon: "bar_chart", slug: "#" },
+        { title: "Overview", icon: "grid_view", slug: "overview" },
+        { title: "Analytics", icon: "bar_chart", slug: "analytics" },
         { title: "Product", icon: "storefront", slug: "product-form" },
         { title: "Sales", icon: "shopping_cart", slug: "#" },
     ];
@@ -23,57 +26,76 @@ function Sidebar() {
         { title: "Setting", icon: "settings", slug: "#" },
         { title: "Dark Mode", icon: "visibility", slug: "#" },
     ];
+    const navigate = useNavigate();
+    // Handle navigation
+    const handleNavigation = (slug, title) => {
+        if (slug !== "#") {
+            navigate(slug);
+        }
+        setActive(title);
+    };
 
+    // console.log(isOpen)
     return (
-        <aside className="sidebar">
-            <div className="menu-section">
-                <h4>Main Menu</h4>
-                <ul className='d-flex flex-column gap-2'>
-                    {menuItems.map((item) => (
-                        <li
-                            key={item.title}
-                            className={active === item.title ? "active d-flex  gap-2" : " d-flex gap-2"}
-                            onClick={() => setActive(item.title)}
-                        >
-                            <span className="material-icons-outlined">{item.icon}</span>
-                            <Link to={`/${item?.slug}`}>{item.title}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+        <>
+            <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+                <div className="sidebar-toggle" onClick={toggleSidebar}>
+                    <span class="material-symbols-outlined">
+                        menu
+                    </span>
+                </div>
+                <div className="menu-section">
+                    <h4>{isOpen ? "Main Menu" : ""}</h4>
+                    <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
+                        {menuItems.map((item) => (
+                            <li
+                                key={item.title}
+                                className={active === item.title ? "active d-flex gap-2 justify-content-start align-items-start" : "d-flex gap-2 justify-content-start align-items-start"}
+                                onClick={() => handleNavigation(item.slug, item.title)}
+                            >
+                                <span className="material-icons-outlined">{item.icon}</span>
+                                <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
+                                {!isOpen && <span className="tooltip">{item.title}</span>}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-            <div className="menu-section my-3">
-                <h4>Transaction</h4>
-                <ul className='d-flex flex-column gap-2'>
-                    {transactions.map((item) => (
-                        <li
-                            key={item.title}
-                            className={active === item.title ? "active d-flex  gap-2" : " d-flex gap-2"}
-                            onClick={() => setActive(item.title)}
-                        >
-                            <span className="material-icons-outlined">{item.icon}</span>
-                            <Link to={`/${item?.slug}`}>{item.title}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                <div className="menu-section my-3">
+                    <h4>{isOpen ? "Transaction" : ""}</h4>
+                    <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
+                        {transactions.map((item) => (
+                            <li
+                                key={item.title}
+                                className={active === item.title ? "active d-flex gap-2 justify-content-start align-items-start" : "d-flex gap-2 justify-content-start align-items-start"}
+                                onClick={() => handleNavigation(item.slug, item.title)}
+                            >
+                                <span className="material-icons-outlined">{item.icon}</span>
+                                <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
+                                {!isOpen && <span className="tooltip">{item.title}</span>}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-            <div className="menu-section my-3">
-                <h4>General</h4>
-                <ul className='d-flex flex-column gap-2'>
-                    {general.map((item) => (
-                        <li
-                            key={item.title}
-                            className={active === item.title ? "active d-flex  gap-2" : " d-flex gap-2"}
-                            onClick={() => setActive(item.title)}
-                        >
-                            <span className="material-icons-outlined">{item.icon}</span>
-                            <Link to={`/${item?.slug}`}>{item.title}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </aside>
+                <div className="menu-section my-3">
+                    <h4>{isOpen ? "General" : ""}</h4>
+                    <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
+                        {general.map((item) => (
+                            <li
+                                key={item.title}
+                                className={active === item.title ? "active d-flex gap-2 justify-content-start align-items-start" : "d-flex gap-2 justify-content-start align-items-start"}
+                                onClick={() => handleNavigation(item.slug, item.title)}
+                            >
+                                <span className="material-icons-outlined">{item.icon}</span>
+                                <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
+                                {!isOpen && <span className="tooltip">{item.title}</span>}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </aside>
+        </>
     );
 }
 

@@ -62,7 +62,7 @@ function Header() {
                     <Tooltip title="Admin Pannel" disableInteractive>
                         <Link
                             className='btn focus:ring-opacity-50 border border-gray-200 p-3'
-                            to='/admin'
+                            to='/admin/overview'
                         >
                             <div className='d-flex'>
                                 <span class="material-symbols-outlined pe-2">
