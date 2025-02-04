@@ -1251,4 +1251,91 @@ header .user-section .btn:hover {
 .sidebar.open .menu-text {
   opacity: 1;
   max-width: 150px;
+}
+
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.admin-layout .content-wrapper {
+  display: flex;
+  flex-grow: 1;
+}
+.admin-layout .main-content {
+  flex-grow: 1;
+  padding: 20px;
+  min-height: 80vh;
+}
+.admin-layout .footer {
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .seller-details-section .seller-details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.seller-details-section .percentage-completion-container {
+  background-color: #7688db;
+  border-radius: 10px;
+  padding: 15px 25px;
+  max-height: 430px;
+}
+.seller-details-section .percentage-completion-container .cart-btn {
+  padding: 24px 81px;
+  border: 1px solid #7688db;
+  border-radius: 80px;
+  height: 50%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-weight: 800;
+  font-size: 1.75rem;
+}
+.seller-details-section .personal-info-container .card,
+.seller-details-section .tax-info-container .card,
+.seller-details-section .company-info-container .card {
+  transition: transform 0.4s ease-out;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+.seller-details-section .personal-info-container .card form label,
+.seller-details-section .tax-info-container .card form label,
+.seller-details-section .company-info-container .card form label {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.seller-details-section .personal-info-container .card form select,
+.seller-details-section .tax-info-container .card form select,
+.seller-details-section .company-info-container .card form select {
+  background-color: #EFEFEF;
+  padding: 7px 0;
+}
+.seller-details-section .personal-info-container .card form option,
+.seller-details-section .tax-info-container .card form option,
+.seller-details-section .company-info-container .card form option {
+  font-size: 0.75rem;
+}
+.seller-details-section .personal-info-container .card form input,
+.seller-details-section .tax-info-container .card form input,
+.seller-details-section .company-info-container .card form input {
+  background-color: #EFEFEF;
+  padding: 7px 0;
+  padding-left: 10px;
+}
+.seller-details-section .personal-info-container .card form input:not(:-moz-placeholder-shown), .seller-details-section .tax-info-container .card form input:not(:-moz-placeholder-shown), .seller-details-section .company-info-container .card form input:not(:-moz-placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
+}
+.seller-details-section .personal-info-container .card form input:not(:placeholder-shown),
+.seller-details-section .tax-info-container .card form input:not(:placeholder-shown),
+.seller-details-section .company-info-container .card form input:not(:placeholder-shown) {
+  font-weight: 700;
+  padding-left: 12px;
 }/*# sourceMappingURL=main.css.map */

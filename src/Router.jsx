@@ -11,6 +11,7 @@ import CreateProductForm from './components/Product/CreateProductForm';
 import Dashboard from './components/Admin/Dashboard';
 import AdminLayout from './components/Admin/AdminLayout';
 import Admin from './components/Admin/Admin';
+import SellerDetail from './components/Admin/SellerDetail';
 
 export const router = createBrowserRouter([
     {
@@ -74,8 +75,9 @@ export const router = createBrowserRouter([
         element: <AdminLayout />, // This keeps Header, Sidebar, and Footer fixed
         children: [
             { path: 'overview', element: <Admin /> },
-            { path: 'analytics', element: <Dashboard /> }, // Default admin dashboard
-            { path: 'product-form', element: <CreateProductForm /> }, // Renders inside AdminLayout
+            { path: 'analytics', element: <Dashboard /> },
+            { path: 'seller-details', element: <SellerDetail /> },
+            { path: 'product-form', element: <CreateProductForm /> },
         ],
     },
 ]);

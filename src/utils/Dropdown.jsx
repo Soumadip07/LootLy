@@ -11,17 +11,18 @@ function Dropdown({
     const [inputValue, setInputValue] = useState("");
     const [filteredOptions, setFilteredOptions] = useState(options);
     const [open, setOpen] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     const dropdownRef = useRef(null);
     // 🔹 Check if options is an array
-    useEffect(() => {
-        if (!Array.isArray(options)) {
-            console.error("Options prop should be an array.");
-            setFilteredOptions([]);
-        } else {
-            setFilteredOptions(options);
-        }
-    }, [options]);
+    // useEffect(() => {
+    //     if (options && !Array.isArray(options)) {
+    //         console.error("Options prop should be an array.");
+    //         setFilteredOptions([]);
+    //     } else {
+    //         setFilteredOptions(options);
+    //     }
+    // }, []);
     // 🔹 Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {

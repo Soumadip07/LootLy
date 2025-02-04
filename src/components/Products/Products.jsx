@@ -29,6 +29,7 @@ function Products() {
     const [category, setCategories] = useState();
     const [selectedOption, setSelectedOption] = useState();
     const [open, setOpen] = useState(false)
+    const [hasError, setHasError] = useState(false);
     const imageMap = {
         prod1: prod1,
         prod2: prod2,
@@ -68,6 +69,7 @@ function Products() {
     }, [selectedCategory]);
     const getData = async (pageNumber, pageSize, sortBy, sortDir) => {
         setError("");
+        setHasError(false)
         setLoading(true);
         try {
             // console.log("Payload being sent:", data);
@@ -77,6 +79,7 @@ function Products() {
             // console.log("Response:", response.data);
             // alert("User created successfully!");
         } catch (err) {
+            setHasError(true)
             console.error("Error:", err.response?.data || err.message);
             setError(err.response?.data?.message || "Something went wrong!");
         } finally {
@@ -86,7 +89,7 @@ function Products() {
     const getCategory = async () => {
         try {
             // console.log("Payload being sent:", data);
-
+            setHasError(false)
             const response = await CategoriesApis.getCategories();
             // console.log(response)
             setCategories(response.data)
@@ -94,22 +97,23 @@ function Products() {
             // console.log("Response:", response?.data);
             // alert("User created successfully!");
         } catch (err) {
+            setHasError(true)
             console.error("Error:", err.response?.data || err.message);
             setError(err.response?.data?.message || "Something went wrong!");
         } finally {
         }
     }
     useEffect(() => {
-        if (!data)
+        if (!data && !hasError)
             getData();
-    }, [data])
+    }, [data, hasError])
 
     useEffect(() => {
         // console.log("Category", category)
-        if (!category)
+        if (!category && !hasError)
             getCategory();
-    }, [category])
-
+    }, [category, hasError])
+    console.log(hasError)
     // console.log((category), "check", data?.data?.content?.[4]?.title)
     return (
         <section className="product-section" id="product-section">

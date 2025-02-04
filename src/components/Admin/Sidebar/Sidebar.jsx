@@ -11,6 +11,7 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
         { title: "Analytics", icon: "bar_chart", slug: "analytics" },
         { title: "Product", icon: "storefront", slug: "product-form" },
         { title: "Sales", icon: "shopping_cart", slug: "#" },
+        { title: "Profile", icon: "badge", slug: "seller-details" }
     ];
 
     const transactions = [

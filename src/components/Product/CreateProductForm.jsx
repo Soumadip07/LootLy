@@ -105,7 +105,6 @@ function CreateProductForm() {
         readonly: false,
         placeholder: "Description for the product",
         height: 350,
-        // width: 600,
         background: "#7688db",
         buttons: [
             "source", "bold", "italic", "underline", "strikethrough", "superscript", "subscript",
