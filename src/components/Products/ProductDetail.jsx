@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { products } from '../../Data/ProductData';
 import prod1 from '../../assets/prod1.jpeg';
@@ -17,9 +17,14 @@ import Faq from '../Faq';
 import DeliveryPolicy from '../DeliveryPolicy';
 import Reviews from '../Reviews';
 import { Tooltip } from '@mui/material';
+import ProductsApis from '../Services/ProductsService';
 
 function ProductDetails() {
     const { id } = useParams();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [hasError, setHasError] = useState(false);
+    const [data, setData] = useState();
 
     const imageMap = {
         prod1: prod1,
@@ -41,8 +46,30 @@ function ProductDetails() {
     const getImage = (imageName) => {
         return imageMap[imageName] || '/images/default-image.jpeg';
     };
+    const getData = async (pageNumber, pageSize, sortBy, sortDir) => {
+        setError("");
+        setHasError(false)
+        setLoading(true);
+        try {
+            // console.log("Payload being sent:", data);
 
-    console.log(filteredProductData)
+            const response = await ProductsApis.getProductById(id);
+            setData(response)
+            // console.log("Response:", response.data);
+            // alert("User created successfully!");
+        } catch (err) {
+            setHasError(true)
+            console.error("Error:", err.response?.data || err.message);
+            setError(err.response?.data?.message || "Something went wrong!");
+        } finally {
+            setLoading(false);
+        }
+    };
+    // useEffect(() => {
+    //     if (!data && !hasError)
+    //         getData();
+    // }, [data, hasError])
+    // console.log(data)
 
     return (
         <section className="product-details">

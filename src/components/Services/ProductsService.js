@@ -16,13 +16,18 @@ const uploadProductImage = (productId, imageData, config) => {
         `/api/products/image/upload/${productId}`, imageData, config
     );
 };
-
+const getProductById = (productId) => {
+    return axiosInstance.get(
+        `/api/products/${productId}`,
+    );
+};
 
 // Export the API functions
 const ProductsApis = {
     getProducts,
     createProduct,
-    uploadProductImage
+    uploadProductImage,
+    getProductById
 };
 
 export default ProductsApis;
