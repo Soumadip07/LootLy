@@ -62,7 +62,7 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
                     </ul>
                 </div>
 
-                <div className="menu-section my-3">
+                <div className="menu-section my-2">
                     <h4>{isOpen ? "Transaction" : ""}</h4>
                     <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
                         {transactions.map((item) => (
@@ -79,7 +79,7 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
                     </ul>
                 </div>
 
-                <div className="menu-section my-3">
+                <div className="menu-section">
                     <h4>{isOpen ? "General" : ""}</h4>
                     <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
                         {general.map((item) => (
@@ -95,6 +95,13 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
                         ))}
                     </ul>
                 </div>
+                {/* <div className='profile-tab'>
+                    <div>
+
+                        <h2>John Doe</h2>
+                        <p>John@gmail.com</p>
+                    </div>
+                </div> */}
             </aside>
         </>
     );

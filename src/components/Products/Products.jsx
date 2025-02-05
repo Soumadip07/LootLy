@@ -19,6 +19,7 @@ import { Tooltip } from '@mui/material'
 import ProductsApis from '../Services/ProductsService'
 import CategoriesApis from '../Services/CategoryService'
 import Dropdown from '../../utils/Dropdown'
+import toast, { Toaster } from 'react-hot-toast'
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
@@ -73,7 +74,7 @@ function Products() {
         setLoading(true);
         try {
             // console.log("Payload being sent:", data);
-
+            // toast.loading('Waiting...');
             const response = await ProductsApis.getProducts(pageNumber, pageSize, sortBy, sortDir);
             setData(response)
             // console.log("Response:", response.data);
@@ -96,7 +97,10 @@ function Products() {
 
             // console.log("Response:", response?.data);
             // alert("User created successfully!");
+            toast.success('This is success!');
+
         } catch (err) {
+            toast.error('This is an error!');
             setHasError(true)
             console.error("Error:", err.response?.data || err.message);
             setError(err.response?.data?.message || "Something went wrong!");
@@ -205,6 +209,7 @@ function Products() {
                     ))}
                 </div>
             </div>
+            <Toaster />
         </section >
     );
 }
