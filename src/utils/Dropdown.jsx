@@ -24,7 +24,7 @@ function Dropdown({
 
             setFilteredOptions(options);
         }
-    }, [options]);
+    }, []);
     // 🔹 Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {

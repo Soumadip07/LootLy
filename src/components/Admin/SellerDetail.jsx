@@ -3,11 +3,16 @@ import { useForm } from 'react-hook-form';
 import statesMapper from '../../utils/States';
 import Dropdown from '../../utils/Dropdown';
 import districtsMapper, { transformDistricts } from '../../utils/District';
+import ProgressBar from '../../utils/ProgressBar';
 
 function SellerDetail() {
-    const [state, setState] = useState(null);
-    const [districts, setDistricts] = useState(null);
-    const [open, setOpen] = useState(false)
+    const [state, setState] = useState();
+    const [districts, setDistricts] = useState();
+    const [openState, setOpenState] = useState(false)
+    const [openDistrict, setOpenDistrict] = useState(false)
+    const [totalValue, setTotalValue] = useState(0);
+    const [ItemNumber, setItemNumeber] = useState(0);
+    const [isSubmit, setIsSubmit] = useState(false)
 
     const {
         register,
@@ -16,15 +21,28 @@ function SellerDetail() {
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data)
-    }
-    // if (state) {
+        const allKeys = Object.keys(data); // Get all keys
+
+        // Count only non-empty fields & check FileList properly
+        const filledFields = allKeys.filter(key => {
+            const value = data[key];
+
+            // If value is a FileList and empty, treat it as falsy
+            if (value instanceof FileList && value.length === 0) {
+                return false;
+            }
+
+            return Boolean(value); // Otherwise, check for truthy values
+        });
+        console.log(allKeys.length, "asd", filledFields.length)
+
+        setTotalValue(allKeys.length);
+        setItemNumeber(filledFields.length);
+        setIsSubmit(true)
+    };
+
     const districtsd = (transformDistricts(districtsMapper).find((dist) => dist.state === state)?.districts || []);
-    console.log(districtsd)
-    // setDistricts(districtsd)
-    // }
-    // }), [];
-    // console.log(districts, "check", transformDistricts(districtsMapper))
+
 
 
     return (
@@ -38,11 +56,7 @@ function SellerDetail() {
             <div className='row seller-details-container'>
                 {/* Percentage completion container */}
                 <div className='col-lg-3 percentage-completion-container d-flex justify-content-center align-items-center flex-column gap-3'>
-                    <h4>Profile Information</h4>
-                    <p>Complete profile info to unlock all features</p>
-                    <button className='cart-btn'>
-                        75%
-                    </button>
+                    <ProgressBar totalValue={totalValue} ItemNumber={ItemNumber} />
                 </div>
 
                 {/* Personal Information */}
@@ -58,10 +72,17 @@ function SellerDetail() {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    {...register("fullNmae", { required: "Full Name is required", maxLength: 50 })}
+                                    {...register("fullName",
+                                        // { required: "Full Name is required", maxLength: 50 
+
+
+                                        // }
+                                    )
+                                    }
+
                                     placeholder="Enter your Full name"
                                 />
-                                {errors.title && <small className="text-danger">{errors.title.message}</small>}
+                                {errors.fullName && <small className="text-danger">{errors.fullName.message}</small>}
                             </div>
 
                             {/* Email Field */}
@@ -70,10 +91,13 @@ function SellerDetail() {
                                 <input
                                     type="email"
                                     className="form-control"
-                                    {...register("email", { required: "Email is required", maxLength: 50 })}
+                                    {...register("email",
+                                        // { required: "Email is required", maxLength: 50 }
+                                    )}
+
                                     placeholder="Enter your Email"
                                 />
-                                {errors.title && <small className="text-danger">{errors.title.message}</small>}
+                                {errors.email && <small className="text-danger">{errors.email.message}</small>}
                             </div>
 
                             {/* Email Field */}
@@ -82,10 +106,13 @@ function SellerDetail() {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    {...register("phnNo", { required: "Phone number is required", maxLength: 50 })}
+                                    {...register("phnNo",
+                                        //  { required: "Phone number is required", maxLength: 50 }
+
+                                    )}
                                     placeholder="Enter your Phone Number"
                                 />
-                                {errors.title && <small className="text-danger">{errors.title.message}</small>}
+                                {errors.phnNo && <small className="text-danger">{errors.phnNo.message}</small>}
                             </div>
                             {/* State Field */}
                             <div className="mb-3">
@@ -94,8 +121,8 @@ function SellerDetail() {
                                     options={statesMapper}
                                     onChange={(item) => setState(item)}
                                     placeholder={"Type to search"}
-                                    open={open}
-                                    setOpen={setOpen}
+                                    open={openState}
+                                    setOpen={setOpenState}
                                     keyTitle={"name"}
                                     idTitle={"id"}
                                     type="state"
@@ -109,8 +136,8 @@ function SellerDetail() {
                                     options={districtsd}
                                     onChange={(item) => setDistricts(item)}
                                     placeholder={"Type to search"}
-                                    open={open}
-                                    setOpen={setOpen}
+                                    open={openDistrict}
+                                    setOpen={setOpenDistrict}
                                     type="district"
                                     keyTitle={"district_name"}
                                     idTitle={"id"}
@@ -123,10 +150,12 @@ function SellerDetail() {
                                 <input
                                     type="file"
                                     className="form-control"
-                                    {...register("profilePic", { required: "Profile Picture is required", maxLength: 50 })}
+                                    {...register("profilePic",
+                                        // { required: "Profile Picture is required", maxLength: 50 }
+                                    )}
                                     placeholder="Enter your Profile Picture"
                                 />
-                                {errors.title && <small className="text-danger">{errors.title.message}</small>}
+                                {errors.profilePic && <small className="text-danger">{errors.profilePic.message}</small>}
                             </div>
                         </form>
                     </div>
@@ -145,10 +174,12 @@ function SellerDetail() {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    {...register("PanNumber", { required: "Pan Number is required", maxLength: 50 })}
+                                    {...register("PanNumber",
+                                        // { required: "Pan Number is required", maxLength: 50 }
+                                    )}
                                     placeholder="Enter your Pan number"
                                 />
-                                {errors.title && <small className="text-danger">{errors.title.message}</small>}
+                                {errors.PanNumber && <small className="text-danger">{errors.PanNumber.message}</small>}
                             </div>
 
                             {/* Email Field */}
@@ -157,10 +188,12 @@ function SellerDetail() {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    {...register("gstNumber", { required: "GST number is required", maxLength: 50 })}
+                                    {...register("gstNumber",
+                                        // { required: "GST number is required", maxLength: 50 }
+                                    )}
                                     placeholder="Enter your GST number"
                                 />
-                                {errors.title && <small className="text-danger">{errors.title.message}</small>}
+                                {errors.gstNumber && <small className="text-danger">{errors.gstNumber.message}</small>}
                             </div>
 
                             {/* Email Field */}
@@ -169,10 +202,11 @@ function SellerDetail() {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    {...register("taxType", { required: "Tax Category/Type is required", maxLength: 50 })}
+                                    {...register("taxType",
+                                        { required: "Tax Category/Type is required", maxLength: 50 })}
                                     placeholder="Enter your Tax Category/Type"
                                 />
-                                {errors.title && <small className="text-danger">{errors.title.message}</small>}
+                                {errors.taxType && <small className="text-danger">{errors.taxType.message}</small>}
                             </div>
 
                             {/* Profile pic Field */}
@@ -184,7 +218,7 @@ function SellerDetail() {
                                     {...register("Taxdoc", { required: "Supporting Documents is required", maxLength: 50 })}
                                     placeholder="Enter your Supporting Documents"
                                 />
-                                {errors.title && <small className="text-danger">{errors.title.message}</small>}
+                                {errors.Taxdoc && <small className="text-danger">{errors.Taxdoc.message}</small>}
                             </div>
                         </form>
                     </div>
@@ -249,7 +283,9 @@ function SellerDetail() {
                                 <input
                                     type="file"
                                     className="form-control"
-                                    {...register("companyLogo", { required: "Company Logo is required" })}
+                                    {...register("companyLogo",
+                                        // { required: "Company Logo is required" }
+                                    )}
                                 />
                                 {errors.companyLogo && <small className="text-danger">{errors.companyLogo.message}</small>}
                             </div>
