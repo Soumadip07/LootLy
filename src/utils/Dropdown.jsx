@@ -15,14 +15,16 @@ function Dropdown({
 
     const dropdownRef = useRef(null);
     // 🔹 Check if options is an array
-    // useEffect(() => {
-    //     if (options && !Array.isArray(options)) {
-    //         console.error("Options prop should be an array.");
-    //         setFilteredOptions([]);
-    //     } else {
-    //         setFilteredOptions(options);
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (options && !Array.isArray(options)) {
+            console.error("Options prop should be an array.");
+            setFilteredOptions([]);
+        } else {
+            console.log("Options prop is an array.");
+
+            setFilteredOptions(options);
+        }
+    }, [options]);
     // 🔹 Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -48,6 +50,7 @@ function Dropdown({
             (keyTitle && opt[keyTitle] ? opt[keyTitle] : opt).toLowerCase().includes(searchValue.toLowerCase())
         );
         setFilteredOptions(filtered);
+
     };
 
     // 🔹 Select an option
@@ -73,6 +76,8 @@ function Dropdown({
             setOpen((prev) => !prev);
         }
     };
+
+    // console.log(filteredOptions, "key", keyTitle, "sad", idTitle, "optuiojns", options)
     return (
         <div className="dropdown-container" ref={dropdownRef}>
             {/* Input Field */}
@@ -103,11 +108,12 @@ function Dropdown({
                     {filteredOptions.length > 0 ? (
                         filteredOptions.map((opt, index) => (
                             <div
-                                key={idTitle && opt[idTitle] ? opt[idTitle] : index}
+                                key={idTitle ? opt[idTitle] : index} // Use idTitle if provided
                                 onClick={() => onItemSelected(opt)}
                                 className="option"
                             >
-                                {keyTitle && opt[keyTitle] ? opt[keyTitle] : opt}                            </div>
+                                {keyTitle ? opt[keyTitle] : opt} {/* Use keyTitle if provided */}
+                            </div>
                         ))
                     ) : (
                         <div className="no-results">No results found</div>

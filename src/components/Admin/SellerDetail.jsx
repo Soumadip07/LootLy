@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
+import statesMapper from '../../utils/States';
+import Dropdown from '../../utils/Dropdown';
+import districtsMapper, { transformDistricts } from '../../utils/District';
 
 function SellerDetail() {
+    const [state, setState] = useState(null);
+    const [districts, setDistricts] = useState(null);
+    const [open, setOpen] = useState(false)
+
     const {
         register,
         handleSubmit,
@@ -11,6 +18,14 @@ function SellerDetail() {
     const onSubmit = async (data) => {
         console.log(data)
     }
+    // if (state) {
+    const districtsd = (transformDistricts(districtsMapper).find((dist) => dist.state === state)?.districts || []);
+    console.log(districtsd)
+    // setDistricts(districtsd)
+    // }
+    // }), [];
+    // console.log(districts, "check", transformDistricts(districtsMapper))
+
 
     return (
         <section className='seller-details-section'>
@@ -71,6 +86,35 @@ function SellerDetail() {
                                     placeholder="Enter your Phone Number"
                                 />
                                 {errors.title && <small className="text-danger">{errors.title.message}</small>}
+                            </div>
+                            {/* State Field */}
+                            <div className="mb-3">
+                                <label className="form-label">State</label>
+                                <Dropdown
+                                    options={statesMapper}
+                                    onChange={(item) => setState(item)}
+                                    placeholder={"Type to search"}
+                                    open={open}
+                                    setOpen={setOpen}
+                                    keyTitle={"name"}
+                                    idTitle={"id"}
+                                    type="state"
+
+                                />
+                            </div>
+                            {/* District Field */}
+                            <div className="mb-3">
+                                <label className="form-label">District</label>
+                                <Dropdown
+                                    options={districtsd}
+                                    onChange={(item) => setDistricts(item)}
+                                    placeholder={"Type to search"}
+                                    open={open}
+                                    setOpen={setOpen}
+                                    type="district"
+                                    keyTitle={"district_name"}
+                                    idTitle={"id"}
+                                />
                             </div>
 
                             {/* Profile pic Field */}
