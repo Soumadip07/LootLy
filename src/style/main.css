@@ -1338,4 +1338,25 @@ header .user-section .btn:hover {
 .seller-details-section .company-info-container .card form input:not(:placeholder-shown) {
   font-weight: 700;
   padding-left: 12px;
+}
+
+.dashboard-section {
+  margin-right: 15px;
+}
+.dashboard-section h5 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.dashboard-section h4 {
+  font-weight: 800;
+}
+.dashboard-section small {
+  font-size: 0.75rem;
+}
+.dashboard-section .card {
+  background-color: #F9F9F9;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  padding: 15px 10px;
 }/*# sourceMappingURL=main.css.map */

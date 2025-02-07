@@ -12,6 +12,7 @@ import Dashboard from './components/Admin/Dashboard';
 import AdminLayout from './components/Admin/AdminLayout';
 import Admin from './components/Admin/Admin';
 import SellerDetail from './components/Admin/SellerDetail';
+import Sales from './components/Admin/Sales';
 
 export const router = createBrowserRouter([
     {
@@ -76,6 +77,7 @@ export const router = createBrowserRouter([
         children: [
             { path: 'overview', element: <Admin /> },
             { path: 'analytics', element: <Dashboard /> },
+            { path: 'sales', element: <Sales /> },
             { path: 'seller-details', element: <SellerDetail /> },
             { path: 'product-form', element: <CreateProductForm /> },
         ],
