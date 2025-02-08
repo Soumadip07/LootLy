@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/logo.png';
 
 function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
-    const [active, setActive] = useState(null);
-    // const [isOpen, setIsOpen] = useState(false); // Sidebar toggle state
+
 
     const menuItems = [
         { title: "Overview", icon: "grid_view", slug: "overview" },
@@ -21,20 +20,13 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
         { title: "Returns", icon: "undo", slug: "#" },
     ];
 
+
     const general = [
         { title: "Notifications", icon: "notifications", slug: "#" },
         { title: "Feedback", icon: "flag", slug: "#" },
         { title: "Setting", icon: "settings", slug: "#" },
         { title: "Dark Mode", icon: "visibility", slug: "#" },
     ];
-    const navigate = useNavigate();
-    // Handle navigation
-    const handleNavigation = (slug, title) => {
-        if (slug !== "#") {
-            navigate(slug);
-        }
-        setActive(title);
-    };
 
     // console.log(isOpen)
     return (
@@ -49,6 +41,25 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
                     <h4>{isOpen ? "Main Menu" : ""}</h4>
                     <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
                         {menuItems.map((item) => (
+                            <li key={item.title}>
+                                <NavLink
+                                    to={`${item.slug}`}
+                                    className={({ isActive }) =>
+                                        `d-flex gap-2 justify-content-start align-items-start ${isActive ? "active" : ""}`
+                                    }
+                                >
+                                    <span className="material-icons-outlined">{item.icon}</span>
+                                    <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
+                                    {!isOpen && <span className="tooltip">{item.title}</span>}
+                                </NavLink>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                {/* <div className="menu-section">
+                    <h4>{isOpen ? "Main Menu" : ""}</h4>
+                    <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
+                        {menuItems.map((item) => (
                             <li
                                 key={item.title}
                                 className={active === item.title ? "active d-flex gap-2 justify-content-start align-items-start" : "d-flex gap-2 justify-content-start align-items-start"}
@@ -60,20 +71,34 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
                             </li>
                         ))}
                     </ul>
-                </div>
+                </div> */}
 
                 <div className="menu-section my-2">
                     <h4>{isOpen ? "Transaction" : ""}</h4>
                     <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
                         {transactions.map((item) => (
-                            <li
-                                key={item.title}
-                                className={active === item.title ? "active d-flex gap-2 justify-content-start align-items-start" : "d-flex gap-2 justify-content-start align-items-start"}
-                                onClick={() => handleNavigation(item.slug, item.title)}
-                            >
-                                <span className="material-icons-outlined">{item.icon}</span>
-                                <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
-                                {!isOpen && <span className="tooltip">{item.title}</span>}
+                            <li key={item.title}>
+                                {item.slug !== "#" ? (
+                                    <NavLink
+                                        to={item.slug}
+                                        className={({ isActive }) =>
+                                            `d-flex gap-2 justify-content-start align-items-start ${isActive ? "active" : ""}`
+                                        }
+                                    >
+                                        <span className="material-icons-outlined">{item.icon}</span>
+                                        <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
+                                        {!isOpen && <span className="tooltip">{item.title}</span>}
+                                    </NavLink>
+                                ) : (
+                                    <NavLink
+                                        to={"#"}
+                                        className="d-flex gap-2 justify-content-start align-items-start disabled"
+                                    >
+                                        <span className="material-icons-outlined">{item.icon}</span>
+                                        <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
+                                        {!isOpen && <span className="tooltip">{item.title}</span>}
+                                    </NavLink>
+                                )}
                             </li>
                         ))}
                     </ul>
@@ -81,20 +106,35 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
 
                 <div className="menu-section">
                     <h4>{isOpen ? "General" : ""}</h4>
-                    <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
+                    <ul className="d-flex flex-column justify-content-start align-items-start gap-2">
                         {general.map((item) => (
-                            <li
-                                key={item.title}
-                                className={active === item.title ? "active d-flex gap-2 justify-content-start align-items-start" : "d-flex gap-2 justify-content-start align-items-start"}
-                                onClick={() => handleNavigation(item.slug, item.title)}
-                            >
-                                <span className="material-icons-outlined">{item.icon}</span>
-                                <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
-                                {!isOpen && <span className="tooltip">{item.title}</span>}
+                            <li key={item.title}>
+                                {item.slug !== "#" ? (
+                                    <NavLink
+                                        to={item.slug}
+                                        className={({ isActive }) =>
+                                            `d-flex gap-2 justify-content-start align-items-start ${isActive ? "active" : ""}`
+                                        }
+                                    >
+                                        <span className="material-icons-outlined">{item.icon}</span>
+                                        <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
+                                        {!isOpen && <span className="tooltip">{item.title}</span>}
+                                    </NavLink>
+                                ) : (
+                                    <NavLink
+                                        to={"#"}
+                                        className="d-flex gap-2 justify-content-start align-items-start disabled"
+                                    >
+                                        <span className="material-icons-outlined">{item.icon}</span>
+                                        <span className={`menu-text ${isOpen ? "visible" : "hidden"}`}>{item.title}</span>
+                                        {!isOpen && <span className="tooltip">{item.title}</span>}
+                                    </NavLink>
+                                )}
                             </li>
                         ))}
                     </ul>
                 </div>
+
                 {/* <div className='profile-tab'>
                     <div>
 

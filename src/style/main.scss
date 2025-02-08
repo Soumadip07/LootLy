@@ -108,6 +108,11 @@ span {
     background-color: #F0F2FB;
 }
 
+.table-responsive {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
 .cartless-btn {
     padding: 6px 60px;
     border: 1px solid #333;
@@ -1328,7 +1333,8 @@ header {
     &.open {
         width: 150px;
 
-        li {
+
+        a {
             padding: 6px;
             padding-right: 8px;
         }
@@ -1337,7 +1343,7 @@ header {
     &.closed {
         width: 50px;
 
-        li {
+        a {
             padding: 2px 5px;
             padding-right: 0px;
         }
@@ -1366,10 +1372,12 @@ header {
         color: inherit;
         position: relative;
 
-        &.active {
+        &.active,
+        &.disabled {
             background-color: #7688db;
             color: #F0F2FB;
             font-weight: 800;
+            padding: 6px;
         }
 
         &:hover {
@@ -1377,6 +1385,31 @@ header {
             color: #F0F2FB;
             font-weight: 800;
         }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            border-radius: 7px;
+
+            &.active {
+                background-color: #7688db;
+                color: #F0F2FB;
+                font-weight: 800;
+            }
+
+            &.disabled {
+                background-color: transparent;
+                color: #212529;
+                font-weight: 400;
+            }
+
+            &:hover {
+                background-color: #7688db;
+                color: #F0F2FB;
+                font-weight: 800;
+            }
+        }
+
 
         .tooltip {
             position: absolute;
@@ -1534,9 +1567,9 @@ header {
 
 }
 
-.dashboard-section {
+.dashboard-section,
+.analytics-section {
     margin-right: 15px;
-
 
     h5 {
         font-size: 1rem;

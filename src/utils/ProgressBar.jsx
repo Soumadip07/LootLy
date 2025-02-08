@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 function ProgressBar({ totalValue = 0, ItemNumber = 0 }) {
     const [percentage, setPercentage] = useState(0);
-    console.log(totalValue, "asdasd", ItemNumber)
+    // console.log(totalValue, "asdasd", ItemNumber)
     useEffect(() => {
         if (!totalValue && !ItemNumber) {
             setPercentage(0)

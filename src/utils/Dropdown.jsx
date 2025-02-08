@@ -17,11 +17,8 @@ function Dropdown({
     // 🔹 Check if options is an array
     useEffect(() => {
         if (options && !Array.isArray(options)) {
-            console.error("Options prop should be an array.");
             setFilteredOptions([]);
         } else {
-            console.log("Options prop is an array.");
-
             setFilteredOptions(options);
         }
     }, []);

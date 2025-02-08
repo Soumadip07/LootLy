@@ -79,6 +79,11 @@ span {
   background-color: #F0F2FB;
 }
 
+.table-responsive {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
 .cartless-btn {
   padding: 6px 60px;
   border: 1px solid #333;
@@ -1174,14 +1179,14 @@ header .user-section .btn:hover {
 .sidebar.open {
   width: 150px;
 }
-.sidebar.open li {
+.sidebar.open a {
   padding: 6px;
   padding-right: 8px;
 }
 .sidebar.closed {
   width: 50px;
 }
-.sidebar.closed li {
+.sidebar.closed a {
   padding: 2px 5px;
   padding-right: 0px;
 }
@@ -1206,12 +1211,33 @@ header .user-section .btn:hover {
   color: inherit;
   position: relative;
 }
-.sidebar li.active {
+.sidebar li.active, .sidebar li.disabled {
+  background-color: #7688db;
+  color: #F0F2FB;
+  font-weight: 800;
+  padding: 6px;
+}
+.sidebar li:hover {
   background-color: #7688db;
   color: #F0F2FB;
   font-weight: 800;
 }
-.sidebar li:hover {
+.sidebar li a {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 7px;
+}
+.sidebar li a.active {
+  background-color: #7688db;
+  color: #F0F2FB;
+  font-weight: 800;
+}
+.sidebar li a.disabled {
+  background-color: transparent;
+  color: #212529;
+  font-weight: 400;
+}
+.sidebar li a:hover {
   background-color: #7688db;
   color: #F0F2FB;
   font-weight: 800;
@@ -1340,20 +1366,25 @@ header .user-section .btn:hover {
   padding-left: 12px;
 }
 
-.dashboard-section {
+.dashboard-section,
+.analytics-section {
   margin-right: 15px;
 }
-.dashboard-section h5 {
+.dashboard-section h5,
+.analytics-section h5 {
   font-size: 1rem;
   font-weight: 600;
 }
-.dashboard-section h4 {
+.dashboard-section h4,
+.analytics-section h4 {
   font-weight: 800;
 }
-.dashboard-section small {
+.dashboard-section small,
+.analytics-section small {
   font-size: 0.75rem;
 }
-.dashboard-section .card {
+.dashboard-section .card,
+.analytics-section .card {
   background-color: #F9F9F9;
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
