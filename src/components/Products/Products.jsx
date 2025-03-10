@@ -117,24 +117,25 @@ function Products() {
         if (!category && !hasError)
             getCategory();
     }, [category, hasError])
-    console.log(hasError)
     // console.log((category), "check", data?.data?.content?.[4]?.title)
     return (
         <section className="product-section" id="product-section">
             <div className="container mt-5 flex-column justify-content-start align-items-start">
                 <div className="filter pb-3 d-flex gap-3">
-                    <div className="">
-                        <Dropdown
-                            options={category}
-                            onChange={(item) => setSelectedOption(item)}
-                            selectedKey={selectedOption}
-                            placeholder={"Product Category"}
-                            open={open}
-                            setOpen={setOpen}
-                            keyTitle={"categoryTitle"}
-                            idTitle={"categoryId"}
-                        />
-                    </div>
+                    {category && (
+                        <div className="">
+                            <Dropdown
+                                options={category}
+                                onChange={(item) => setSelectedOption(item)}
+                                selectedKey={selectedOption}
+                                placeholder={"Select Category"}
+                                open={open}
+                                setOpen={setOpen}
+                                keyTitle={"categoryTitle"}
+                                idTitle={"categoryId"}
+                            />
+                        </div>
+                    )}
                     {selectedCategory && (
                         <button className='cart-btn d-flex justify-content-center align-items-center gap-2'
                             onClick={handleClearAll}

@@ -14,15 +14,14 @@ function Dropdown({
     const [hasError, setHasError] = useState(false);
 
     const dropdownRef = useRef(null);
-    // 🔹 Check if options is an array
     useEffect(() => {
         if (options && !Array.isArray(options)) {
             setFilteredOptions([]);
         } else {
             setFilteredOptions(options);
         }
-    }, []);
-    // 🔹 Close dropdown when clicking outside
+    }, [options]);
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -40,7 +39,7 @@ function Dropdown({
         const searchValue = e.target.value;
         setInputValue(searchValue);
 
-        if (!Array.isArray(options)) return; // If options is not an array, do nothing
+        if (!Array.isArray(options)) return;
 
         // 🔹 Filter options based on search term
         const filtered = options.filter((opt) =>
@@ -50,40 +49,38 @@ function Dropdown({
 
     };
 
-    // 🔹 Select an option
     const onItemSelected = (opt) => {
-        if (!Array.isArray(options)) return; // If options is not an array, do nothing
+        if (!Array.isArray(options)) return;
 
-        setInputValue((keyTitle && opt[keyTitle] ? opt[keyTitle] : opt)); // Update input text
-        onChange((keyTitle && opt[keyTitle] ? opt[keyTitle] : opt)); // Update parent state
+        setInputValue((keyTitle && opt[keyTitle] ? opt[keyTitle] : opt));
+        onChange((keyTitle && opt[keyTitle] ? opt[keyTitle] : opt));
         setOpen(false); // Close dropdown
     };
 
     // 🔹 Clear input value
     const clearDropdown = (e) => {
-        e.stopPropagation(); // Prevent dropdown from toggling
+        e.stopPropagation();
         setInputValue("");
         onChange("");
     };
 
-    // 🔹 Toggle dropdown (Prevent icon selection)
     const onInputClick = (e) => {
-        if (!Array.isArray(options)) return; // If options is not an array, do nothing
+        if (!Array.isArray(options)) return;
         if (e.target.tagName !== "SPAN") {
             setOpen((prev) => !prev);
         }
     };
 
+
     // console.log(filteredOptions, "key", keyTitle, "sad", idTitle, "optuiojns", options)
     return (
         <div className="dropdown-container" ref={dropdownRef}>
-            {/* Input Field */}
             <div className="input-container" onClick={onInputClick}>
                 <input
                     type="text"
                     value={inputValue}
                     placeholder={placeholder}
-                    onChange={onInputChange} // Handle search input
+                    onChange={onInputChange}
                 />
                 {!inputValue && (
                     <div className="input-arrow-container">
@@ -109,7 +106,10 @@ function Dropdown({
                                 onClick={() => onItemSelected(opt)}
                                 className="option"
                             >
-                                {keyTitle ? opt[keyTitle] : opt} {/* Use keyTitle if provided */}
+                                {opt?.imageName && (
+                                    <img src={`http://localhost:8082/api/image/${opt?.imageName}`} className="category-image me-1" alt="category-image" />
+                                )}
+                                {keyTitle ? opt[keyTitle] : opt}
                             </div>
                         ))
                     ) : (

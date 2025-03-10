@@ -933,6 +933,10 @@ header .user-section .btn:hover {
   margin: 3px;
   border-radius: 5px;
 }
+.dropdown-container .dropdown img {
+  height: 2.5rem;
+  width: 2.5rem;
+}
 .dropdown-container .dropdown .no-results {
   padding: 10px;
   text-align: center;

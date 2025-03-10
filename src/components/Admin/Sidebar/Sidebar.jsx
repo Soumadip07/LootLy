@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import logo from '../../../assets/logo.png';
 
 function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
 
