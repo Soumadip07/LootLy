@@ -53,7 +53,12 @@ function Dropdown({
         if (!Array.isArray(options)) return;
 
         setInputValue((keyTitle && opt[keyTitle] ? opt[keyTitle] : opt));
-        onChange((keyTitle && opt[keyTitle] ? opt[keyTitle] : opt));
+        console.log(idTitle)
+        if (!idTitle)
+            onChange((keyTitle && opt[keyTitle] ? opt[keyTitle] : opt));
+        else
+            onChange({ title: keyTitle && opt[keyTitle] ? opt[keyTitle] : opt, id: opt[idTitle] }); // Passing both title and id
+
         setOpen(false); // Close dropdown
     };
 

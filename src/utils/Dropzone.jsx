@@ -4,27 +4,28 @@ import { useDropzone } from 'react-dropzone';
 function Dropzone({ uploadedImages, setuploadedImages }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const selectedFileRef = useRef(null); // Ref to store the selected image
-
+    // console.log(uploadedImages)
     const onDrop = useCallback((acceptedFiles) => {
-        console.log(acceptedFiles?.[0]?.type)
         if (uploadedImages.length + acceptedFiles.length > 5) {
             alert('You can only upload a maximum of 5 files.');
             return;
         }
-        // Filter invalid files
+
+        // Corrected invalid files check
         const invalidFiles = acceptedFiles.filter(file =>
-            file.type != 'image/png' || file.type != 'image/jpeg' || file.type != 'image/jpg'
+            file.type !== 'image/png' &&
+            file.type !== 'image/jpeg' &&
+            file.type !== 'image/jpg'
         );
 
         if (invalidFiles.length > 0) {
             alert("Only .png, .jpg, and .jpeg files are allowed!");
             return;
         }
-        const validFiles = acceptedFiles.filter(file =>
-            file.type === 'image/png' || file.type === 'image/jpeg'
-        );
 
-        console.log(invalidFiles)
+        const validFiles = acceptedFiles.filter(file =>
+            file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg'
+        );
 
         if (validFiles.length > 0) {
             const filesWithId = validFiles.map(file => ({
@@ -32,19 +33,10 @@ function Dropzone({ uploadedImages, setuploadedImages }) {
                 file,
             }));
 
-            setuploadedImages(prevFiles => {
-                const updatedFiles = [...prevFiles, ...filesWithId];
-
-                // Set the first uploaded image as the main preview if none selected
-                if (!selectedFileRef.current) {
-                    setSelectedFile(updatedFiles[0]);
-                    selectedFileRef.current = updatedFiles[0];
-                }
-
-                return updatedFiles;
-            });
+            setuploadedImages(prevFiles => [...prevFiles, ...filesWithId]);
         }
     }, [uploadedImages]);
+
 
     const handleRemoveFile = (id) => {
         setuploadedImages(prevFiles => {

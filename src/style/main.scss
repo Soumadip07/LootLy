@@ -101,6 +101,33 @@ span {
     color: #7688db;
 }
 
+.loading {
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    border: 0.25rem solid rgba(0, 0, 0, 0.8);
+    border-top-color: rgb(255, 255, 255);
+    animation: spin 1s infinite linear;
+    display: block;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .cart-btn {
     padding: 6px 60px;
     border: 1px solid #7688db;

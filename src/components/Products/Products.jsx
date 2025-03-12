@@ -20,10 +20,11 @@ import ProductsApis from '../Services/ProductsService'
 import CategoriesApis from '../Services/CategoryService'
 import Dropdown from '../../utils/Dropdown'
 import toast, { Toaster } from 'react-hot-toast'
+import prodPlaceholder from '../../assets/prod2Placeholder.png';
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
-    const [filteredproductdata, setFilteredProductData] = useState(products);
+    const [filteredproductdata, setFilteredProductData] = useState();
     const [data, setData] = useState();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -53,21 +54,6 @@ function Products() {
     const getImage = (imageName) => {
         return imageMap[imageName] || '/images/default-image.jpeg';
     };
-    const handleClearAll = () => {
-        setSelectedCategory();
-        setFilteredProductData(products);
-        document.querySelector('.form-select').value = '';
-    }
-    useEffect(() => {
-        if (!selectedCategory) {
-            setFilteredProductData(products);
-        } else {
-            const filteredData = products.filter(
-                (product) => product.category === selectedCategory
-            );
-            setFilteredProductData(filteredData);
-        }
-    }, [selectedCategory]);
     const getData = async (pageNumber, pageSize, sortBy, sortDir) => {
         setError("");
         setHasError(false)
@@ -87,6 +73,7 @@ function Products() {
             setLoading(false);
         }
     };
+
     const getCategory = async () => {
         try {
             // console.log("Payload being sent:", data);
@@ -107,9 +94,25 @@ function Products() {
         } finally {
         }
     }
+    const handleClearAll = () => {
+        setSelectedCategory();
+        setFilteredProductData(data?.data?.content);
+        document.querySelector('.form-select').value = '';
+    }
+    useEffect(() => {
+        if (!selectedCategory) {
+            setFilteredProductData(data?.data?.content);
+        } else {
+            const filteredData = data?.data?.content?.filter(
+                (product) => product.category?.
+                    categoryTitle === selectedCategory
+            );
+            setFilteredProductData(filteredData);
+        }
+    }, [selectedCategory, data]);
     useEffect(() => {
         if (!data && !hasError)
-            getData();
+            getData(0, 10);
     }, [data, hasError])
 
     useEffect(() => {
@@ -117,7 +120,7 @@ function Products() {
         if (!category && !hasError)
             getCategory();
     }, [category, hasError])
-    // console.log((category), "check", data?.data?.content?.[4]?.title)
+    console.log((data?.data?.content?.[0]?.category?.categoryTitle), "check", filteredproductdata)
     return (
         <section className="product-section" id="product-section">
             <div className="container mt-5 flex-column justify-content-start align-items-start">
@@ -160,12 +163,26 @@ function Products() {
                             key={product.id}
                             className="card  mt-4 custom-link"
                         >
-                            <Tooltip title={product?.stockStatus != "Out of Stock" ? `View ${product.name}` : ""} disableInteractive>
-                                <Link className="upper-card focus:ring-opacity-50 " to={product?.stockStatus != "Out of Stock" ? `/products/${product.id}` : "#"}>
-                                    {/* <h6>{product?.tag}</h6> */}
-                                    {/* <img src={`http://localhost:8082/api/products/image/${data?.data?.content?.[4]?.imageName}`} alt='hello' /> */}
-                                    <img src={getImage(product?.image)} className={`${product?.stockStatus === "Out of Stock" ? "out-of-stock-img" : ""}`} alt={product.name} />
-                                    {product?.stockStatus === "Out of Stock" && (
+                            <Tooltip title={product?.stockStatus != "Out of Stock" ? `View ${product.title}` : ""} disableInteractive>
+                                <Link
+                                    className="upper-card focus:ring-opacity-50"
+                                    to={product?.stock > 0 ? `/products/${product.id}` : "#"}
+                                >
+                                    {product?.imageName != "default.png" ? (
+                                        <img
+                                            src={`http://localhost:8082/api/products/image/${product?.imageName}`}
+                                            alt={product?.title || "Product Image"}
+                                            className={product?.stock <= 0 ? "out-of-stock-img" : ""}
+                                        />
+                                    ) : (
+                                        <img
+                                            src={prodPlaceholder}
+                                            alt={product?.title || "Product Image"}
+                                            className={product?.stock <= 0 ? "out-of-stock-img" : ""}
+                                        />
+                                    )}
+
+                                    {product?.stock <= 0 && (
                                         <div className="out-of-stock-overlay">
                                             <span>Out of Stock</span>
                                         </div>
@@ -185,14 +202,14 @@ function Products() {
                                             ))}
                                     </div>
 
-                                    <p>{product?.category}</p>
+                                    <p>{product?.category?.categoryTitle}</p>
                                 </div>
 
-                                <h3>{data?.data?.content?.[4]?.title}</h3>
+                                <h3>{product?.title}</h3>
                                 <div className='d-flex justify-content-between'>
                                     <div className='d-flex'>
                                         <h5>${product?.discountedPrice}</h5>
-                                        <h6>${product?.marketPrice}</h6>
+                                        <h6>${product?.base_price}</h6>
                                     </div>
                                     <p>{product?.quantity}</p>
                                 </div>

@@ -7,6 +7,7 @@ import logo from '../../assets/logo.png'
 import JoditEditor from 'jodit-react';
 import Dropdown from '../../utils/Dropdown';
 import Dropzone from '../../utils/Dropzone';
+import toast, { Toaster } from 'react-hot-toast'
 
 import { DiscountTypes } from '../../utils/DiscountType';
 import { QuantityTypes } from '../../utils/QuantityType';
@@ -21,6 +22,7 @@ function CreateProductForm() {
         formState: { errors },
         control,
         watch,
+        reset,
     } = useForm();
 
     const [error, setError] = useState("");
@@ -39,6 +41,7 @@ function CreateProductForm() {
 
     const [open, setOpen] = useState(false)
     const [selectedCheckboxValue, setSelectedCheckboxValue] = useState(null);
+
 
     const getCategory = async () => {
         if (error)
@@ -63,40 +66,60 @@ function CreateProductForm() {
         if (!category)
             getCategory();
     }, [category])
+    console.log(selectedCategoryOption)
+    const onSubmit = async (data, event) => {
+        if (uploadedImages.length > 0) {
+            setError("");
+            event.preventDefault();
+            setLoading(true);
+            console.log(data?.category?.title, "helooooooooooo");
+            try {
+                const response = await ProductsApis.createProduct(data?.category?.id, 52, {
+                    title: data?.title,
+                    content: data?.content,
+                    base_price: data?.base_price,
+                    quantity: data?.quantity,
+                    stock: data?.stock,
+                    discount: data?.discount,
+                    discount_type: data?.discount_type,
+                });
 
-    const onSubmit = async (data) => {
-        setError("");
-        setLoading(true);
+                console.log(uploadedImages?.[0], "Responses");
 
-        try {
-            const response = await ProductsApis.createProduct(data?.category, userId, {
-                title: data?.title,
-                content: data?.content
-            });
+                if (uploadedImages?.length > 0) {
+                    const formData = new FormData();
+                    formData.append("image", uploadedImages[0]?.file);
 
-            // console.log(response?.data?.productId);
+                    // // Log the FormData to see its contents
+                    // for (let pair of formData.entries()) {
+                    //     console.log(pair[0] + ':', pair[1]);
+                    // }
 
-            if (data?.image?.[0]) {
-                const formData = new FormData();
-                formData.append("image", data.image?.[0]);
+                    const uploadImageResponse = await ProductsApis.uploadProductImage(
+                        response?.data?.productId,
+                        formData,
+                        {
+                            headers: { "Content-Type": "multipart/form-data" },
+                        }
+                    );
 
-                const uploadImageResponse = await ProductsApis.uploadProductImage(
-                    response?.data?.productId,
-                    formData,
-                    {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    }
-                );
-
-                console.log("Image Upload Response:", uploadImageResponse);
+                    console.log("Image Upload Response:", uploadImageResponse);
+                    reset();
+                    setuploadedImages([]);
+                    toast.success("Product created successfully!");
+                }
+            } catch (err) {
+                console.error("Error creating product:", err);
+                setError("Failed to create product");
+            } finally {
+                setLoading(false);
             }
-        } catch (err) {
-            console.error("Error creating product:", err);
-            setError("Failed to create product");
-        } finally {
-            setLoading(false);
+        }
+        else {
+            toast.error('Upload Images for your product!');
         }
     };
+
 
     const editor = useRef(null);
 
@@ -115,23 +138,22 @@ function CreateProductForm() {
         ],
         toolbar: true,
     }), []);
-    // console.log(modalData)
+    console.log(uploadedImages)
     return (
         <section className='product-form p-3' id='product-form'>
-            <div className="row g-4">
-                {/* General Information */}
-                <div className='d-flex gap-2'>
-                    <span class="material-symbols-outlined">
-                        package_2
-                    </span>
-                    <h4>Add New Product</h4>
-                </div>
-                <div className="col-12 col-lg-8">
-                    <div className="card p-4">
-                        <h5 >General Information</h5>
-                        <form
-                            onSubmit={handleSubmit(onSubmit)}
-                        >
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row g-4">
+
+                    {/* General Information */}
+                    <div className='d-flex gap-2'>
+                        <span class="material-symbols-outlined">package_2</span>
+                        <h4>Add New Product</h4>
+                    </div>
+
+                    <div className="col-12 col-lg-8">
+                        <div className="card p-4">
+                            <h5>General Information</h5>
+
                             {/* Product Name Field */}
                             <div className="mb-3">
                                 <label className="form-label">Product Name</label>
@@ -143,7 +165,8 @@ function CreateProductForm() {
                                 />
                                 {errors.title && <small className="text-danger">{errors.title.message}</small>}
                             </div>
-                            {/* Rich Text Editor for Description */}
+
+                            {/* Description Field */}
                             <div className="mb-3">
                                 <label className="form-label">Description</label>
                                 <Controller
@@ -163,118 +186,171 @@ function CreateProductForm() {
                                 />
                                 {errors.content && <small className="text-danger">{errors.content.message}</small>}
                             </div>
+
+                            {/* Quantity & Inventory */}
                             <div className="row">
                                 <div className="col-6">
                                     <label className="form-label" htmlFor="quantityDropdown">Quantity</label>
-                                    <p>Pick Available quantity</p>
-                                    <Dropdown
-                                        options={QuantityTypes}
-                                        onChange={(item) => setSelectedQuantityOption(item)}
-                                        // selectedOption={selectedQuantityOption}
-                                        placeholder={"Type to search"}
-                                        open={open}
-                                        setOpen={setOpen}
+                                    <Controller
+                                        name="quantity"
+                                        control={control}
+                                        rules={{ required: "Quantity is required" }}
+                                        render={({ field: { onChange, value } }) => (
+                                            <Dropdown
+                                                options={QuantityTypes}
+                                                onChange={(item) => {
+                                                    setSelectedQuantityOption(item);
+                                                    onChange(item);
+                                                }}
+                                                placeholder={"Type to search"}
+                                                open={open}
+                                                setOpen={setOpen}
+                                                value={value}
+                                            />
+                                        )}
                                     />
+                                    {errors.quantity && <small className="text-danger">{errors.quantity.message}</small>}
                                 </div>
 
 
-                                <div className="col-6">
+                                {/* <div className="col-6">
                                     <label className="form-label ps-3">Inventory Status</label>
-                                    <p className='ps-3'>Click on the status for the product</p>
                                     <Checkbox
                                         checkboxItems={["Available", "Unavailable", "Discontinued"]}
                                         type={"radio"}
                                         selectedCheckboxValue={selectedCheckboxValue}
                                         setSelectedCheckboxValue={setSelectedCheckboxValue}
                                     />
-
-                                </div>
+                                </div> */}
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
 
-                {/* Upload Image */}
-                <div className="col-12 col-lg-4">
-                    <div className="card p-4">
-                        <h5 className="card-title">Upload Image</h5>
-                        <p >Only .png, .jpg, and .jpeg files are allowed.</p>
-                        <Dropzone
-                            uploadedImages={uploadedImages}
-                            setuploadedImages={setuploadedImages}
-                        />
+                    {/* Upload Image */}
+                    <div className="col-12 col-lg-4">
+                        <div className="card p-4">
+                            <h5 className="card-title">Upload Image</h5>
+                            <p>Only .png, .jpg, and .jpeg files are allowed.</p>
+                            <Dropzone uploadedImages={uploadedImages} setuploadedImages={setuploadedImages} />
+                        </div>
                     </div>
-                </div>
 
-
-                <div className="col-12 col-lg-8">
-                    <div className="card p-4">
-                        <h5 className="card-title">Pricing and Stock</h5>
-                        <form>
+                    {/* Pricing & Stock */}
+                    <div className="col-12 col-lg-8">
+                        <div className="card p-4">
+                            <h5 className="card-title">Pricing and Stock</h5>
                             <div className="row">
                                 <div className="col-6">
                                     <label className="form-label">Base Pricing</label>
-                                    <input type="text" className="form-control" placeholder="$0.00" required />
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="$0.00"
+                                        {...register("base_price", { required: "Base Price is required" })}
+                                    />
                                 </div>
                                 <div className="col-6">
                                     <label className="form-label">Stock</label>
-                                    <input type="text" className="form-control" placeholder="0" />
-                                </div>
-                            </div>
-                            <div className="row mt-3">
-                                <div className="col-6">
-                                    <label className="form-label">Discount</label>
-                                    <input type="text" className="form-control" placeholder="e.g. 10%" />
-                                </div>
-                                <div className="col-6">
-                                    <label className="form-label">Discount Type</label>
-                                    <Dropdown
-                                        options={DiscountTypes}
-                                        onChange={(item) => setSelectedDiscountOption(item)}
-                                        // selectedDiscountOption={selectedOption}
-                                        placeholder={"Search Season Discount"}
-                                        open={open}
-                                        setOpen={setOpen}
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="0"
+                                        {...register("stock", { required: "Stock is required" })}
                                     />
                                 </div>
                             </div>
-                        </form>
+
+                            <div className="row mt-3">
+                                <div className="col-6">
+                                    <label className="form-label">Discount</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="e.g. 10%"
+                                        {...register("discount", { required: "Discount is required" })}
+                                    />
+                                </div>
+                                <div className="col-6">
+                                    <label className="form-label">Discount Type</label>
+                                    <Controller
+                                        name="discount_type"
+                                        control={control}
+                                        rules={{ required: "Discount Type is required" }}
+                                        render={({ field: { onChange, value } }) => (
+                                            <Dropdown
+                                                options={DiscountTypes}
+                                                onChange={(item) => {
+                                                    setSelectedDiscountOption(item);  // For local state update (if needed)
+                                                    onChange(item);  // Important: This ensures the value is stored in the form data
+                                                }}
+                                                placeholder={"Search Season Discount"}
+                                                open={open}
+                                                setOpen={setOpen}
+                                                value={value}  // This ensures the selected value persists in the dropdown
+                                            />
+                                        )}
+                                    />
+                                    {errors.discount_type && <small className="text-danger">{errors.discount_type.message}</small>}
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div className="col-12 col-lg-4">
-                    <div className="card p-4">
-                        <h5 className="card-title">Category</h5>
-                        <p>Pick a Category from the dropdown</p>
-                        <form>
-                            <label className="form-label" htmlFor="categoryDropdown"> Product Category</label>
-                            <Dropdown
-                                options={category}
-                                onChange={(item) => setSelectedCategoryOption(item)}
-                                // selectedQuantityOption={selectedOption}
-                                placeholder={"Type to search Product Category"}
-                                open={open}
-                                setOpen={setOpen}
-                                keyTitle={"categoryTitle"}
-                                idTitle={"categoryId"}
+
+                    {/* Category */}
+                    <div className="col-12 col-lg-4">
+                        <div className="card p-4">
+                            <h5 className="card-title">Category</h5>
+                            <label className="form-label" htmlFor="categoryDropdown">Product Category</label>
+                            <Controller
+                                name="category"
+                                control={control}
+                                rules={{ required: "Category is required" }}
+                                render={({ field: { onChange, value } }) => (
+                                    <Dropdown
+                                        options={category}
+                                        onChange={(item) => {
+                                            setSelectedCategoryOption(item); // Local state update (if needed)
+                                            onChange(item);      // Store only the `id` or desired value in form data
+                                        }}
+                                        placeholder={"Type to search Product Category"}
+                                        open={open}
+                                        setOpen={setOpen}
+                                        value={value}  // Ensures the selected value appears in the dropdown
+                                        keyTitle={"categoryTitle"}
+                                        idTitle={"categoryId"}
+                                    />
+                                )}
                             />
-                            <button
+                            {errors.category && <small className="text-danger">{errors.category.message}</small>}
+
+                            {/* <button
                                 type="button"
                                 className='cart-btn mt-3'
                                 onClick={() => setShowModal(true)}
                             >
                                 Add Category
-                            </button>
-                        </form>
+                            </button> */}
+                        </div>
                     </div>
+
+                    {/* Submit Button */}
+
                 </div>
-                {showModal &&
-                    <Modal
-                        modalData={modalData}
-                        setModalData={setModalData}
-                        closeModal={closeModal}
-                        type={"form"}
-                    />}
-            </div>
+                <button
+                    type="submit"
+                    className={`cart-btn mt-3 ${loading ? 'loading' : ''}`}
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <span className="spinner"></span>  // Ensure that the spinner has a unique class
+                    ) : (
+                        'Submit'
+                    )}
+                </button>
+                <Toaster />
+            </form>
+
 
         </section>
     )
