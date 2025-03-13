@@ -21,13 +21,18 @@ const getProductById = (productId) => {
         `/api/products/${productId}`,
     );
 };
-
+const getProductBySlug = (slug) => {
+    return axiosInstance.get(
+        `/api/products/slug/${slug}`,
+    );
+};
 // Export the API functions
 const ProductsApis = {
     getProducts,
     createProduct,
     uploadProductImage,
-    getProductById
+    getProductById,
+    getProductBySlug
 };
 
 export default ProductsApis;

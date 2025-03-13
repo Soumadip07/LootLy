@@ -21,6 +21,7 @@ import CategoriesApis from '../Services/CategoryService'
 import Dropdown from '../../utils/Dropdown'
 import toast, { Toaster } from 'react-hot-toast'
 import prodPlaceholder from '../../assets/prod2Placeholder.png';
+import { discountedPrice, formatUnit } from '../../utils/constFunctions'
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
@@ -95,21 +96,18 @@ function Products() {
         }
     }
     const handleClearAll = () => {
-        setSelectedCategory();
+        selectedOption();
         setFilteredProductData(data?.data?.content);
         document.querySelector('.form-select').value = '';
     }
     useEffect(() => {
-        if (!selectedCategory) {
+        if (!selectedOption) {
             setFilteredProductData(data?.data?.content);
         } else {
-            const filteredData = data?.data?.content?.filter(
-                (product) => product.category?.
-                    categoryTitle === selectedCategory
-            );
+            const filteredData = data?.data?.content?.flatMap(item => item)?.filter(product => product?.category?.categoryTitle === selectedOption?.title);
             setFilteredProductData(filteredData);
         }
-    }, [selectedCategory, data]);
+    }, [selectedOption, data]);
     useEffect(() => {
         if (!data && !hasError)
             getData(0, 10);
@@ -139,7 +137,7 @@ function Products() {
                             />
                         </div>
                     )}
-                    {selectedCategory && (
+                    {selectedOption && (
                         <button className='cart-btn d-flex justify-content-center align-items-center gap-2'
                             onClick={handleClearAll}
                         >
@@ -166,7 +164,7 @@ function Products() {
                             <Tooltip title={product?.stockStatus != "Out of Stock" ? `View ${product.title}` : ""} disableInteractive>
                                 <Link
                                     className="upper-card focus:ring-opacity-50"
-                                    to={product?.stock > 0 ? `/products/${product.id}` : "#"}
+                                    to={product?.stock > 0 ? `/products/${product.productSlug}` : "#"}
                                 >
                                     {product?.imageName != "default.png" ? (
                                         <img
@@ -208,10 +206,10 @@ function Products() {
                                 <h3>{product?.title}</h3>
                                 <div className='d-flex justify-content-between'>
                                     <div className='d-flex'>
-                                        <h5>${product?.discountedPrice}</h5>
+                                        <h5>${discountedPrice(product?.base_price, product?.discount)}</h5>
                                         <h6>${product?.base_price}</h6>
                                     </div>
-                                    <p>{product?.quantity}</p>
+                                    <p>{formatUnit(product?.quantity)}</p>
                                 </div>
 
                                 <div className='d-flex justify-content-center p-3'>

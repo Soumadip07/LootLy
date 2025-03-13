@@ -18,14 +18,14 @@ import DeliveryPolicy from '../DeliveryPolicy';
 import Reviews from '../Reviews';
 import { Tooltip } from '@mui/material';
 import ProductsApis from '../Services/ProductsService';
+import { discountedPrice } from '../../utils/constFunctions';
 
 function ProductDetails() {
-    const { id } = useParams();
+    const { slug } = useParams();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
     const [data, setData] = useState();
-
     const imageMap = {
         prod1: prod1,
         prod2: prod2,
@@ -41,8 +41,8 @@ function ProductDetails() {
         prod12: prod12,
     };
 
-    const filteredProductData = products.find((product) => product.id === parseInt(id));
-
+    // const filteredProductData = products.find((product) => product.id === parseInt(id));
+    console.log(slug)
     const getImage = (imageName) => {
         return imageMap[imageName] || '/images/default-image.jpeg';
     };
@@ -53,9 +53,9 @@ function ProductDetails() {
         try {
             // console.log("Payload being sent:", data);
 
-            const response = await ProductsApis.getProductById(id);
-            setData(response)
-            // console.log("Response:", response.data);
+            const response = await ProductsApis.getProductBySlug(slug);
+            setData(response?.data)
+            console.log("Response:", response.data);
             // alert("User created successfully!");
         } catch (err) {
             setHasError(true)
@@ -65,21 +65,21 @@ function ProductDetails() {
             setLoading(false);
         }
     };
-    // useEffect(() => {
-    //     if (!data && !hasError)
-    //         getData();
-    // }, [data, hasError])
-    // console.log(data)
+    useEffect(() => {
+        if (!data && !hasError)
+            getData();
+    }, [data, hasError])
+    console.log(data)
 
     return (
         <section className="product-details">
             <div className="d-flex justify-content-center flex-column flex-lg-row pt-5 gap-5">
                 <div className=''>
-                    <img src={getImage(filteredProductData?.image)} alt={filteredProductData?.name} />
+                    <img src={`http://localhost:8082/api/products/image/${data?.imageName}`} alt={data?.title} />
                 </div>
                 <div className='product-info'>
-                    <h2>{filteredProductData?.name}</h2>
-                    <div className="stars">
+                    <h2>{data?.title}</h2>
+                    {/* <div className="stars">
                         {Array(5)
                             .fill()
                             .map((_, index) => (
@@ -90,24 +90,24 @@ function ProductDetails() {
                             ))}
 
                         ({filteredProductData?.reviews.length} reviews)
-                    </div>
+                    </div> */}
 
                     <div className='d-flex justify-content-between py-3'>
                         <div className='d-flex'>
-                            <h5>${filteredProductData?.discountedPrice}</h5>
-                            <h6>${filteredProductData?.marketPrice}</h6>
+                            <h5>${discountedPrice(data?.base_price, data?.discount)}</h5>
+                            <h6>${data?.base_price}</h6>
                         </div>
-                        <p>{filteredProductData?.quantity}</p>
+                        <p>{data?.quantity}</p>
                     </div>
 
                     <div className='stock-status my-3'>
                         <Tooltip title="Stock" disableInteractive>
-                            {filteredProductData?.stockStatus}
+                            {data?.stock}
                         </Tooltip>
                     </div>
-                    <p>{filteredProductData?.description}</p>
-                    {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eveniet inventore dolorum molestiae ex amet, debitis eos magni rem laudantium id qui iusto, reiciendis vitae modi corporis enim ipsam cum a soluta quidem quia ipsum. Cum facilis obcaecati sed est! Harum minus nihil facilis voluptate cumque neque eius temporibus, vitae illo, cupiditate fugit a aliquam sit amet itaque. Provident asperiores animi dolorum non. Quisquam facilis earum ullam excepturi itaque voluptas pariatur possimus amet ab architecto molestiae, quasi rem voluptatem totam debitis maiores consequuntur harum libero commodi qui a ducimus ut. Cupiditate inventore itaque repudiandae odit nihil voluptates, modi iste ipsum.</p> */}
-                    {/* <div>
+                    <p>{data?.content}</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eveniet inventore dolorum molestiae ex amet, debitis eos magni rem laudantium id qui iusto, reiciendis vitae modi corporis enim ipsam cum a soluta quidem quia ipsum. Cum facilis obcaecati sed est! Harum minus nihil facilis voluptate cumque neque eius temporibus, vitae illo, cupiditate fugit a aliquam sit amet itaque. Provident asperiores animi dolorum non. Quisquam facilis earum ullam excepturi itaque voluptas pariatur possimus amet ab architecto molestiae, quasi rem voluptatem totam debitis maiores consequuntur harum libero commodi qui a ducimus ut. Cupiditate inventore itaque repudiandae odit nihil voluptates, modi iste ipsum.</p>
+                    <div>
                         Quantity
                         <button>
                             <span class="material-symbols-outlined">
@@ -120,11 +120,11 @@ function ProductDetails() {
                             </span>
                         </button>
 
-                    </div> */}
-                    {/* <div>
+                    </div>
+                    <div>
                         Sub Total
                         <h5>25.00$</h5>
-                    </div> */}
+                    </div>
 
                     <div className='d-flex  p-3 gap-4 py-5'>
                         <Tooltip title="Add this item to your cart" disableInteractive>
