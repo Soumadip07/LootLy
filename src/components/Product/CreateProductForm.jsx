@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import ProductsApis from '../Services/ProductsService';
 import Cookies from "js-cookie";
 import logo from '../../assets/logo.png'
@@ -12,9 +12,10 @@ import toast, { Toaster } from 'react-hot-toast'
 import { DiscountTypes } from '../../utils/DiscountType';
 import { QuantityTypes } from '../../utils/QuantityType';
 import CategoriesApis from '../Services/CategoryService';
+import ProductVariantService from '../Services/ProductVariantService';
 
 
-function CreateProductForm() {
+function CreateProductForm(type) {
     const {
         register,
         handleSubmit,
@@ -36,7 +37,7 @@ function CreateProductForm() {
 
     const closeModal = () => setShowModal(false);
 
-
+    const { id } = useParams();
     const [open, setOpen] = useState(false)
     const [selectedCheckboxValue, setSelectedCheckboxValue] = useState(null);
 
@@ -72,48 +73,87 @@ function CreateProductForm() {
             getCategory();
     }, [category])
     console.log(userId)
+    console.log(type?.type, "helooooooooooo");
+
     const onSubmit = async (data, event) => {
         if (uploadedImages.length > 0) {
             setError("");
             event.preventDefault();
             setLoading(true);
-            console.log(data?.category?.title, "helooooooooooo");
+            console.log(type, "helooooooooooo");
             try {
-                const response = await ProductsApis.createProduct(data?.category?.id, userId, {
-                    title: data?.title,
-                    content: data?.content,
-                    base_price: data?.base_price,
-                    quantity: data?.quantity,
-                    stock: data?.stock,
-                    discount: data?.discount,
-                    discount_type: data?.discount_type,
-                });
-                navigate("/admin/product");
-                console.log(uploadedImages?.[0], "Responses");
+                if (type?.type != "Product Variant") {
+                    const response = await ProductsApis.createProduct(data?.category?.id, userId, {
+                        title: data?.title,
+                        content: data?.content,
+                        base_price: data?.base_price,
+                        quantity: data?.quantity,
+                        stock: data?.stock,
+                        discount: data?.discount,
+                        discount_type: data?.discount_type,
+                    });
 
-                if (uploadedImages?.length > 0) {
-                    const formData = new FormData();
-                    formData.append("image", uploadedImages[0]?.file);
 
-                    // // Log the FormData to see its contents
-                    // for (let pair of formData.entries()) {
-                    //     console.log(pair[0] + ':', pair[1]);
-                    // }
+                    if (uploadedImages?.length > 0) {
+                        const formData = new FormData();
+                        formData.append("image", uploadedImages[0]?.file);
 
-                    const uploadImageResponse = await ProductsApis.uploadProductImage(
-                        response?.data?.productId,
-                        formData,
-                        {
-                            headers: { "Content-Type": "multipart/form-data" },
-                        }
-                    );
+                        // // Log the FormData to see its contents
+                        // for (let pair of formData.entries()) {
+                        //     console.log(pair[0] + ':', pair[1]);
+                        // }
 
-                    console.log("Image Upload Response:", uploadImageResponse);
-                    reset();
-                    setuploadedImages([]);
-                    toast.success("Product created successfully!");
-                    navigate("/admin/product");
+                        const uploadImageResponse = await ProductsApis.uploadProductImage(
+                            response?.data?.productId,
+                            formData,
+                            {
+                                headers: { "Content-Type": "multipart/form-data" },
+                            }
+                        );
+
+                        console.log("Image Upload Response:", uploadImageResponse);
+                        reset();
+                        setuploadedImages([]);
+                        toast.success("Product created successfully!");
+                        navigate("/admin/product");
+                    }
                 }
+                else {
+                    const response = await ProductVariantService.createProductVariant(id, {
+                        title: data?.title,
+                        content: data?.content,
+                        price: data?.base_price,
+                        quantity: data?.quantity,
+                        stock: data?.stock,
+                        discount: data?.discount,
+                        discount_type: data?.discount_type,
+                    });
+                    console.log(response, "yooo")
+                    if (uploadedImages?.length > 0) {
+                        const formData = new FormData();
+                        formData.append("imageName", uploadedImages[0]?.file);
+
+                        // // Log the FormData to see its contents
+                        // for (let pair of formData.entries()) {
+                        //     console.log(pair[0] + ':', pair[1]);
+                        // }
+
+                        const uploadImageResponse = await ProductVariantService.uploadProductVariantImage(
+                            response?.data?.productVariantId,
+                            formData,
+                            {
+                                headers: { "Content-Type": "multipart/form-data" },
+                            }
+                        );
+
+                        console.log("Image Upload Response:", uploadImageResponse);
+                        reset();
+                        setuploadedImages([]);
+                        toast.success("Product created successfully!");
+                        navigate("/admin/product");
+                    }
+                }
+
             } catch (err) {
                 console.error("Error creating product:", err);
                 setError("Failed to create product");

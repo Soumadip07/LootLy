@@ -8,7 +8,7 @@ import { discountedPrice, encryptId, formatUnit } from '../../utils/constFunctio
 
 function ProductPage() {
     const [selectedProductOperation, setSelectedProductOperation] = useState();
-    const option = ["Delete created Product", "Update Created Product"];
+    const option = ["Delete created Product", "Update Created Product", "Add Product Variant"];
     const [open, setOpen] = useState(false)
     const [userId, setUserId] = useState(null);
     const [data, setData] = useState();
@@ -42,12 +42,17 @@ function ProductPage() {
         }
     }, [userId]);
 
-    const handleDropdownChange = (item, slug) => {
+    const handleDropdownChange = (item, slug, id) => {
         setSelectedProductOperation(item);
         console.log(item)
-
         if (item === "Add New Product") {
             navigate('/admin/product-form');
+        }
+        if (item === "Delete created Product") {
+            navigate(`/admin/delete-product/${slug}`);
+        }
+        if (item === "Add Product Variant") {
+            navigate(`/admin/product-variant/${id}`);
         }
         if (item === "Update Created Product") {
             navigate(`/admin/update-product/${slug}`);
@@ -94,7 +99,7 @@ function ProductPage() {
                                     <td>
                                         <Dropdown
                                             options={option}
-                                            onChange={(item) => handleDropdownChange(item, productItem?.productSlug)}
+                                            onChange={(item) => handleDropdownChange(item, productItem?.productSlug, productItem?.productId)}
                                             placeholder={"Select Product Operation"}
                                             open={open}
                                             setOpen={setOpen}

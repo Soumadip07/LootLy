@@ -15,7 +15,7 @@ function DescriptionBox() {
     // Jodit Editor Config
     const config = useMemo(() => ({
         readonly: false,
-        placeholder: "Description for the product",
+        // placeholder: "Description for the product",
         height: 350,
         // width: 600,
         background: "#7688db",

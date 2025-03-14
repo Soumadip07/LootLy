@@ -13,9 +13,9 @@ import AdminLayout from './components/Admin/AdminLayout';
 import Admin from './components/Admin/Admin';
 import SellerDetail from './components/Admin/SellerDetail';
 import Sales from './components/Admin/Sales';
-import Products from './components/Products/Products';
 import ProductPage from './components/Product/ProductPage';
 import UpdateProduct from './components/Product/UpdateProduct';
+import Products from './components/Products/products';
 
 export const router = createBrowserRouter([
     {
@@ -94,7 +94,21 @@ export const router = createBrowserRouter([
             {
                 path: 'update-product/:slug', element: <>
                     <Header />
-                    <UpdateProduct />
+                    <UpdateProduct type="Update" />
+                    <Footer />
+                </>
+            },
+            {
+                path: 'delete-product/:slug', element: <>
+                    <Header />
+                    <UpdateProduct type="Delete" />
+                    <Footer />
+                </>
+            },
+            {
+                path: 'product-variant/:id', element: <>
+                    <Header />
+                    <CreateProductForm type="Product Variant" />
                     <Footer />
                 </>
             },

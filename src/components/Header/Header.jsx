@@ -14,8 +14,10 @@ function Header() {
     useEffect(() => {
 
     }, [authenticationStatus]);
-
+    const userEmail = useSelector((state) => state.auth.user); // Access the user email
+    console.log("user email", userEmail)
     const logOutHnadler = () => {
+        console.log("Log out")
         dispatch(logoutUser())
     }
     // console.log(isAuthenticated)

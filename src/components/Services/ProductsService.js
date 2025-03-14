@@ -1,5 +1,5 @@
 import { axiosInstance } from '../../utils/AxiosInstance';
-
+import Cookies from 'js-cookie';
 // API function for creating a user
 const getProducts = (pageNumber = 0, pageSize = 5, sortBy = "productId", sortDir = "ASC") => {
     return axiosInstance.get(
@@ -36,6 +36,14 @@ const updateProduct = (productId, productData) => {
         `/api/products/${productId}`, productData
     );
 };
+const deleteProduct = (slug) => {
+    return axiosInstance.delete(`/api/products/slug/${slug}`, {
+        headers: {
+            Authorization: `Bearer ${Cookies.get("authToken")}` // Replace with actual token retrieval
+        }
+    });
+};
+
 // Export the API functions
 const ProductsApis = {
     getProducts,
@@ -45,6 +53,7 @@ const ProductsApis = {
     getProductBySlug,
     getProductByUserId,
     updateProduct,
+    deleteProduct
 };
 
 export default ProductsApis;

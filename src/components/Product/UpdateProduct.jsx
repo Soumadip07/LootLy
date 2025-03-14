@@ -12,7 +12,8 @@ import toast, { Toaster } from 'react-hot-toast'
 import { DiscountTypes } from '../../utils/DiscountType';
 import CategoriesApis from '../Services/CategoryService';
 import { getUserId } from '../../utils/constFunctions';
-function UpdateProduct() {
+import { QuantityTypes } from '../../utils/QuantityType';
+function UpdateProduct({ type }) {
     const {
         register,
         handleSubmit,
@@ -31,6 +32,7 @@ function UpdateProduct() {
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState();
     const [data, setData] = useState();
+    const [selectedQuantityOption, setSelectedQuantityOption] = useState();
 
     const closeModal = () => setShowModal(false);
     const [userId, setUserId] = useState(null);
@@ -45,6 +47,8 @@ function UpdateProduct() {
     console.log("User ID:", userId);
     const [open, setOpen] = useState(false)
     const [selectedCheckboxValue, setSelectedCheckboxValue] = useState(null);
+
+
     useEffect(() => {
         const fetchProductData = async () => {
             if (!userId) return; // Ensure userId exists
@@ -85,7 +89,21 @@ function UpdateProduct() {
             fetchProductData();
         }
     }, [userId, reset]);
+    const handleRemoveProduct = async () => {
+        console.log("Delete")
+        if (type == "Delete") {
+            try {
+                const response = await ProductsApis.deleteProduct(slug, {
 
+                });
+            } catch (err) {
+                console.error("Error deleting product:", err);
+                setError("Failed to delete product");
+            } finally {
+                setLoading(false);
+            }
+        }
+    }
     console.log(selectedCategoryOption)
     const onSubmit = async (data, event) => {
         if (uploadedImages.length > 0) {
@@ -174,8 +192,9 @@ function UpdateProduct() {
                     {/* General Information */}
                     <div className='d-flex gap-2'>
                         <span className="material-symbols-outlined">package_2</span>
-                        <h4>Update Product</h4>
+                        <h4>{type} page</h4>
                     </div>
+
 
                     <div className="col-12 col-lg-8">
                         <div className="card p-4">
@@ -213,6 +232,43 @@ function UpdateProduct() {
                                 />
                                 {errors.content && <small className="text-danger">{errors.content.message}</small>}
                             </div>
+
+                            {/* Quantity & Inventory */}
+                            <div className="row">
+                                <div className="col-6">
+                                    <label className="form-label" htmlFor="quantityDropdown">Quantity</label>
+                                    <Controller
+                                        name="quantity"
+                                        control={control}
+                                        rules={{ required: "Quantity is required" }}
+                                        render={({ field: { onChange, value } }) => (
+                                            <Dropdown
+                                                options={QuantityTypes}
+                                                onChange={(item) => {
+                                                    setSelectedQuantityOption(item);
+                                                    onChange(item);
+                                                }}
+                                                placeholder={"Type to search"}
+                                                open={open}
+                                                setOpen={setOpen}
+                                                value={value}
+                                            />
+                                        )}
+                                    />
+                                    {errors.quantity && <small className="text-danger">{errors.quantity.message}</small>}
+                                </div>
+
+
+                                {/* <div className="col-6">
+                                    <label className="form-label ps-3">Inventory Status</label>
+                                    <Checkbox
+                                        checkboxItems={["Available", "Unavailable", "Discontinued"]}
+                                        type={"radio"}
+                                        selectedCheckboxValue={selectedCheckboxValue}
+                                        setSelectedCheckboxValue={setSelectedCheckboxValue}
+                                    />
+                                </div> */}
+                            </div>
                         </div>
                     </div>
 
@@ -221,7 +277,7 @@ function UpdateProduct() {
                         <div className="card p-4">
                             <h5 className="card-title">Upload Image</h5>
                             <p>Only .png, .jpg, and .jpeg files are allowed.</p>
-                            <Dropzone uploadedImages={uploadedImages} setUploadedImages={setuploadedImages} />
+                            {/* <Dropzone uploadedImages={uploadedImages} setuploadedImages={setuploadedImages} /> */}
                         </div>
                     </div>
 
@@ -260,26 +316,97 @@ function UpdateProduct() {
                                         {...register("discount", { required: "Discount is required" })}
                                     />
                                 </div>
-                                {/* <div className="col-6">
+                                <div className="col-6">
                                     <label className="form-label">Discount Type</label>
-                                    <Dropdown options={DiscountTypes} selectedOption={selectedDiscountOption} setValue={setSelectedDiscountOption} />
-                                </div> */}
+                                    <Controller
+                                        name="discount_type"
+                                        control={control}
+                                        rules={{ required: "Discount Type is required" }}
+                                        render={({ field: { onChange, value } }) => (
+                                            <Dropdown
+                                                options={DiscountTypes}
+                                                onChange={(item) => {
+                                                    setSelectedDiscountOption(item);  // For local state update (if needed)
+                                                    onChange(item);  // Important: This ensures the value is stored in the form data
+                                                }}
+                                                placeholder={"Search Season Discount"}
+                                                open={open}
+                                                setOpen={setOpen}
+                                                value={value}  // This ensures the selected value persists in the dropdown
+                                            />
+                                        )}
+                                    />
+                                    {errors.discount_type && <small className="text-danger">{errors.discount_type.message}</small>}
+
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    {/* Category */}
+                    <div className="col-12 col-lg-4">
+                        <div className="card p-4">
+                            <h5 className="card-title">Category</h5>
+                            <label className="form-label" htmlFor="categoryDropdown">Product Category</label>
+                            <Controller
+                                name="category"
+                                control={control}
+                                rules={{ required: "Category is required" }}
+                                render={({ field: { onChange, value } }) => (
+                                    <Dropdown
+                                        options={category}
+                                        onChange={(item) => {
+                                            setSelectedCategoryOption(item); // Local state update (if needed)
+                                            onChange(item);      // Store only the `id` or desired value in form data
+                                        }}
+                                        placeholder={"Type to search Product Category"}
+                                        open={open}
+                                        setOpen={setOpen}
+                                        value={value}  // Ensures the selected value appears in the dropdown
+                                        keyTitle={"categoryTitle"}
+                                        idTitle={"categoryId"}
+                                    />
+                                )}
+                            />
+                            {errors.category && <small className="text-danger">{errors.category.message}</small>}
+
+                            {/* <button
+                                type="button"
+                                className='cart-btn mt-3'
+                                onClick={() => setShowModal(true)}
+                            >
+                                Add Category
+                            </button> */}
+                        </div>
+                    </div>
+
                     <div className="col-12 d-flex justify-content-end">
-                        <button
-                            className="cart-btn"
-                            type="submit"
-                            disabled={loading}
-                        >
-                            {loading ? (
-                                <div className="spinner-border text-light" role="status">
-                                    <span className="visually-hidden">Loading...</span>
-                                </div>
-                            ) : "Save Changes"}
-                        </button>
+                        {type != "Delete" ? (
+                            <button
+                                className="cart-btn"
+                                type="submit"
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <div className="spinner-border text-light" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                ) : "Save Changes"}
+                            </button>
+                        ) : (
+                            <button
+                                className="cart-btn"
+                                onClick={handleRemoveProduct}
+                                disabled={loading}
+                                type="button"
+                            >
+                                {loading ? (
+                                    <div className="spinner-border text-light" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                ) : "Delete Product"}
+                            </button>
+                        )}
                     </div>
                 </div>
             </form>
