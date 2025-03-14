@@ -135,8 +135,16 @@ span {
     background-color: #F0F2FB;
 }
 
+.small-buttons {
+    border: 1px solid #7688db;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bolder;
+    background-color: #F0F2FB;
+}
+
 .table-responsive {
-    max-height: 200px;
+    height: 100%;
     overflow-y: scroll;
 }
 
@@ -544,7 +552,9 @@ header {
 
     img {
         max-height: 650px;
+        min-height: 300px;
         max-width: 100%;
+        min-width: 300px;
         border: 1px solid #d1d5db;
         border-radius: 10px;
         padding: 0.5rem;
@@ -599,13 +609,19 @@ header {
             color: #6B7280;
         }
 
-        .stock-status {
+        .stock-status,
+        .quantity {
             background-color: #DCFCE7;
             padding: 6px;
             width: max-content;
             border-radius: 10px;
             color: #16A34A;
             font-weight: 600;
+        }
+
+        .quantity {
+            background-color: #F0F2FB;
+            color: #7688db;
         }
 
         @media (max-width: 768px) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import ProductsApis from '../Services/ProductsService';
 import Cookies from "js-cookie";
 import logo from '../../assets/logo.png'
@@ -10,11 +10,9 @@ import Dropzone from '../../utils/Dropzone';
 import toast, { Toaster } from 'react-hot-toast'
 
 import { DiscountTypes } from '../../utils/DiscountType';
-import { QuantityTypes } from '../../utils/QuantityType';
 import CategoriesApis from '../Services/CategoryService';
-
-
-function CreateProductForm() {
+import { getUserId } from '../../utils/constFunctions';
+function UpdateProduct() {
     const {
         register,
         handleSubmit,
@@ -27,38 +25,16 @@ function CreateProductForm() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [category, setCategories] = useState();
-    const [selectedQuantityOption, setSelectedQuantityOption] = useState();
     const [selectedDiscountOption, setSelectedDiscountOption] = useState();
     const [selectedCategoryOption, setSelectedCategoryOption] = useState();
     const [uploadedImages, setuploadedImages] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState();
+    const [data, setData] = useState();
 
     const closeModal = () => setShowModal(false);
-
-
-    const [open, setOpen] = useState(false)
-    const [selectedCheckboxValue, setSelectedCheckboxValue] = useState(null);
-
-
-    const getCategory = async () => {
-        if (error)
-            return;
-        try {
-            // console.log("Payload being sent:", data);
-
-            const response = await CategoriesApis.getCategories();
-            // console.log(response)
-            setCategories(response.data)
-
-            // alert("User created successfully!");
-        } catch (err) {
-            console.error("Error:", err.response?.data || err.message);
-            setError(err.response?.data?.message || "Something went wrong!");
-        } finally {
-        }
-    }
     const [userId, setUserId] = useState(null);
+    const { slug } = useParams();
 
     useEffect(() => {
         const storedUserId = Cookies.get("userId");
@@ -66,12 +42,51 @@ function CreateProductForm() {
             setUserId(storedUserId);
         }
     }, []);
-
+    console.log("User ID:", userId);
+    const [open, setOpen] = useState(false)
+    const [selectedCheckboxValue, setSelectedCheckboxValue] = useState(null);
     useEffect(() => {
-        if (!category)
-            getCategory();
-    }, [category])
-    console.log(userId)
+        const fetchProductData = async () => {
+            if (!userId) return; // Ensure userId exists
+
+            try {
+                const response = await ProductsApis.getProductBySlug(slug);
+                if (response?.data) {
+                    const productData = response.data;
+                    console.log(productData?.discount_type, "product")
+
+                    // Populate form fields
+                    reset({
+                        title: productData.title || "",
+                        content: productData.content || "",
+                        base_price: productData.base_price || "",
+                        stock: productData.stock || "",
+                        discount: productData.discount || "",
+                        // discount_type: productData.discount_type || "",
+                        category: productData.category || "",
+                    });
+
+                    // Set category and discount dropdowns
+                    setSelectedCategoryOption(productData.category || null);
+                    // setSelectedDiscountOption(productData.discount_type || null);
+
+                    // If product has an image, set it
+                    if (productData.imageName) {
+                        setuploadedImages({ file: productData.imageName });
+                    }
+                }
+            } catch (err) {
+                console.error("Error fetching product data:", err);
+                setError("Failed to fetch product details.");
+            }
+        };
+
+        if (userId) {
+            fetchProductData();
+        }
+    }, [userId, reset]);
+
+    console.log(selectedCategoryOption)
     const onSubmit = async (data, event) => {
         if (uploadedImages.length > 0) {
             setError("");
@@ -79,16 +94,16 @@ function CreateProductForm() {
             setLoading(true);
             console.log(data?.category?.title, "helooooooooooo");
             try {
-                const response = await ProductsApis.createProduct(data?.category?.id, userId, {
+                const response = await ProductsApis.updateProduct(data?.productId, {
                     title: data?.title,
                     content: data?.content,
                     base_price: data?.base_price,
                     quantity: data?.quantity,
                     stock: data?.stock,
                     discount: data?.discount,
-                    discount_type: data?.discount_type,
+                    // discount_type: data?.discount_type,
                 });
-                navigate("/admin/product");
+
                 console.log(uploadedImages?.[0], "Responses");
 
                 if (uploadedImages?.length > 0) {
@@ -112,7 +127,6 @@ function CreateProductForm() {
                     reset();
                     setuploadedImages([]);
                     toast.success("Product created successfully!");
-                    navigate("/admin/product");
                 }
             } catch (err) {
                 console.error("Error creating product:", err);
@@ -120,7 +134,6 @@ function CreateProductForm() {
             } finally {
                 setLoading(false);
             }
-
         }
         else {
             toast.error('Upload Images for your product!');
@@ -147,11 +160,11 @@ function CreateProductForm() {
     const handleNavigate = () => {
         navigate("/admin/product");
     }
-    // console.log(uploadedImages)
+    console.log(uploadedImages)
     return (
         <section className='product-form p-3' id='product-form'>
             <button className="small-buttons d-flex mb-3 justify-content-center align-items-center p-1" onClick={handleNavigate}>
-                <span class="material-symbols-outlined">
+                <span className="material-symbols-outlined">
                     chevron_backward
                 </span>
                 <h6 className='mt-2'>Product page</h6>
@@ -160,8 +173,8 @@ function CreateProductForm() {
                 <div className="row g-4">
                     {/* General Information */}
                     <div className='d-flex gap-2'>
-                        <span class="material-symbols-outlined">package_2</span>
-                        <h4>Add New Product</h4>
+                        <span className="material-symbols-outlined">package_2</span>
+                        <h4>Update Product</h4>
                     </div>
 
                     <div className="col-12 col-lg-8">
@@ -200,43 +213,6 @@ function CreateProductForm() {
                                 />
                                 {errors.content && <small className="text-danger">{errors.content.message}</small>}
                             </div>
-
-                            {/* Quantity & Inventory */}
-                            <div className="row">
-                                <div className="col-6">
-                                    <label className="form-label" htmlFor="quantityDropdown">Quantity</label>
-                                    <Controller
-                                        name="quantity"
-                                        control={control}
-                                        rules={{ required: "Quantity is required" }}
-                                        render={({ field: { onChange, value } }) => (
-                                            <Dropdown
-                                                options={QuantityTypes}
-                                                onChange={(item) => {
-                                                    setSelectedQuantityOption(item);
-                                                    onChange(item);
-                                                }}
-                                                placeholder={"Type to search"}
-                                                open={open}
-                                                setOpen={setOpen}
-                                                value={value}
-                                            />
-                                        )}
-                                    />
-                                    {errors.quantity && <small className="text-danger">{errors.quantity.message}</small>}
-                                </div>
-
-
-                                {/* <div className="col-6">
-                                    <label className="form-label ps-3">Inventory Status</label>
-                                    <Checkbox
-                                        checkboxItems={["Available", "Unavailable", "Discontinued"]}
-                                        type={"radio"}
-                                        selectedCheckboxValue={selectedCheckboxValue}
-                                        setSelectedCheckboxValue={setSelectedCheckboxValue}
-                                    />
-                                </div> */}
-                            </div>
                         </div>
                     </div>
 
@@ -245,7 +221,7 @@ function CreateProductForm() {
                         <div className="card p-4">
                             <h5 className="card-title">Upload Image</h5>
                             <p>Only .png, .jpg, and .jpeg files are allowed.</p>
-                            <Dropzone uploadedImages={uploadedImages} setuploadedImages={setuploadedImages} />
+                            <Dropzone uploadedImages={uploadedImages} setUploadedImages={setuploadedImages} />
                         </div>
                     </div>
 
@@ -284,90 +260,32 @@ function CreateProductForm() {
                                         {...register("discount", { required: "Discount is required" })}
                                     />
                                 </div>
-                                <div className="col-6">
+                                {/* <div className="col-6">
                                     <label className="form-label">Discount Type</label>
-                                    <Controller
-                                        name="discount_type"
-                                        control={control}
-                                        rules={{ required: "Discount Type is required" }}
-                                        render={({ field: { onChange, value } }) => (
-                                            <Dropdown
-                                                options={DiscountTypes}
-                                                onChange={(item) => {
-                                                    setSelectedDiscountOption(item);  // For local state update (if needed)
-                                                    onChange(item);  // Important: This ensures the value is stored in the form data
-                                                }}
-                                                placeholder={"Search Season Discount"}
-                                                open={open}
-                                                setOpen={setOpen}
-                                                value={value}  // This ensures the selected value persists in the dropdown
-                                            />
-                                        )}
-                                    />
-                                    {errors.discount_type && <small className="text-danger">{errors.discount_type.message}</small>}
-
-                                </div>
+                                    <Dropdown options={DiscountTypes} selectedOption={selectedDiscountOption} setValue={setSelectedDiscountOption} />
+                                </div> */}
                             </div>
                         </div>
                     </div>
 
-                    {/* Category */}
-                    <div className="col-12 col-lg-4">
-                        <div className="card p-4">
-                            <h5 className="card-title">Category</h5>
-                            <label className="form-label" htmlFor="categoryDropdown">Product Category</label>
-                            <Controller
-                                name="category"
-                                control={control}
-                                rules={{ required: "Category is required" }}
-                                render={({ field: { onChange, value } }) => (
-                                    <Dropdown
-                                        options={category}
-                                        onChange={(item) => {
-                                            setSelectedCategoryOption(item); // Local state update (if needed)
-                                            onChange(item);      // Store only the `id` or desired value in form data
-                                        }}
-                                        placeholder={"Type to search Product Category"}
-                                        open={open}
-                                        setOpen={setOpen}
-                                        value={value}  // Ensures the selected value appears in the dropdown
-                                        keyTitle={"categoryTitle"}
-                                        idTitle={"categoryId"}
-                                    />
-                                )}
-                            />
-                            {errors.category && <small className="text-danger">{errors.category.message}</small>}
-
-                            {/* <button
-                                type="button"
-                                className='cart-btn mt-3'
-                                onClick={() => setShowModal(true)}
-                            >
-                                Add Category
-                            </button> */}
-                        </div>
+                    <div className="col-12 d-flex justify-content-end">
+                        <button
+                            className="cart-btn"
+                            type="submit"
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <div className="spinner-border text-light" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            ) : "Save Changes"}
+                        </button>
                     </div>
-
-                    {/* Submit Button */}
-
                 </div>
-                <button
-                    type="submit"
-                    className={`cart-btn mt-3 ${loading ? 'loading' : ''}`}
-                    disabled={loading}
-                >
-                    {loading ? (
-                        <span className="spinner"></span>  // Ensure that the spinner has a unique class
-                    ) : (
-                        'Submit'
-                    )}
-                </button>
-                <Toaster />
             </form>
-
-
+            <Toaster />
         </section>
     )
 }
 
-export default CreateProductForm;
+export default UpdateProduct

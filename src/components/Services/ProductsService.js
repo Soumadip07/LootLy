@@ -26,13 +26,25 @@ const getProductBySlug = (slug) => {
         `/api/products/slug/${slug}`,
     );
 };
+const getProductByUserId = (userId) => {
+    return axiosInstance.get(
+        `/api/user/${userId}/products`,
+    );
+}
+const updateProduct = (productId, productData) => {
+    return axiosInstance.put(
+        `/api/products/${productId}`, productData
+    );
+};
 // Export the API functions
 const ProductsApis = {
     getProducts,
     createProduct,
     uploadProductImage,
     getProductById,
-    getProductBySlug
+    getProductBySlug,
+    getProductByUserId,
+    updateProduct,
 };
 
 export default ProductsApis;

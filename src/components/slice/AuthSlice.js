@@ -13,13 +13,14 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await LoginApis.LoginUser(credentials);
             const userData = response.data;
-            console.log(userData)
+            console.log(userData?.user?.id, "user data")
             // Save token and user data in cookies
             Cookies.set("authToken", userData.token, { expires: 7 }); // Set token cookie with a 7-day expiry
-            Cookies.set("userId", credentials?.id, {
-                secure: true,  // Transmitted only over HTTPS
-                httpOnly: true, // Not accessible via JavaScript
-                sameSite: "Strict", // Prevent cross-site requests
+
+            Cookies.set("userId", userData?.user?.id, {
+                // secure: true,  // Transmitted only over HTTPS
+                // httpOnly: true, // Not accessible via JavaScript
+                // sameSite: "Strict", // Prevent cross-site requests
                 expires: 7,  // Set an expiration date
             });
             Cookies.set("isAuthenticated", "true", { expires: 7 }); // Authentication status

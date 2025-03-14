@@ -104,8 +104,16 @@ span {
   background-color: #F0F2FB;
 }
 
+.small-buttons {
+  border: 1px solid #7688db;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: bolder;
+  background-color: #F0F2FB;
+}
+
 .table-responsive {
-  max-height: 200px;
+  height: 100%;
   overflow-y: scroll;
 }
 
@@ -456,7 +464,9 @@ header .user-section .btn:hover {
 }
 .product-details img {
   max-height: 650px;
+  min-height: 300px;
   max-width: 100%;
+  min-width: 300px;
   border: 1px solid #d1d5db;
   border-radius: 10px;
   padding: 0.5rem;
@@ -501,7 +511,8 @@ header .user-section .btn:hover {
   padding-right: 5px;
   color: #6B7280;
 }
-.product-details .product-info .stock-status {
+.product-details .product-info .stock-status,
+.product-details .product-info .quantity {
   background-color: #DCFCE7;
   padding: 6px;
   width: -moz-max-content;
@@ -509,6 +520,10 @@ header .user-section .btn:hover {
   border-radius: 10px;
   color: #16A34A;
   font-weight: 600;
+}
+.product-details .product-info .quantity {
+  background-color: #F0F2FB;
+  color: #7688db;
 }
 @media (max-width: 768px) {
   .product-details .product-info h3 {

@@ -18,7 +18,8 @@ import DeliveryPolicy from '../DeliveryPolicy';
 import Reviews from '../Reviews';
 import { Tooltip } from '@mui/material';
 import ProductsApis from '../Services/ProductsService';
-import { discountedPrice } from '../../utils/constFunctions';
+import { discountedPrice, formatUnit } from '../../utils/constFunctions';
+import toast, { Toaster } from "react-hot-toast";
 
 function ProductDetails() {
     const { slug } = useParams();
@@ -42,10 +43,10 @@ function ProductDetails() {
     };
 
     // const filteredProductData = products.find((product) => product.id === parseInt(id));
-    console.log(slug)
-    const getImage = (imageName) => {
-        return imageMap[imageName] || '/images/default-image.jpeg';
-    };
+    const [quantity, setQuantity] = useState(1);
+
+
+
     const getData = async (pageNumber, pageSize, sortBy, sortDir) => {
         setError("");
         setHasError(false)
@@ -68,7 +69,24 @@ function ProductDetails() {
     useEffect(() => {
         if (!data && !hasError)
             getData();
-    }, [data, hasError])
+    }, [])
+    const handleQuantityCounter = (type) => {
+        if (!data?.stock) {
+            toast.error("Stock data unavailable!");
+            return;
+        }
+
+        if (type === "increase") {
+            if (quantity >= data?.stock) {
+                toast.error(`Stock limit reached! Max: ${data?.stock}`);
+                return;
+            }
+            setQuantity((prevQuantity) => prevQuantity + 1);
+        } else if (type === "decrease" && quantity > 1) {
+            setQuantity((prevQuantity) => prevQuantity - 1);
+        }
+    };
+
     console.log(data)
 
     return (
@@ -97,7 +115,7 @@ function ProductDetails() {
                             <h5>${discountedPrice(data?.base_price, data?.discount)}</h5>
                             <h6>${data?.base_price}</h6>
                         </div>
-                        <p>{data?.quantity}</p>
+                        <p>{formatUnit(data?.quantity)}</p>
                     </div>
 
                     <div className='stock-status my-3'>
@@ -105,25 +123,32 @@ function ProductDetails() {
                             {data?.stock}
                         </Tooltip>
                     </div>
-                    <p>{data?.content}</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eveniet inventore dolorum molestiae ex amet, debitis eos magni rem laudantium id qui iusto, reiciendis vitae modi corporis enim ipsam cum a soluta quidem quia ipsum. Cum facilis obcaecati sed est! Harum minus nihil facilis voluptate cumque neque eius temporibus, vitae illo, cupiditate fugit a aliquam sit amet itaque. Provident asperiores animi dolorum non. Quisquam facilis earum ullam excepturi itaque voluptas pariatur possimus amet ab architecto molestiae, quasi rem voluptatem totam debitis maiores consequuntur harum libero commodi qui a ducimus ut. Cupiditate inventore itaque repudiandae odit nihil voluptates, modi iste ipsum.</p>
-                    <div>
+                    <p
+                        dangerouslySetInnerHTML={{
+                            __html: data?.content || "",
+                        }}
+                    />
+
+                    <div className='d-flex gap-2'>
                         Quantity
-                        <button>
+                        <button className='d-flex justify-content-center align-items-center small-buttons' onClick={() => handleQuantityCounter("increase")}>
                             <span class="material-symbols-outlined">
                                 add
                             </span>
                         </button>
-                        <button>
+                        <button className='d-flex justify-content-center align-items-center small-buttons' onClick={() => handleQuantityCounter("decrease")}>
                             <span class="material-symbols-outlined">
                                 remove
                             </span>
                         </button>
 
                     </div>
-                    <div>
-                        Sub Total
-                        <h5>25.00$</h5>
+                    <div className='quantity'>
+                        {quantity}
+                    </div>
+                    <div className='d-flex gap-2  align-items-center'>
+                        <p className='mt-3'>Sub Total</p>
+                        <div className='small-buttons'>${quantity * discountedPrice(data?.base_price, data?.discount)}</div>
                     </div>
 
                     <div className='d-flex  p-3 gap-4 py-5'>
@@ -196,6 +221,7 @@ function ProductDetails() {
                     </div>
                 </div>
             </div>
+            <Toaster />
         </section >
     );
 }

@@ -7,7 +7,7 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
     const menuItems = [
         { title: "Overview", icon: "grid_view", slug: "overview" },
         { title: "Analytics", icon: "bar_chart", slug: "analytics" },
-        { title: "Product", icon: "storefront", slug: "product-form" },
+        { title: "Product", icon: "storefront", slug: "product" },
         { title: "Sales", icon: "shopping_cart", slug: "sales" },
         { title: "Profile", icon: "badge", slug: "seller-details" }
     ];
