@@ -16,6 +16,7 @@ import Sales from './components/Admin/Sales';
 import ProductPage from './components/Product/ProductPage';
 import UpdateProduct from './components/Product/UpdateProduct';
 import Products from './components/Products/products';
+import Profile from './components/User/Profile';
 
 export const router = createBrowserRouter([
     {
@@ -113,6 +114,16 @@ export const router = createBrowserRouter([
                 </>
             },
             { path: 'product-form', element: <CreateProductForm /> },
+        ],
+    },
+    {
+        path: '/user',
+        element: <AdminLayout />, // This keeps Header, Sidebar, and Footer fixed
+        children: [
+            { path: 'profile', element: <Profile /> },
+            { path: 'analytics', element: <Dashboard /> },
+            { path: 'sales', element: <Sales /> },
+
         ],
     },
 ]);

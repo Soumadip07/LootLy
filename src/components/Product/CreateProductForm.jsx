@@ -98,10 +98,10 @@ function CreateProductForm(type) {
                         const formData = new FormData();
                         formData.append("image", uploadedImages[0]?.file);
 
-                        // // Log the FormData to see its contents
-                        // for (let pair of formData.entries()) {
-                        //     console.log(pair[0] + ':', pair[1]);
-                        // }
+                        console.log(uploadedImages[0]?.file, "form data")
+                        for (let pair of formData.entries()) {
+                            console.log(pair[0] + ':', pair[1]);
+                        }
 
                         const uploadImageResponse = await ProductsApis.uploadProductImage(
                             response?.data?.productId,
@@ -133,10 +133,10 @@ function CreateProductForm(type) {
                         const formData = new FormData();
                         formData.append("imageName", uploadedImages[0]?.file);
 
-                        // // Log the FormData to see its contents
-                        // for (let pair of formData.entries()) {
-                        //     console.log(pair[0] + ':', pair[1]);
-                        // }
+                        console.log(formData, "form data")
+                        for (let pair of formData.entries()) {
+                            console.log(pair[0] + ':', pair[1]);
+                        }
 
                         const uploadImageResponse = await ProductVariantService.uploadProductVariantImage(
                             response?.data?.productVariantId,

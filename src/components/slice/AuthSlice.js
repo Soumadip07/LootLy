@@ -16,7 +16,8 @@ export const loginUser = createAsyncThunk(
             console.log(userData?.user?.id, "user data")
             // Save token and user data in cookies
             Cookies.set("authToken", userData.token, { expires: 7 }); // Set token cookie with a 7-day expiry
-
+            Cookies.set("role", userData?.user?.roles?.[0]?.name, { expires: 7 });
+            console.log(userData?.user?.roles?.[0]?.name, "user")
             Cookies.set("userId", userData?.user?.id, {
                 // secure: true,  // Transmitted only over HTTPS
                 // httpOnly: true, // Not accessible via JavaScript

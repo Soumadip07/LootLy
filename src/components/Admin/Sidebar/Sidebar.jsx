@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
 function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
-
+    const user = useSelector((state) => state.auth);
+    let userRole = user?.user?.roles?.[0]?.name;
+    if (!userRole) {
+        userRole = Cookies.get("role");
+    }
+    console.log(userRole)
 
     const menuItems = [
         { title: "Overview", icon: "grid_view", slug: "overview" },
         { title: "Analytics", icon: "bar_chart", slug: "analytics" },
         { title: "Product", icon: "storefront", slug: "product" },
         { title: "Sales", icon: "shopping_cart", slug: "sales" },
-        { title: "Profile", icon: "badge", slug: "seller-details" }
+        { title: "Admin Details", icon: "badge", slug: "seller-details" },
+        { title: "Profile", icon: "badge", slug: "profile" },
+        { title: "Orders", icon: "badge", slug: "orders" }
+
     ];
 
+    const filteredMenuItems = menuItems.filter((item) => {
+        if (userRole === "ADMIN_USER") {
+            return true;
+        } else if (userRole === "NORMAL_USER") {
+            return item.slug === "overview" || item.slug === "profile" || item.slug === "orders";
+        }
+        return false;
+    });
     const transactions = [
         { title: "Payment", icon: "credit_card", slug: "#" },
         { title: "Refunds", icon: "receipt", slug: "#" },
@@ -27,7 +44,7 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
         { title: "Dark Mode", icon: "visibility", slug: "#" },
     ];
 
-    // console.log(isOpen)
+    console.log(filteredMenuItems, "menu", menuItems)
     return (
         <>
             <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
@@ -39,7 +56,7 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
                 <div className="menu-section">
                     <h4>{isOpen ? "Main Menu" : ""}</h4>
                     <ul className='d-flex flex-column justify-content-start align-items-start gap-2'>
-                        {menuItems.map((item) => (
+                        {filteredMenuItems.map((item) => (
                             <li key={item.title}>
                                 <NavLink
                                     to={`${item.slug}`}

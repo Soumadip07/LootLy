@@ -1221,7 +1221,7 @@ header .user-section .btn:hover {
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 .sidebar.open {
-  width: 150px;
+  width: 160px;
 }
 .sidebar.open a {
   padding: 6px;

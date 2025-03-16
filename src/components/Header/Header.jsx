@@ -10,8 +10,11 @@ function Header() {
     const dispatch = useDispatch();
     const { isAuthenticated } = useSelector((state) => state.auth);
     const authenticationStatus = Cookies.get("isAuthenticated") || isAuthenticated;
-
-    useEffect(() => {
+    const user = useSelector((state) => state.auth);
+    let userRole = user?.user?.roles?.[0]?.name;
+    if (!userRole) {
+        userRole = Cookies.get("role");
+    } useEffect(() => {
 
     }, [authenticationStatus]);
     const userEmail = useSelector((state) => state.auth.user); // Access the user email
@@ -61,20 +64,36 @@ function Header() {
                             </div>
                         </Link>
                     </Tooltip> */}
-                    <Tooltip title="Admin Pannel" disableInteractive>
-                        <Link
-                            className='btn focus:ring-opacity-50 border border-gray-200 p-3'
-                            to='/admin/overview'
-                        >
-                            <div className='d-flex'>
-                                <span class="material-symbols-outlined pe-2">
-                                    grocery
-                                </span>
-                                <h3>Admin</h3>
-                            </div>
-                        </Link>
-                    </Tooltip>
-
+                    {userRole === "ADMIN_USER" && (
+                        <Tooltip title="Admin Pannel" disableInteractive>
+                            <Link
+                                className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                                to='/admin/overview'
+                            >
+                                <div className='d-flex'>
+                                    <span class="material-symbols-outlined">
+                                        supervisor_account
+                                    </span>
+                                    <h3>Admin</h3>
+                                </div>
+                            </Link>
+                        </Tooltip>
+                    )}
+                    {userRole === "NORMAL_USER" && (
+                        <Tooltip title="Profile" disableInteractive>
+                            <Link
+                                className='btn focus:ring-opacity-50 border border-gray-200 p-3'
+                                to='/user'
+                            >
+                                <div className='d-flex'>
+                                    <span class="material-symbols-outlined">
+                                        manage_accounts
+                                    </span>
+                                    <h3>Profile</h3>
+                                </div>
+                            </Link>
+                        </Tooltip>
+                    )}
                     <Tooltip title="View your shopping cart" disableInteractive>
                         <Link
                             className='btn focus:ring-opacity-50 border border-gray-200 p-3'
