@@ -94,16 +94,12 @@ export const router = createBrowserRouter([
             { path: 'product', element: <ProductPage /> },
             {
                 path: 'update-product/:slug', element: <>
-                    <Header />
                     <UpdateProduct type="Update" />
-                    <Footer />
                 </>
             },
             {
                 path: 'delete-product/:slug', element: <>
-                    <Header />
                     <UpdateProduct type="Delete" />
-                    <Footer />
                 </>
             },
             {

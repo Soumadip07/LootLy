@@ -18,10 +18,11 @@ function Header() {
 
     }, [authenticationStatus]);
     const userEmail = useSelector((state) => state.auth.user); // Access the user email
-    console.log("user email", userEmail)
+    // console.log("user email", userEmail)
     const logOutHnadler = () => {
-        console.log("Log out")
         dispatch(logoutUser())
+        Cookies.remove("isAuthenticated");
+        Cookies.remove("role");
     }
     // console.log(isAuthenticated)
     return (

@@ -56,7 +56,7 @@ function Hero() {
                                         dangerouslySetInnerHTML={{ __html: banner.offer_code_text }}>
                                     </span>
                                     <div>
-                                        <Link to="/products" className="btn mt-4">
+                                        <Link to={banner?.imageUrl ? banner?.imageUrl : "/products"} className="btn mt-4">
                                             Shop Now
                                         </Link>
                                     </div>

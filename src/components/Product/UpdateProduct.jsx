@@ -33,11 +33,10 @@ function UpdateProduct({ type }) {
     const [modalData, setModalData] = useState();
     const [data, setData] = useState();
     const [selectedQuantityOption, setSelectedQuantityOption] = useState();
-
+    const [isImageUpdated, setIsImageUpdated] = useState(false);
     const closeModal = () => setShowModal(false);
     const [userId, setUserId] = useState(null);
     const { slug } = useParams();
-
     useEffect(() => {
         const storedUserId = Cookies.get("userId");
         if (storedUserId) {
@@ -102,27 +101,28 @@ function UpdateProduct({ type }) {
             } finally {
                 setLoading(false);
             }
+            toast.success("Product deleted successfully!");
+            navigate("/admin/product");
         }
     }
-    console.log(selectedCategoryOption)
+    // console.log(selectedCategoryOption)
     const onSubmit = async (data, event) => {
-        if (uploadedImages.length > 0) {
+        console.log(uploadedImages, "yoooo")
+        if (uploadedImages) {
             setError("");
             event.preventDefault();
             setLoading(true);
-            console.log(data?.category?.title, "helooooooooooo");
             try {
-                const response = await ProductsApis.updateProduct(data?.productId, {
+                const response = await ProductsApis.updateProductbySlug(slug, {
                     title: data?.title,
                     content: data?.content,
                     base_price: data?.base_price,
-                    quantity: data?.quantity,
                     stock: data?.stock,
                     discount: data?.discount,
                     // discount_type: data?.discount_type,
                 });
 
-                console.log(uploadedImages?.[0], "Responses");
+                console.log(response, "Responses");
 
                 if (uploadedImages?.length > 0) {
                     const formData = new FormData();
@@ -146,12 +146,37 @@ function UpdateProduct({ type }) {
                     setuploadedImages([]);
                     toast.success("Product created successfully!");
                 }
+                if (uploadedImages?.length > 0 && isImageUpdated) {
+                    console.log("hhehk")
+                    const formData = new FormData();
+                    formData.append("image", uploadedImages[0]?.file);
+
+                    // // Log the FormData to see its contents
+                    // for (let pair of formData.entries()) {
+                    //     console.log(pair[0] + ':', pair[1]);
+                    // }
+
+                    const uploadImageResponse = await ProductsApis.uploadProductImage(
+                        response?.data?.productId,
+                        formData,
+                        {
+                            headers: { "Content-Type": "multipart/form-data" },
+                        }
+                    );
+
+                    console.log("Image Upload Response:", uploadImageResponse);
+                    reset();
+                    setuploadedImages([]);
+                    toast.success("Product created successfully!");
+                    setIsImageUpdated(false)
+                }
             } catch (err) {
                 console.error("Error creating product:", err);
                 setError("Failed to create product");
             } finally {
                 setLoading(false);
             }
+            navigate("/admin/product");
         }
         else {
             toast.error('Upload Images for your product!');
@@ -178,7 +203,7 @@ function UpdateProduct({ type }) {
     const handleNavigate = () => {
         navigate("/admin/product");
     }
-    console.log(uploadedImages)
+    console.log(isImageUpdated, "kkk", uploadedImages.length)
     return (
         <section className='product-form p-3' id='product-form'>
             <button className="small-buttons d-flex mb-3 justify-content-center align-items-center p-1" onClick={handleNavigate}>
@@ -235,7 +260,7 @@ function UpdateProduct({ type }) {
 
                             {/* Quantity & Inventory */}
                             <div className="row">
-                                <div className="col-6">
+                                {/* <div className="col-6">
                                     <label className="form-label" htmlFor="quantityDropdown">Quantity</label>
                                     <Controller
                                         name="quantity"
@@ -256,7 +281,7 @@ function UpdateProduct({ type }) {
                                         )}
                                     />
                                     {errors.quantity && <small className="text-danger">{errors.quantity.message}</small>}
-                                </div>
+                                </div> */}
 
 
                                 {/* <div className="col-6">
@@ -277,7 +302,7 @@ function UpdateProduct({ type }) {
                         <div className="card p-4">
                             <h5 className="card-title">Upload Image</h5>
                             <p>Only .png, .jpg, and .jpeg files are allowed.</p>
-                            {/* <Dropzone uploadedImages={uploadedImages} setuploadedImages={setuploadedImages} /> */}
+                            <Dropzone uploadedImages={uploadedImages} setuploadedImages={setuploadedImages} isImageUpdated={isImageUpdated} setIsImageUpdated={setIsImageUpdated} isUpdateMode={"YES"} />
                         </div>
                     </div>
 
@@ -316,7 +341,7 @@ function UpdateProduct({ type }) {
                                         {...register("discount", { required: "Discount is required" })}
                                     />
                                 </div>
-                                <div className="col-6">
+                                {/* <div className="col-6">
                                     <label className="form-label">Discount Type</label>
                                     <Controller
                                         name="discount_type"
@@ -326,59 +351,23 @@ function UpdateProduct({ type }) {
                                             <Dropdown
                                                 options={DiscountTypes}
                                                 onChange={(item) => {
-                                                    setSelectedDiscountOption(item);  // For local state update (if needed)
-                                                    onChange(item);  // Important: This ensures the value is stored in the form data
+                                                    setSelectedDiscountOption(item);
+                                                    onChange(item);
                                                 }}
                                                 placeholder={"Search Season Discount"}
                                                 open={open}
                                                 setOpen={setOpen}
-                                                value={value}  // This ensures the selected value persists in the dropdown
+                                                value={value}
                                             />
                                         )}
                                     />
                                     {errors.discount_type && <small className="text-danger">{errors.discount_type.message}</small>}
 
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
 
-                    {/* Category */}
-                    <div className="col-12 col-lg-4">
-                        <div className="card p-4">
-                            <h5 className="card-title">Category</h5>
-                            <label className="form-label" htmlFor="categoryDropdown">Product Category</label>
-                            <Controller
-                                name="category"
-                                control={control}
-                                rules={{ required: "Category is required" }}
-                                render={({ field: { onChange, value } }) => (
-                                    <Dropdown
-                                        options={category}
-                                        onChange={(item) => {
-                                            setSelectedCategoryOption(item); // Local state update (if needed)
-                                            onChange(item);      // Store only the `id` or desired value in form data
-                                        }}
-                                        placeholder={"Type to search Product Category"}
-                                        open={open}
-                                        setOpen={setOpen}
-                                        value={value}  // Ensures the selected value appears in the dropdown
-                                        keyTitle={"categoryTitle"}
-                                        idTitle={"categoryId"}
-                                    />
-                                )}
-                            />
-                            {errors.category && <small className="text-danger">{errors.category.message}</small>}
-
-                            {/* <button
-                                type="button"
-                                className='cart-btn mt-3'
-                                onClick={() => setShowModal(true)}
-                            >
-                                Add Category
-                            </button> */}
-                        </div>
-                    </div>
 
                     <div className="col-12 d-flex justify-content-end">
                         {type != "Delete" ? (

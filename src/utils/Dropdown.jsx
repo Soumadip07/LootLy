@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 
 function Dropdown({
     options = [],
@@ -9,18 +9,20 @@ function Dropdown({
     idTitle
 }) {
     const [inputValue, setInputValue] = useState("");
-    const [filteredOptions, setFilteredOptions] = useState(options);
     const [open, setOpen] = useState(false);
     const [hasError, setHasError] = useState(false);
 
     const dropdownRef = useRef(null);
-    useEffect(() => {
-        if (options && !Array.isArray(options)) {
-            setFilteredOptions([]);
-        } else {
-            setFilteredOptions(options);
-        }
-    }, [options]);
+    // ✅ Filter options dynamically using `useMemo`
+    const filteredOptions = useMemo(() => {
+        if (!inputValue) return options; // Return all options if no input
+        return options.filter((opt) =>
+            (keyTitle && opt[keyTitle] ? opt[keyTitle] : opt)
+                .toLowerCase()
+                .includes(inputValue.toLowerCase())
+        );
+    }, [inputValue, options, keyTitle]);
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {

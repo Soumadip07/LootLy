@@ -19,7 +19,7 @@ function ProductPage() {
             setUserId(storedUserId);
         }
     }, []);
-    console.log("User ID:", userId);
+    // console.log("User ID:", userId);
     const navigate = useNavigate()
     useEffect(() => {
         const fetchProductData = async () => {
@@ -29,7 +29,7 @@ function ProductPage() {
                 const response = await ProductsApis.getProductByUserId(userId);
                 if (response?.data) {
                     const productData = response.data;
-                    console.log(productData, "product")
+                    // console.log(productData, "product")
                     setData(productData);
                 }
             } catch (err) {
@@ -44,7 +44,7 @@ function ProductPage() {
 
     const handleDropdownChange = (item, slug, id) => {
         setSelectedProductOperation(item);
-        console.log(item)
+        // console.log(item)
         if (item === "Add New Product") {
             navigate('/admin/product-form');
         }
@@ -90,9 +90,11 @@ function ProductPage() {
                                     <td>{encryptId(productItem?.productId)}</td>
                                     <td>{productItem?.title}
                                     </td>
-                                    <td>
-                                        <img src={`http://localhost:8082/api/products/image/${productItem?.imageName}`} alt="product-image" style={{ width: 100, height: 90, borderRadius: 5 }} />
-                                    </td>
+                                    {productItem?.imageName && (
+                                        <td>
+                                            <img src={`http://localhost:8082/api/products/image/${productItem?.imageName}`} alt="product-image" style={{ width: 100, height: 90, borderRadius: 5 }} />
+                                        </td>
+                                    )}
                                     <td>${discountedPrice(productItem?.base_price, productItem?.discount)}</td>
                                     <td>{productItem?.stock}</td>
                                     <td>{formatUnit(productItem?.quantity)}</td>

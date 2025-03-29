@@ -33,13 +33,31 @@ const getProductByUserId = (userId) => {
 }
 const updateProduct = (productId, productData) => {
     return axiosInstance.put(
-        `/api/products/${productId}`, productData
+        `/api/products/${productId}`,
+        productData, // Add a comma here
+        {
+            headers: {
+                Authorization: `Bearer ${Cookies.get("authToken")}`
+            }
+        }
     );
 };
+const updateProductbySlug = (slug, productData) => {
+    return axiosInstance.put(
+        `/api/products/slug/${slug}`,
+        productData, // Add a comma here
+        {
+            headers: {
+                Authorization: `Bearer ${Cookies.get("authToken")}`
+            }
+        }
+    );
+};
+
 const deleteProduct = (slug) => {
     return axiosInstance.delete(`/api/products/slug/${slug}`, {
         headers: {
-            Authorization: `Bearer ${Cookies.get("authToken")}` // Replace with actual token retrieval
+            Authorization: `Bearer ${Cookies.get("authToken")}`
         }
     });
 };
@@ -53,7 +71,8 @@ const ProductsApis = {
     getProductBySlug,
     getProductByUserId,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    updateProductbySlug
 };
 
 export default ProductsApis;

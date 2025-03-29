@@ -1,17 +1,20 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-function Dropzone({ uploadedImages, setuploadedImages }) {
+function Dropzone({ uploadedImages, setuploadedImages, isUpdateMode, isImageUpdated, setIsImageUpdated }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const selectedFileRef = useRef(null); // Ref to store the selected image
-    // console.log(uploadedImages)
+    const [imageRemoved, setImageRemoved] = useState(false);
+
     const onDrop = useCallback((acceptedFiles) => {
+        console.log("hello")
+        // Check for file limit
         if (uploadedImages.length + acceptedFiles.length > 5) {
             alert('You can only upload a maximum of 5 files.');
             return;
         }
 
-        // Corrected invalid files check
+        // Validate file types
         const invalidFiles = acceptedFiles.filter(file =>
             file.type !== 'image/png' &&
             file.type !== 'image/jpeg' &&
@@ -23,20 +26,27 @@ function Dropzone({ uploadedImages, setuploadedImages }) {
             return;
         }
 
+        // Filter valid files
         const validFiles = acceptedFiles.filter(file =>
             file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg'
         );
 
+        // If there are valid files, append them to uploadedImages
         if (validFiles.length > 0) {
             const filesWithId = validFiles.map(file => ({
                 id: Date.now() + Math.random(),
                 file,
             }));
 
+            // Update the state with new files
             setuploadedImages(prevFiles => [...prevFiles, ...filesWithId]);
+            if (uploadedImages && imageRemoved) {
+                setIsImageUpdated(true)
+            }
+            // Reset imageRemoved to false when a new image is uploaded
+            setImageRemoved(false);
         }
     }, [uploadedImages]);
-
 
     const handleRemoveFile = (id) => {
         setuploadedImages(prevFiles => {
@@ -58,7 +68,11 @@ function Dropzone({ uploadedImages, setuploadedImages }) {
         });
     };
 
-
+    const handleImageRemove = () => {
+        setuploadedImages([]); // Clear all uploaded images
+        setImageRemoved(true);  // Set imageRemoved to true
+        setSelectedFile(null);  // Reset selected file
+    };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -67,11 +81,12 @@ function Dropzone({ uploadedImages, setuploadedImages }) {
             'image/png': [],
         },
     });
+    console.log(uploadedImages, "uploaded")
 
     return (
         <section className="dropzone-container">
             {/* Main Preview */}
-            {selectedFile && (
+            {(selectedFile) && (
                 <div className="image-main-preview mb-3">
                     <img
                         src={URL.createObjectURL(selectedFile.file)}
@@ -84,32 +99,55 @@ function Dropzone({ uploadedImages, setuploadedImages }) {
                 </div>
             )}
 
-            {/* Image Thumbnails */}
-            <div className="uploaded-images">
-                {uploadedImages.map((uploadedFile, index) => (
-                    <div className="image-preview" key={uploadedFile.id} onClick={() => {
-                        setSelectedFile(uploadedFile);
-                        selectedFileRef.current = uploadedFile;
-                    }}>
-                        <img
-                            src={URL.createObjectURL(uploadedFile.file)}
-                            alt={`uploaded-file-${index}`}
-                            className="uploaded-image"
-                        />
-                        <button className="remove-btn" onClick={() => handleRemoveFile(uploadedFile.id)}>
-                            ×
-                        </button>
-                    </div>
-                ))}
+            {isUpdateMode === "YES" && !imageRemoved && uploadedImages && !selectedFile && uploadedImages?.file && (
+                <div className="image-main-preview mb-3">
+                    <img
+                        src={`http://localhost:8082/api/products/image/${uploadedImages?.file}`}
+                        alt="main-preview"
+                        className="uploaded-main-image"
+                    />
+                    <button className="remove-btn" onClick={handleImageRemove}>
+                        ×
+                    </button>
+                </div>
+            )}
 
-                {/* Upload Box */}
-                {uploadedImages.length < 5 && (
-                    <div className="add-image-box" {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        {isDragActive ? <p>Drop here...</p> : <span className="plus-icon">＋</span>}
-                    </div>
-                )}
-            </div>
+            {(isUpdateMode !== "YES" || imageRemoved || uploadedImages.length < 5) && (
+                <div className="uploaded-images">
+                    {uploadedImages.map((uploadedFile, index) => (
+                        <div className="image-preview" key={uploadedFile.id} onClick={() => {
+                            setSelectedFile(uploadedFile);
+                            selectedFileRef.current = uploadedFile;
+                        }}>
+                            <img
+                                src={URL.createObjectURL(uploadedFile.file)}
+                                alt={`uploaded-file-${index}`}
+                                className="uploaded-image"
+                            />
+                            <button className="remove-btn" onClick={() => handleRemoveFile(uploadedFile.id)}>
+                                ×
+                            </button>
+                        </div>
+                    ))}
+
+                    {/* Upload Box */}
+                    {isUpdateMode === "YES" ? (
+                        (
+                            <div className="add-image-box" {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                {isDragActive ? <p>Drop here...</p> : <span className="plus-icon">＋</span>}
+                            </div>
+                        )
+                    ) : (
+                        uploadedImages.length < 5 && (
+                            <div className="add-image-box" {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                {isDragActive ? <p>Drop here...</p> : <span className="plus-icon">＋</span>}
+                            </div>
+                        )
+                    )}
+                </div>
+            )}
         </section>
     );
 }

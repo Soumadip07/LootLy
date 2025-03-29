@@ -118,7 +118,7 @@ function Products() {
         if (!category && !hasError)
             getCategory();
     }, [category, hasError])
-    console.log((data?.data?.content?.[0]?.category?.categoryTitle), "check", filteredproductdata)
+    // console.log((data?.data?.content?.[0]?.category?.categoryTitle), "check", filteredproductdata)
     return (
         <section className="product-section" id="product-section">
             <div className="container mt-5 flex-column justify-content-start align-items-start">

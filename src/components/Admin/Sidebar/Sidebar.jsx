@@ -8,7 +8,7 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
     if (!userRole) {
         userRole = Cookies.get("role");
     }
-    console.log(userRole)
+    // console.log(userRole)
 
     const menuItems = [
         { title: "Overview", icon: "grid_view", slug: "overview" },
@@ -44,7 +44,7 @@ function Sidebar({ isOpen, setIsOpen, toggleSidebar }) {
         { title: "Dark Mode", icon: "visibility", slug: "#" },
     ];
 
-    console.log(filteredMenuItems, "menu", menuItems)
+    // console.log(filteredMenuItems, "menu", menuItems)
     return (
         <>
             <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
