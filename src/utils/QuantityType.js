@@ -35,3 +35,65 @@ export const QuantityTypes = [
     "ONE_ROLL",
     "ONE_SLEEVE"
 ];
+export const formatLabel = (key) => {
+    const quantityMap = {
+        "ONE_KG": "1 kg",
+        "FIVE_HUNDRED_G": "500 g",
+        "ONE_LB": "1 lb",
+        "TWO_HUNDRED_G": "200 g",
+        "TWO_POINT_FIVE_KG": "2.5 kg",
+        "FIVE_LB": "5 lb",
+        "ONE_LITER": "1 L",
+        "FIVE_HUNDRED_ML": "500 ml",
+        "TWO_HUNDRED_FIFTY_ML": "250 ml",
+        "ONE_GALLON": "1 gallon",
+        "TWO_LITERS": "2 L",
+        "ONE_QUART": "1 quart",
+        "ONE_PACK": "1 pack",
+        "TWO_PACKS": "2 packs",
+        "FIVE_PACKS": "5 packs",
+        "TEN_PACKS": "10 packs",
+        "SIX_PACK": "6 pack",
+        "ONE_UNIT": "1 unit",
+        "TWO_UNITS": "2 units",
+        "THREE_UNITS": "3 units",
+        "SIX_UNITS": "6 units",
+        "TWELVE_UNITS": "12 units",
+        "ONE_METER": "1 m",
+        "TWO_METERS": "2 m",
+        "FIVE_METERS": "5 m",
+        "ONE_YARD": "1 yard",
+        "TEN_FEET": "10 ft",
+        "ONE_PIECE": "1 piece",
+        "ONE_SET": "1 set",
+        "ONE_BOX": "1 box",
+        "ONE_BOTTLE": "1 bottle",
+        "ONE_BAG": "1 bag",
+        "ONE_CARTON": "1 carton",
+        "ONE_ROLL": "1 roll",
+        "ONE_SLEEVE": "1 sleeve"
+    };
+
+    const discountMap = {
+        "HOLIDAY": "Holiday",
+        "BLACK_FRIDAY": "Black Friday",
+        "CYBER_MONDAY": "Cyber Monday",
+        "EID": "Eid",
+        "BACK_TO_SCHOOL": "Back to School",
+        "VALENTINES_DAY": "Valentine's Day",
+        "ANNIVERSARY": "Anniversary",
+        "FESTIVE": "Festive",
+        "SUMMER_SALE": "Summer Sale",
+        "WINTER_SALE": "Winter Sale",
+        "SEASONAL_CLEARANCE": "Seasonal Clearance",
+        "CHRISTMAS_SALE": "Christmas Sale",
+        "SPRING_SALE": "Spring Sale",
+        "FLASH_SALE": "Flash Sale",
+        "THANKSGIVING_SALE": "Thanksgiving Sale",
+        "MOTHERS_DAY": "Mother's Day",
+        "FATHERS_DAY": "Father's Day"
+    };
+
+    return quantityMap[key] || discountMap[key] || key.replace(/_/g, " ").toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+};
+;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { formatLabel } from "./QuantityType";
 
 function Dropdown({
     options = [],
@@ -79,7 +80,7 @@ function Dropdown({
     };
 
 
-    // console.log(filteredOptions, "key", keyTitle, "sad", idTitle, "optuiojns", options)
+    console.log(filteredOptions, "key", keyTitle, "sad", idTitle, "optuiojns", options)
     return (
         <div className="dropdown-container" ref={dropdownRef}>
             <div className="input-container" onClick={onInputClick}>
@@ -116,7 +117,7 @@ function Dropdown({
                                 {opt?.imageName && (
                                     <img src={`http://localhost:8082/api/image/${opt?.imageName}`} className="category-image me-1" alt="category-image" />
                                 )}
-                                {keyTitle ? opt[keyTitle] : opt}
+                                {keyTitle ? formatLabel(opt[keyTitle]) : formatLabel(opt)}
                             </div>
                         ))
                     ) : (

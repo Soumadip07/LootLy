@@ -22,6 +22,7 @@ import Dropdown from '../../utils/Dropdown'
 import toast, { Toaster } from 'react-hot-toast'
 import prodPlaceholder from '../../assets/prod2Placeholder.png';
 import { discountedPrice, formatUnit } from '../../utils/constFunctions'
+import { formatLabel } from '../../utils/QuantityType'
 
 function Products() {
     const [selectedCategory, setSelectedCategory] = useState();
@@ -110,7 +111,7 @@ function Products() {
     }, [selectedOption, data]);
     useEffect(() => {
         if (!data && !hasError)
-            getData(0, 10);
+            getData(0, 20);
     }, [data, hasError])
 
     useEffect(() => {
@@ -209,7 +210,7 @@ function Products() {
                                         <h5>${discountedPrice(product?.base_price, product?.discount)}</h5>
                                         <h6>${product?.base_price}</h6>
                                     </div>
-                                    <p>{formatUnit(product?.quantity)}</p>
+                                    <p>{product?.quantity ? formatLabel(product?.quantity) : ""}</p>
                                 </div>
 
                                 <div className='d-flex justify-content-center p-3'>

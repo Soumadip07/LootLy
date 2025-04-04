@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ProductsApis from '../Services/ProductsService';
 import Cookies from "js-cookie";
 import { discountedPrice, encryptId, formatUnit } from '../../utils/constFunctions';
+import { formatLabel } from '../../utils/QuantityType';
 
 function ProductPage() {
     const [selectedProductOperation, setSelectedProductOperation] = useState();
@@ -97,7 +98,7 @@ function ProductPage() {
                                     )}
                                     <td>${discountedPrice(productItem?.base_price, productItem?.discount)}</td>
                                     <td>{productItem?.stock}</td>
-                                    <td>{formatUnit(productItem?.quantity)}</td>
+                                    <td>{formatLabel(productItem?.quantity)}</td>
                                     <td>
                                         <Dropdown
                                             options={option}

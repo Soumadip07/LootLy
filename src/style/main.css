@@ -407,7 +407,7 @@ header .user-section .btn:hover {
 }
 .product-section .product-wrapper .card .upper-card img {
   height: 18rem;
-  width: 100%;
+  width: 18rem;
   -o-object-fit: cover;
      object-fit: cover;
 }
