@@ -15,9 +15,9 @@ function Header() {
     if (!userRole) {
         userRole = Cookies.get("role");
     } useEffect(() => {
-
+        console.log("logout")
     }, [authenticationStatus]);
-    const userEmail = useSelector((state) => state.auth.user); // Access the user email
+    const userEmail = useSelector((state) => state.auth.user);
     // console.log("user email", userEmail)
     const logOutHnadler = () => {
         dispatch(logoutUser())

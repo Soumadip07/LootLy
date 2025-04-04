@@ -27,7 +27,7 @@ function Hero() {
 
             const response = await TopBannerService.getAllBanner();
             setData(response?.data)
-            console.log("Response:", response.data);
+            // console.log("Response:", response.data);
             // alert("User created successfully!");
         } catch (err) {
             console.error("Error:", err.response?.data || err.message);

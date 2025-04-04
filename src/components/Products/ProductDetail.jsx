@@ -20,6 +20,8 @@ import { Tooltip } from '@mui/material';
 import ProductsApis from '../Services/ProductsService';
 import { discountedPrice, formatUnit } from '../../utils/constFunctions';
 import toast, { Toaster } from "react-hot-toast";
+import Cookies from "js-cookie";
+import CartService from '../Services/CartService';
 
 function ProductDetails() {
     const { slug } = useParams();
@@ -27,24 +29,18 @@ function ProductDetails() {
     const [loading, setLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
     const [data, setData] = useState();
-    const imageMap = {
-        prod1: prod1,
-        prod2: prod2,
-        prod3: prod3,
-        prod4: prod4,
-        prod5: prod5,
-        prod6: prod6,
-        prod7: prod7,
-        prod8: prod8,
-        prod9: prod9,
-        prod10: prod10,
-        prod11: prod11,
-        prod12: prod12,
-    };
+
+    const [userId, setUserId] = useState(null);
 
     // const filteredProductData = products.find((product) => product.id === parseInt(id));
     const [quantity, setQuantity] = useState(1);
 
+    useEffect(() => {
+        const storedUserId = Cookies.get("userId");
+        if (storedUserId) {
+            setUserId(storedUserId);
+        }
+    }, []);
 
 
     const getData = async (pageNumber, pageSize, sortBy, sortDir) => {
@@ -86,8 +82,22 @@ function ProductDetails() {
             setQuantity((prevQuantity) => prevQuantity - 1);
         }
     };
+    const handleAddtoCart = async (productId) => {
+        if (!userId) {
+            toast.error("User not logged in. Please log in to add items to the cart.");
+            return;
+        }
 
-    console.log(data)
+        try {
+            const response = await CartService.AddtoCart(userId, productId, quantity);
+            toast.success("Item added to cart successfully!");
+            console.log("Cart Response:", response.data);
+        } catch (error) {
+            console.error("Error adding to cart:", error.response?.data || error.message);
+            toast.error(error.response?.data?.message || "Failed to add item to cart.");
+        }
+    };
+    console.log(userId)
 
     return (
         <section className="product-details">
@@ -153,7 +163,7 @@ function ProductDetails() {
 
                     <div className='d-flex  p-3 gap-4 py-5'>
                         <Tooltip title="Add this item to your cart" disableInteractive>
-                            <button className='cart-btn'>Add to Cart</button>
+                            <button className='cart-btn' onClick={() => handleAddtoCart(data?.productId)}>Add to Cart</button>
                         </Tooltip>
                         <Tooltip title="Buy this item" disableInteractive>
                             <button className='cart-btn'>Buy</button>
